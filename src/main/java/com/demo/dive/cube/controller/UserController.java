@@ -1,10 +1,12 @@
 package com.demo.dive.cube.controller;
 
+import com.demo.dive.cube.config.UtilService;
 import com.demo.dive.cube.dto.AuthenticationRequestDto;
 import com.demo.dive.cube.dto.UserDto;
 import com.demo.dive.cube.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,15 +19,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/reg")
-    private ModelAndView indexCall(){
+    @GetMapping(value = "/registration")
+    private ModelAndView registrationView(){
         ModelAndView m = new ModelAndView();
         m.addObject("user",new UserDto());
         m.setViewName("registration");
         return m;
     }
 
-    @PostMapping(value = "/registration")
+    @PostMapping(value = "/saveUser")
     public String save(
            @Valid @ModelAttribute UserDto user){
 
@@ -34,15 +36,21 @@ public class UserController {
     }
     @RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        modelAndView.addObject("authenticationRequest",new AuthenticationRequestDto());
-        return modelAndView;
+
+        return userService.checkUserAuthenticate(new ModelAndView());
     }
+
+
     @RequestMapping(value="/userLogin", method = RequestMethod.POST)
-    public String login(@ModelAttribute AuthenticationRequestDto authenticationRequestDto,HttpServletRequest httpServletRequest){
-        userService.authenticate(authenticationRequestDto);
-        return "redirect:/item";
+    public String login(@ModelAttribute AuthenticationRequestDto authenticationRequestDto, HttpServletRequest httpServletRequest, Model model){
+
+           Boolean isAuthenticated = userService.authenticate(authenticationRequestDto);
+           if(isAuthenticated)
+            return "redirect:/item";
+           else{
+               model.addAttribute("loginError", true);
+               return "login.html"; }
+
     }
 
 

@@ -31,6 +31,8 @@
 
             <div class="login-form">
 <!--                <img class="img-responsive" th:src="@{/images/fish.png}" alt="Chania">-->
+                <p th:if="${loginError}" class="error">Wrong user or password</p>
+
                 <div class="form-group">
                     <form th:action="@{/userLogin}" method="post" th:object="${authenticationRequestDto}">
                         <label>Username</label>
