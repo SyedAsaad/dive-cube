@@ -5,19 +5,23 @@ import com.demo.dive.cube.config.exception.RecordNotFoundException;
 import com.demo.dive.cube.config.exception.ServiceException;
 import com.demo.dive.cube.dto.AuthenticationRequestDto;
 import com.demo.dive.cube.dto.UserDto;
+import com.demo.dive.cube.model.Item;
 import com.demo.dive.cube.model.User;
 import com.demo.dive.cube.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,8 @@ public class UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private ItemService itemService;
 
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -58,28 +64,53 @@ public class UserService {
 
     }
 
-    public void authenticate(AuthenticationRequestDto authenticationDto) {
-        if(authenticationDto != null) {
+    public Boolean authenticate(AuthenticationRequestDto authenticationDto) {
+        Boolean flag = false;
+        try {
+            if(authenticationDto != null) {
 
-//			Map <String,String> credentials = (Map<String, String>) authentication.getCredentials();
-            User user = findUserByUsername(authenticationDto.getUsername());
+                User user = findUserByUsername(authenticationDto.getUsername());
 
-            if (bCryptPasswordEncoder.matches(authenticationDto.getPassword(),user.getPassword())) {
+                if (bCryptPasswordEncoder.matches(authenticationDto.getPassword(), user.getPassword())) {
 
+                    List<GrantedAuthority> grantedAuthorities = convertList(new ArrayList<String>() {{
+                        add("ROLE_ADMIN");
+                    }}, role -> new SimpleGrantedAuthority(role));
 
-                List<GrantedAuthority> grantedAuthorities = convertList(new ArrayList<String>(){{add("ROLE_ADMIN");}}, role -> new SimpleGrantedAuthority(role));
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(
+                            user.getEmail(), null, grantedAuthorities);
 
-                Authentication authentication =  new UsernamePasswordAuthenticationToken(
-                        user.getEmail(), null,grantedAuthorities );
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else {
-                throw new BadRequestException("User is invalid");
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    flag = true;
+                }
             }
-        }else {
-            throw new UsernameNotFoundException(String.format("No appUser found with username '%s'.", ""));
+            return flag;
         }
+        catch (Exception e){
+            throw new AuthenticationServiceException("Authentication error");
+        }
+
     }
+
+    public ModelAndView checkUserAuthenticate(ModelAndView modelAndView) {
+        try {
+            Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+            if(!authentication.getPrincipal().toString().equalsIgnoreCase("anonymoususer")) {
+                modelAndView.addObject("item", new Item());
+                modelAndView.addObject("items", itemService.findAll());
+                modelAndView.setViewName("item");
+            } else{
+                modelAndView.setViewName("login");
+                modelAndView.addObject("authenticationRequest",new AuthenticationRequestDto());
+            }
+            return modelAndView;
+        }
+        catch (Exception e){
+            throw new ServiceException(e.getMessage(),e);
+        }
+
+        }
+
 
     public static <T, U> List<U> convertList(List<T> from, Function<T, U> func) {
         return from.stream().map(func).collect(Collectors.toList());
