@@ -4,6 +4,7 @@ import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.dto.PaymentDto;
 import com.demo.dive.cube.model.Item;
 import com.demo.dive.cube.service.ItemService;
+import com.demo.dive.cube.service.SupplierPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -21,18 +22,20 @@ public class PaymentController {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private SupplierPaymentService supplierPaymentService;
+
     @GetMapping("/supplier")
-    public ModelAndView getPaymentSupplier(Model model){
+    public ModelAndView getPaymentSupplier(){
         ModelAndView modelAndView = new ModelAndView("supplierPayment");
         modelAndView.addObject("payment",new PaymentDto());
-        modelAndView.addObject("items",itemService.findAll());
+//        modelAndView.addObject("pa",supplierPaymentService.findAll());
 //        modelAndView.addObject("items",itemService.findAll());
         return modelAndView;
     }
     @PostMapping(value = "/supplier"+ URLConstants.SAVE_URL)
     public String save(@ModelAttribute PaymentDto paymentDto){
-//        itemService.save(item);
-        System.out.println(paymentDto);
+        supplierPaymentService.savePayment(paymentDto);
         return "redirect:/item";
     }
 }
