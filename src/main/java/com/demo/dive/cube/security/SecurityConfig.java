@@ -31,13 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers("/","/login**","/logout","/userLogin").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").failureUrl("/?error=true")
-                .defaultSuccessUrl("/default")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
+                .and().formLogin().loginPage("/login").failureUrl("/login?error=true")
                 .and()
-                .logout().logoutUrl("/logout").permitAll()
-                .logoutSuccessUrl("/").and().exceptionHandling();
+                .logout().logoutUrl("/logout").permitAll().clearAuthentication(true).invalidateHttpSession(true).deleteCookies()
+                .logoutSuccessUrl("/").and().exceptionHandling().accessDeniedPage("/error");
     }
 
     /*	@Bean
