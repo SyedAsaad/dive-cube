@@ -21,9 +21,13 @@ public class SupplierPaymentService {
 
     public void savePayment(PaymentDto paymentDto) {
         if(paymentDto!=null){
-            SupplierPayment supplierPayment = modelMapper.map(paymentDto,SupplierPayment.class);
-            supplierPayment.setPaymentMethod(paymentDto.getPaymentMethod().getCode());
-            supplierPayment.setPaymentType(paymentDto.getPaymentType().getCode());
+            SupplierPayment supplierPayment = new SupplierPayment();
+            supplierPayment.setPaymentDate(paymentDto.getPaymentDate());
+            supplierPayment.setAmount(paymentDto.getAmount());
+            supplierPayment.setItem(paymentDto.getItemId());
+            supplierPayment.setPaymentMethod(paymentDto.getPaymentMethod());
+            supplierPayment.setPaymentType(paymentDto.getPaymentType());
+            supplierPayment.setSupplier(paymentDto.getSupplierId());
             paymentRepository.save(supplierPayment);
 
         }

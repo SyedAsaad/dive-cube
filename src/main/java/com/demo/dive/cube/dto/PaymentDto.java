@@ -2,51 +2,36 @@ package com.demo.dive.cube.dto;
 
 import com.demo.dive.cube.config.Constants.PaymentMethod;
 import com.demo.dive.cube.config.Constants.PaymentType;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.demo.dive.cube.model.Item;
+import com.demo.dive.cube.model.Supplier;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
 
 public class PaymentDto {
 
-    private Long itemId;
+    private Item itemId;
+
+    private Supplier supplierId;
     @NotNull()
     private PaymentMethod paymentMethod;
     @NotNull
     private PaymentType paymentType;
     @NotNull
-    @Pattern(regexp = "[0-9]+",message = "Digits only allowed")
+    @Pattern(regexp = "[0-9]+", message = "Digits only allowed")
     @Min(1)
     private Long amount;
+    private String paymentDate;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date paymentDate;
-
-    public Long getItemId() {
+    public Item getItemId() {
         return itemId;
     }
 
-    public void setItemId(Long itemId) {
+    public void setItemId(Item itemId) {
         this.itemId = itemId;
     }
 
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
 
     public Long getAmount() {
         return amount;
@@ -56,12 +41,35 @@ public class PaymentDto {
         this.amount = amount;
     }
 
+    public Supplier getSupplierId() {
+        return supplierId;
+    }
 
-    public Date getPaymentDate() {
+    public void setSupplierId(Supplier supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public Integer getPaymentType() {
+        return paymentType != null ? paymentType.ordinal() : null;
+    }
+
+    public void setPaymentType(Integer i) {
+        this.paymentType = PaymentType.values()[i];
+    }
+
+    public Integer getPaymentMethod() {
+        return paymentMethod != null ? paymentMethod.ordinal() : null;
+    }
+
+    public void setPaymentMethod(Integer i) {
+        this.paymentMethod = PaymentMethod.values()[i];
     }
 }

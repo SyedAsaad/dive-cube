@@ -1,5 +1,8 @@
 package com.demo.dive.cube.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
 
 
@@ -8,36 +11,55 @@ public class Constants {
 
 
     public enum PaymentType{
-        FULL_PAYMENT("Full Payment", "FULL_PAYMENT"),
-        PARTIAL_PAYMENT("Partial Payment","PARTIAL_PAYMENT");
+        FULL_PAYMENT("Full Payment"),
+        PARTIAL_PAYMENT("Partial Payment");
 
-        private String code;
         private String title;
+        public static final Map<Integer, String> keyValues = new HashMap<>();
 
-        PaymentType(String code, String title) {
-            this.code = code;
+        static {
+            for(PaymentType type : PaymentType.values()){
+                keyValues.put(type.ordinal(), type.getTitle());
+            }
+        }
+
+        PaymentType(String title) {
             this.title = title;
         }
 
-        public String getCode() {
-            return code;
+        public String getTitle() {
+            return title;
         }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
     }
 
     public enum PaymentMethod{
-        CREDIT_CARD("Credit Card", "CREDIT_CARD"),
-        WIRE_TRANSFER("Wire Transfer", "WIRE_TRANSFER"),
-        CASH("Cash","CASH");
-        private String code;
+        CREDIT_CARD("Credit Card"),
+        WIRE_TRANSFER("Wire Transfer"),
+        CASH("Cash");
         private String title;
+        public static final Map<Integer, String> keyValues = new HashMap<>();
 
-        PaymentMethod(String title,String code ) {
-            this.code = code;
+        static {
+            for(PaymentMethod type : PaymentMethod.values()){
+                keyValues.put(type.ordinal(), type.getTitle());
+            }
+        }
+
+        PaymentMethod(String title) {
             this.title = title;
         }
 
-        public String getCode() {
-            return code;
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
     }
 }
