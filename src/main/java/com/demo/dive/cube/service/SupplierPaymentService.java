@@ -1,7 +1,6 @@
 package com.demo.dive.cube.service;
 
 import com.demo.dive.cube.dto.PaymentDto;
-import com.demo.dive.cube.model.Item;
 import com.demo.dive.cube.model.SupplierPayment;
 import com.demo.dive.cube.repository.PaymentRepository;
 import org.modelmapper.ModelMapper;
@@ -34,7 +33,29 @@ public class SupplierPaymentService {
     }
 
     public List<SupplierPayment> findAll(){
-        return paymentRepository.findAll();
+        return paymentRepository.findAllByIsDeletedFalse();
     }
 
+    public void delete(Long id){
+        SupplierPayment supplierPayment = paymentRepository.findById(id).get();
+        if(supplierPayment != null){
+            supplierPayment.setIsDeleted(Boolean.TRUE);
+            paymentRepository.save(supplierPayment);
+        }
+    }
+
+    public PaymentDto findOne(Long id){
+        SupplierPayment supplierPayment = paymentRepository.findById(id).get();
+        PaymentDto paymentDto = new PaymentDto();
+        if(supplierPayment!=null){
+            paymentDto.setAmount(supplierPayment.getAmount());
+            paymentDto.setItemId(supplierPayment.getItem());
+            paymentDto.setPaymentDate(supplierPayment.getPaymentDate());
+            paymentDto.setPaymentMethod(supplierPayment.getPaymentMethod().ordinal());
+            paymentDto.setPaymentType(supplierPayment.getPaymentType().ordinal());
+            paymentDto.setSupplierId(supplierPayment.getSupplier());
+
+        }
+        return paymentDto;
+    }
 }

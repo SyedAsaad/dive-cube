@@ -125,6 +125,8 @@
                             <th>Item Name</th>
                             <th>Supplier</th>
                             <th>Amount</th>
+                            <th>Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -135,8 +137,8 @@
                             <td th:text="${payment.item.itemName}"></td>
                             <td th:text="${payment.supplier.name}"></td>
                             <td th:text="${payment.amount}"></td>
-<!--                            <td><a th:href="@{supplier/delete/{id}(id=${supplier.id})}" class="btn btn-danger btn-sm">Delete</a></td>-->
-<!--                            <td><a th:href="@{supplier/edit/{id}(id=${supplier.id})}" class="btn btn-danger btn-sm">Edit</a></td>-->
+                            <td><a th:href="@{/payment/supplier/delete/{id}(id=${payment.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/payment/supplier/edit/{id}(id=${payment.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>
