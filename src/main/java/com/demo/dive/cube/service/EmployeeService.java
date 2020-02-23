@@ -38,17 +38,18 @@ public class EmployeeService {
     }
 
     public List<Employee> findAll(){
-        return employeeRepository.findAll();
+        return employeeRepository.findAllByIsDeletedFalse();
     }
 
     public void delete(Long id){
         Employee employee = findOne(id);
         if(employee != null){
-            employeeRepository.delete(employee);
+            employee.setDeleted(true);
+            employeeRepository.save(employee);
         }
     }
 
     public Employee findOne(Long id){
-        return employeeRepository.findById(id).get();
+        return employeeRepository.findOneByIdAndIsDeletedFalse(id);
     }
 }

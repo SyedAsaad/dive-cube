@@ -28,17 +28,18 @@ public class CourseService {
     }
 
     public List<Course> findAll(){
-        return courseRepository.findAll();
+        return courseRepository.findAllByIsDeletedFalse();
     }
 
     public void delete(Long id){
         Course course = findOne(id);
         if(course != null){
-            courseRepository.delete(course);
+            course.setDeleted(true);
+            courseRepository.save(course);
         }
     }
 
     public Course findOne(Long id){
-        return courseRepository.findById(id).get();
+        return courseRepository.findOneByIdAndIsDeletedFalse(id);
     }
 }

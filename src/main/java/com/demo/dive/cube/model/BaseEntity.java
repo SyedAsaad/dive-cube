@@ -40,14 +40,14 @@ public abstract class BaseEntity implements Serializable {
 
     private Boolean isDeleted;
 
-    @PrePersist
-    public void isDeletedPersist() {
-        isDeleted = false;
+    @PreUpdate
+    public void isDeleteUpdate() {
+        if (isDeleted != null && isDeleted.equals(Boolean.TRUE)) {
+            isDeleted= true;
+        } else {
+            isDeleted = false;
+        }
     }
-//    @PrePersist
-//    public void isActivePersist() {
-//        isActive = true;
-//    }/
 
 
     public static long getSerialVersionUID() {
