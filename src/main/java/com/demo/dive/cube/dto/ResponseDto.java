@@ -1,15 +1,10 @@
 package com.demo.dive.cube.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
 public class ResponseDto<T> {
 
     private List<String> responseMessage;

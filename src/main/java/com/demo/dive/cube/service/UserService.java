@@ -48,7 +48,7 @@ public class UserService {
             }
             BeanUtils.copyProperties(userDto,user);
             user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-            user.setIsEnabled(true);
+            user.setEnabled(true);
             userRepository.save(user);
         }
         catch (Exception e){

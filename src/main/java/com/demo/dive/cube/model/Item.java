@@ -9,7 +9,6 @@ public class Item extends BaseEntity{
     @Column
     private String itemName;
 
-
     public String getItemName() {
         return itemName;
     }

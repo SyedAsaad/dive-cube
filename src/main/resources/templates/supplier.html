@@ -121,6 +121,9 @@
 			</div>
 		</div>
 	</div>
+<footer>
+	<div th:replace="footer :: myfooter"></div>
+</footer>
 	<script>
 		$('#supplier-datatable').DataTable({
 			"paging" : true,
@@ -134,9 +137,6 @@
 			"order" : [ [ 1, 'asc' ] ]
 		});
 	</script>
-<footer>
-	<div th:replace="footer :: myfooter"></div>
-</footer>
 </body>
 </html>
 
