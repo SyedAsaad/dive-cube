@@ -14,11 +14,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity implements Serializable {
@@ -52,10 +47,67 @@ public abstract class BaseEntity implements Serializable {
     public void isDeletedPersist() {
         isDeleted = false;
     }
-//    @PrePersist
-//    public void isActivePersist() {
-//        isActive = true;
-//    }/
 
+    @PreUpdate
+    public void isDeleteUpdate() {
+        if (isDeleted != null && isDeleted.equals(Boolean.TRUE)) {
+            isDeleted= true;
+        } else {
+            isDeleted = false;
+        }
+    }
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
 }
