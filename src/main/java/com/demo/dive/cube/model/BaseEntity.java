@@ -48,6 +48,16 @@ public abstract class BaseEntity implements Serializable {
         isDeleted = false;
     }
 
+    @PreUpdate
+    public void isDeleteUpdate() {
+        if (isDeleted != null && isDeleted.equals(Boolean.TRUE)) {
+            isDeleted= true;
+        } else {
+            isDeleted = false;
+        }
+    }
+
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

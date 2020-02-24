@@ -3,6 +3,7 @@ package com.demo.dive.cube.dto;
 import com.demo.dive.cube.config.Constants.PaymentMethod;
 import com.demo.dive.cube.config.Constants.PaymentType;
 import com.demo.dive.cube.model.Item;
+import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.model.Supplier;
 
 import javax.validation.constraints.Min;
@@ -11,34 +12,27 @@ import javax.validation.constraints.Pattern;
 
 public class PaymentDto {
 
-    private Item itemId;
-
+    private Long id;
+    @NotNull
+    private Order orderId;
+    @NotNull
     private Supplier supplierId;
     @NotNull()
     private PaymentMethod paymentMethod;
     @NotNull
     private PaymentType paymentType;
     @NotNull
-    @Pattern(regexp = "[0-9]+", message = "Digits only allowed")
     @Min(1)
-    private Long amount;
+    private Double amount;
+    @NotNull
     private String paymentDate;
 
-    public Item getItemId() {
-        return itemId;
+    public Order getOrderId() {
+        return orderId;
     }
 
-    public void setItemId(Item itemId) {
-        this.itemId = itemId;
-    }
-
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setOrderId(Order orderId) {
+        this.orderId = orderId;
     }
 
     public Supplier getSupplierId() {
@@ -71,5 +65,21 @@ public class PaymentDto {
 
     public void setPaymentMethod(Integer i) {
         this.paymentMethod = PaymentMethod.values()[i];
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
