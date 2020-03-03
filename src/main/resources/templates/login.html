@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sporting Goods</title>
+    <title>Dive Cube</title>
     <meta name="description" content="Lead Smith - Maintain Excel Files Record">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,6 +31,8 @@
 
             <div class="login-form">
 <!--                <img class="img-responsive" th:src="@{/images/fish.png}" alt="Chania">-->
+                <p th:if="${loginError}" class="error">Wrong user or password</p>
+
                 <div class="form-group">
                     <form th:action="@{/userLogin}" method="post" th:object="${authenticationRequestDto}">
                         <label>Username</label>

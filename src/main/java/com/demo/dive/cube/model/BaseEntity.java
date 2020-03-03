@@ -40,6 +40,11 @@ public abstract class BaseEntity implements Serializable {
 
     private Boolean isDeleted;
 
+    @PrePersist
+    public void isDeletedPersist() {
+        isDeleted = false;
+    }
+
     @PreUpdate
     public void isDeleteUpdate() {
         if (isDeleted != null && isDeleted.equals(Boolean.TRUE)) {
@@ -47,11 +52,6 @@ public abstract class BaseEntity implements Serializable {
         } else {
             isDeleted = false;
         }
-    }
-
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public Long getId() {
@@ -94,11 +94,12 @@ public abstract class BaseEntity implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
-    public Boolean getDeleted() {
-        return isDeleted;
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
+
 }
