@@ -1,16 +1,12 @@
 package com.demo.dive.cube.config.exception;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 
 import javax.validation.ConstraintViolationException;
 import java.util.HashSet;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
 public class ServiceException extends BaseRuntimeException {
 
     public ServiceException(String errorMessage, Exception e) {

@@ -28,17 +28,18 @@ public class SupplierService {
     }
 
     public List<Supplier> findAll(){
-        return supplierRepository.findAll();
+        return supplierRepository.findAllByIsDeletedFalse();
     }
 
     public void delete(Long id){
         Supplier supplier = findOne(id);
         if(supplier != null){
-            supplierRepository.delete(supplier);
+            supplier.setDeleted(true);
+            supplierRepository.save(supplier);
         }
     }
 
     public Supplier findOne(Long id){
-        return supplierRepository.findById(id).get();
+        return supplierRepository.findOneByIdAndIsDeletedFalse(id);
     }
 }

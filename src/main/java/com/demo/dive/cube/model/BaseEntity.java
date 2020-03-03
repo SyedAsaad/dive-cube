@@ -1,9 +1,6 @@
 package com.demo.dive.cube.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -55,11 +52,6 @@ public abstract class BaseEntity implements Serializable {
         } else {
             isDeleted = false;
         }
-    }
-
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public Long getId() {

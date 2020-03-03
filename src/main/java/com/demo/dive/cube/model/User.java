@@ -1,10 +1,6 @@
 package com.demo.dive.cube.model;
 
 import com.demo.dive.cube.config.Constants;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +11,6 @@ import javax.validation.constraints.Size;
 
 @Table
 @Entity(name = "user")
-
 public class User extends BaseEntity{
 
     @Column(name = "first_name", nullable = false)
@@ -82,12 +77,12 @@ public class User extends BaseEntity{
         this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getIsEnabled() {
-        return this.isEnabled;
+    public Boolean getEnabled() {
+        return isEnabled;
     }
 
-    public void setIsEnabled(Boolean isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
     }
 
     public String getAddress() {

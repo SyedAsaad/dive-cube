@@ -28,17 +28,18 @@ public class ItemService {
     }
 
     public List<Item> findAll(){
-        return itemRepository.findAll();
+        return itemRepository.findAllByIsDeletedFalse();
     }
 
     public void delete(Long id){
         Item item = findOne(id);
         if(item != null){
-            itemRepository.delete(item);
+            item.setDeleted(true);
+            itemRepository.save(item);
         }
     }
 
     public Item findOne(Long id){
-        return itemRepository.findById(id).get();
+        return itemRepository.findOneByIdAndIsDeletedFalse(id);
     }
 }
