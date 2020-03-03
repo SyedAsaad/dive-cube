@@ -28,17 +28,18 @@ public class QuoteService {
     }
 
     public List<Quote> findAll(){
-        return quoteRepository.findAll();
+        return quoteRepository.findAllByIsDeletedFalse();
     }
 
     public void delete(Long id){
         Quote quote = findOne(id);
         if(quote != null){
-            quoteRepository.delete(quote);
+            quote.setDeleted(true);
+            quoteRepository.save(quote);
         }
     }
 
     public Quote findOne(Long id){
-        return quoteRepository.findById(id).get();
+        return quoteRepository.findOneByIdAndIsDeletedFalse(id);
     }
 }

@@ -27,13 +27,14 @@ public class BookDiveController {
      ModelAndView modelAndView = new ModelAndView("bookDive");
      modelAndView.addObject("dive",new BookDive());
      modelAndView.addObject("diveTypes",diveService.findAll());
+     modelAndView.addObject("bookList",bookDiveService.findAll());
      return modelAndView;
     }
 
     @PostMapping(value = "/dive"+ URLConstants.SAVE_URL)
     public String save(@Valid @ModelAttribute BookDive bookDive){
         bookDiveService.save(bookDive);
-        return "redirect://book/dive";
+        return "redirect:/book/dive";
     }
 
     @GetMapping(value = "/dive"+ URLConstants.DELETE_URL)
@@ -44,9 +45,10 @@ public class BookDiveController {
 
     @GetMapping(value = "/dive"+ URLConstants.EDIT_URL)
     public ModelAndView edit(@PathVariable Long id){
-        ModelAndView modelAndView = new ModelAndView("dive");
+        ModelAndView modelAndView = new ModelAndView("bookDive");
         modelAndView.addObject("dive",bookDiveService.findOne(id));
         modelAndView.addObject("diveTypes",diveService.findAll());
+        modelAndView.addObject("bookList",bookDiveService.findAll());
         return modelAndView;
     }
 }

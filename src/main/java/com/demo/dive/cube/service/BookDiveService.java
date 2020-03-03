@@ -16,7 +16,7 @@ public class BookDiveService {
 
     public BookDive findOne(Long id) {
         if(id != null)
-            return bookDiveRepository.findById(id).get();
+            return bookDiveRepository.findByIdAndIsDeletedFalse(id);
         else return null;
     }
 
@@ -25,15 +25,13 @@ public class BookDiveService {
     }
 
     public void save(BookDive bookDive) {
-        if(bookDive != null ){
             if(bookDive.getId()!=null){
-                BookDive existBookDive = bookDiveRepository.findById(bookDive.getId()).get();
+                BookDive existBookDive = bookDiveRepository.findByIdAndIsDeletedFalse(bookDive.getId());
                 if(existBookDive != null){
                     bookDiveRepository.save(bookDive);
                 }
             }else
                 bookDiveRepository.save(bookDive);
-        }
     }
 
     public void delete(Long id) {
