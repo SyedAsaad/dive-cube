@@ -3,6 +3,7 @@ package com.demo.dive.cube.model;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
@@ -10,14 +11,19 @@ import java.time.LocalTime;
 @Table(name = "book_dive")
 public class BookDive extends BaseEntity {
 
+    @NotNull
     private String name;
     private String address;
+    @NotNull
+    @Min(1)
     private String contactNumber;
     @NotNull
     private String tripDate;
+    @NotNull
     private String tripTime;
     @OneToOne
     private DiveType diveType;
+    @NotNull
     private Double depositAmount;
 
     public String getName() {
@@ -75,4 +81,5 @@ public class BookDive extends BaseEntity {
     public void setDepositAmount(Double depositAmount) {
         this.depositAmount = depositAmount;
     }
+
 }
