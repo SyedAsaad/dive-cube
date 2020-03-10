@@ -1,6 +1,8 @@
 package com.demo.dive.cube.service;
 
 import com.demo.dive.cube.config.Constants;
+import com.demo.dive.cube.enums.PaymentMethod;
+import com.demo.dive.cube.enums.PaymentType;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -9,11 +11,9 @@ import java.util.Map;
 public class EnumService {
 
     public Map<Integer, String> findAllPaymentMethod(){
-        return Constants.PaymentMethod.keyValues;
+        return PaymentMethod.keyValues;
     }
 
-    public Map<Integer, String> findAllPaymentType(){
-        return Constants.PaymentType.keyValues;
-    }
+    public Map<Integer, String> findAllPaymentType(){ return PaymentType.keyValues; }
 
 }

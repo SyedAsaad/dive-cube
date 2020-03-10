@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Long> {
-    public Employee findOneByIdAndIsDeletedFalse(Long id);
-    public List<Employee> findAllByIsDeletedFalse();
+    Employee findOneByIdAndIsDeletedFalse(Long id);
+    List<Employee> findAllByIsDeletedFalse();
 }

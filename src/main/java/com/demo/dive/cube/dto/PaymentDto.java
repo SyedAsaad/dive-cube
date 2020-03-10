@@ -1,14 +1,12 @@
 package com.demo.dive.cube.dto;
 
-import com.demo.dive.cube.config.Constants.PaymentMethod;
-import com.demo.dive.cube.config.Constants.PaymentType;
-import com.demo.dive.cube.model.Item;
+import com.demo.dive.cube.enums.PaymentMethod;
+import com.demo.dive.cube.enums.PaymentType;
 import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.model.Supplier;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 public class PaymentDto {
 
