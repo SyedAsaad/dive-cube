@@ -8,21 +8,21 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name="supplier_order")
 @Entity
+@Table(name="supplier_order")
 public class Order extends BaseEntity {
 
-    @NotNull
-    @Column(name = "title")
+    @Column
     private String title;
 
-    @OneToOne
+    @ManyToOne
     private Supplier supplier;
 
-    @Column(name="payment_date")
-    private String paymentDate;
+    @Column(name="order_date")
+    private String orderDate;
 
-    private Double amount;
+    @Column
+    private Double amount = 0.0;
 
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
@@ -39,12 +39,12 @@ public class Order extends BaseEntity {
         this.supplier = supplier;
     }
 
-    public String getPaymentDate() {
-        return paymentDate;
+    public String getOrderDate() {
+        return orderDate;
     }
 
-    public void setPaymentDate(String paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Double getAmount() {
@@ -54,12 +54,13 @@ public class Order extends BaseEntity {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(Integer i) {
-        this.paymentMethod = PaymentMethod.values()[i];
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public List<OrderDetail> getOrderDetailList() {
@@ -70,19 +71,19 @@ public class Order extends BaseEntity {
         this.orderDetailList = orderDetailList;
     }
 
+    public void addOrderDetail(){
+        if(orderDetailList==null)
+            orderDetailList = new ArrayList<>();
+        else
+            orderDetailList.add(new OrderDetail());
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void addOrderDetail(){
-        if(orderDetailList==null)
-            orderDetailList = new ArrayList<>();
-        else
-            orderDetailList.add(new OrderDetail());
     }
 }
 
