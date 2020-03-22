@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -71,5 +73,11 @@ public class SupplierPaymentService {
 
         }
         return paymentDto;
+    }
+
+    public List<String> getAllPaymentTypes(){
+        List<String> paymentType = new ArrayList<>();
+        Arrays.stream(Constants.PaymentType.values()).forEach(type->paymentType.add(type.name()));
+        return paymentType;
     }
 }

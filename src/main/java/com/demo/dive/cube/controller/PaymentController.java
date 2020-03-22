@@ -28,8 +28,8 @@ public class PaymentController {
     public ModelAndView getPaymentSupplier(){
         ModelAndView modelAndView = new ModelAndView("supplierPayment");
         modelAndView.addObject("payment",new PaymentDto());
-        modelAndView.addObject("paymentMethods",enumService.findAllPaymentMethod());
-        modelAndView.addObject("paymentTypes",enumService.findAllPaymentType());
+        modelAndView.addObject("paymentMethods",orderService.getAllPaymentMethods());
+        modelAndView.addObject("paymentTypes",supplierPaymentService.getAllPaymentTypes());
         modelAndView.addObject("suppliers",supplierService.findAll());
         modelAndView.addObject("suppliersPayment",supplierPaymentService.findAll());
         modelAndView.addObject("orders",orderService.findAll());
@@ -51,8 +51,8 @@ public class PaymentController {
     public ModelAndView edit(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("supplierPayment");
         modelAndView.addObject("payment",supplierPaymentService.findOne(id));
-        modelAndView.addObject("paymentMethods",enumService.findAllPaymentMethod());
-        modelAndView.addObject("paymentTypes",enumService.findAllPaymentType());
+        modelAndView.addObject("paymentMethods",orderService.getAllPaymentMethods());
+        modelAndView.addObject("paymentTypes",supplierPaymentService.getAllPaymentTypes());
         modelAndView.addObject("suppliers",supplierService.findAll());
         modelAndView.addObject("suppliersPayment",supplierPaymentService.findAll());
         modelAndView.addObject("orders",orderService.findAll());
