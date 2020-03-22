@@ -35,7 +35,7 @@ function postStudentData(event) {
 
         }
     });
-    
+
 
 }
 
