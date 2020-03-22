@@ -1,6 +1,7 @@
 package com.demo.dive.cube.service;
 
 import com.demo.dive.cube.config.Constants;
+import com.demo.dive.cube.enums.PaymentMethod;
 import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,5 @@ public class OrderService {
         return orderRepository.findOneByIdAndIsDeletedFalse(id);
     }
 
-    public List<String> getAllPaymentMethods(){
-        List<String> paymentMethods = new ArrayList<>();
-        Arrays.stream(Constants.PaymentMethod.values()).forEach(type->paymentMethods.add(type.name()));
-        return paymentMethods;
-    }
+
 }

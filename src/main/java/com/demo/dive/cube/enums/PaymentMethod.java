@@ -1,23 +1,19 @@
 package com.demo.dive.cube.enums;
 
-import com.demo.dive.cube.config.Constants;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public enum PaymentMethod {
 
     CREDIT_CARD("Credit Card"),
     WIRE_TRANSFER("Wire Transfer"),
     CASH("Cash");
     private String title;
-    public static final Map<Integer, String> keyValues = new HashMap<>();
 
-    static {
-        for(PaymentMethod type : PaymentMethod.values()){
-            keyValues.put(type.ordinal(), type.getTitle());
-        }
-    }
+//    public static final Map<Integer, String> keyValues = new HashMap<>();
+//
+//    static {
+//        for(PaymentMethod type : PaymentMethod.values()){
+//            keyValues.put(type.ordinal(), type.getTitle());
+//        }
+//    }
 
     PaymentMethod(String title) {
         this.title = title;
@@ -27,7 +23,4 @@ public enum PaymentMethod {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }
