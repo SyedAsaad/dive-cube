@@ -1,12 +1,14 @@
 package com.demo.dive.cube.config;
 
 import com.demo.dive.cube.config.exception.BadRequestException;
+import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Objects;
 
 public class UtilService {
@@ -36,13 +38,13 @@ public class UtilService {
         }
     }
 
-    public static Boolean isValidFile(MultipartFile file, Long minSize, Long maxSize, String extension){
+    public static Boolean isValidFile(MultipartFile file, Long minSize, Long maxSize, List<String> extension){
 
 //        logger.info("Utility.isValidFile: Started");
 
         if(file.getContentType() != null && file.getSize() > minSize && file.getSize() <= maxSize){
             String ext = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
-            if(extension.toLowerCase().equals(ext.toLowerCase())) return true;
+            if(extension.stream().filter(fileExt -> fileExt.equalsIgnoreCase(ext)).findAny().isPresent()) return true;
         }
 //        logger.info("Utility.isValidFile: Invalid File");
         return false;

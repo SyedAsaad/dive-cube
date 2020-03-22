@@ -16,7 +16,6 @@ public class StudentDto implements Serializable {
     private String name;
     private String permanentAddress;
 
-    @Column(name="phone_number",length = 30)
     @Size(min = 7, max = 20, message = "Phone Number should be at-least 7 digits and at-most 20 digits long")
     private String phoneNumber;
 
@@ -26,12 +25,9 @@ public class StudentDto implements Serializable {
     private String dob;
     @NotNull(message = "emergencyContactNum cannot be null")
     private String emergencyContactNum;
-
-    @Column(name = "emergency_contact_name")
     private String emergencyContactName;
     private String gender;
     private String recievingAddress;
-//    private MultipartFile image;
 
     public String getName() {
         return name;

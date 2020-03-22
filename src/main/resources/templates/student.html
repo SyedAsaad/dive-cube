@@ -2,6 +2,11 @@
 <html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
+    <style> .hidden {
+        display: none !important;
+        visibility: hidden !important;
+    }</style>
+
     <div th:replace="header :: myheader"></div>
 </head>
 <body>
@@ -23,90 +28,101 @@
     <div class="content mt-3">
         <div class="col-lg-12">
             <div class="card">
-<!--                th:action="@{}"-->
-                <form id="formSubmit" enctype="multipart/form-data" method="post" th:object="${student}">
-                    <input type="hidden" th:field="*{id}"/>
+                <form id="formSubmit" method="POST" enctype="multipart/form-data">
+
+<!--                                        <input type="hidden" id="id"/>-->
                     <div class="card-header">
                         <small>Add </small>Student
                     </div>
                     <div class="card-body card-block">
+<!--                        <div class="form-row">-->
+<!--                            <div th:if="${errorList}">-->
+<!--                                <span style="color: red" th:attr="${errorList}"></span>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label >Name</label> <input
                                     type="text" class="form-control" name="name" id="name"
-                                    placeholder="Name" th:field="*{name}">
+                                    placeholder="Name"  required>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label >Phone Number</label> <input
-                                    type="text" class="form-control" name="phoneNumber" id="phoneNumber"
-                                    placeholder="Phone Number" th:field="*{phoneNumber}">
-                            </div>
+<!--                            <div class="form-group col-md-6">-->
+<!--                                <label >Phone Number</label> <input-->
+<!--                                    type="text" class="form-control" name="phoneNumber" id="phoneNumber"-->
+<!--                                    placeholder="Phone Number" >-->
+<!--                            </div>-->
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Country</label>
-                                <input type="text" class="form-control" name="country" id="country"
-                                       placeholder="Country Name" th:field="*{country}">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label >City</label> <input
-                                    type="text" class="form-control" name="city" id="city"
-                                    placeholder="City Name" th:field="*{city}">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-9">
-                                <label>Address</label>
-                                <input type="text" class="form-control" name="address" placeholder="Address" th:field="*{permanentAddress}">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label >Zip Code</label> <input
-                                    type="text" class="form-control" name="zipCode"
-                                    placeholder="Zip Code" th:field="*{zipCode}">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class=" form-control-label">Gender :</label>
-                                <select class="form-control" id="gender" name="gender" th:field="*{gender}">
-                                    <option value="" selected>Select Gender</option>
-                                    <option value="Male" >Male</option>
-                                    <option value="Female" >Female</option>
-                                </select>
+<!--                        <div class="form-row">-->
+<!--                            <div class="form-group col-md-6">-->
+<!--                                <label>Country</label>-->
+<!--                                <input type="text" class="form-control" name="country" id="country"-->
+<!--                                       placeholder="Country Name">-->
+<!--                            </div>-->
+<!--                            <div class="form-group col-md-6">-->
+<!--                                <label >City</label> <input-->
+<!--                                    type="text" class="form-control" name="city" id="city"-->
+<!--                                    placeholder="City Name">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-row">-->
+<!--                            <div class="form-group col-md-9">-->
+<!--                                <label>Address</label>-->
+<!--                                <input type="text" class="form-control" name="address" placeholder="Address">-->
+<!--                            </div>-->
+<!--                            <div class="form-group col-md-3">-->
+<!--                                <label >Zip Code</label> <input-->
+<!--                                    type="text" class="form-control" name="zipCode"-->
+<!--                                    placeholder="Zip Code">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-row">-->
+<!--                            <div class="form-group col-md-6">-->
+<!--                                <label class=" form-control-label">Gender :</label>-->
+<!--                                <select class="form-control" id="gender" name="gender" required>-->
+<!--                                    <option value="" selected>Select Gender</option>-->
+<!--                                    <option value="Male" >Male</option>-->
+<!--                                    <option value="Female" >Female</option>-->
+<!--                                </select>-->
 
-                            </div>
+<!--                            </div>-->
 
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label">Date Of Birth : </label>
+<!--                            <div class="form-group col-md-6">-->
+<!--                                <label class="form-control-label">Date Of Birth : </label>-->
 
-                                <input type="text"
-                                       class="form-control" name="dob" id="dob"
-                                       th:field="*{dob}">
-                            </div>
-                        </div>
+<!--                                <input type="text"-->
+<!--                                       class="form-control" name="dob" id="dob"-->
+<!--                                        >-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="form-row">
                             <div class="form-group col-md-9">
                                 <label class="form-control-label">Image :</label>
-                                <input type="file" id="fileUploadForm" name="file">
+                                <input type="file" id="fileUploadForm" name="file" required>
+<!--                                 <span th:if="${fileError}" style="color: red">File Extension error</span>-->
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Emergency Contact Name</label>
-                                <input type="text" class="form-control" name="emergencyContactName" placeholder="Contact Name" th:field="*{emergencyContactName}">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Emergency Contact Number</label>
-                                <input type="text" class="form-control" name="emergencyContactNum" placeholder="Contact Number" th:field="*{emergencyContactNum}">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label>Certificate Recieving Address (Where do you want your certification recieved)</label>
-                                <input type="text" class="form-control" name="recievingAddress" placeholder="Certificate Recieving Address" th:field="*{recievingAddress}">
-                            </div>
-                        </div>
+                        <div class="form-row"><span style="color: green">File size should be less than 2MB and JPEG or JPG format is allowed</span></div>
+
+<!--                        <div class="form-row">-->
+<!--                            <div class="form-group col-md-6">-->
+<!--                                <label>Emergency Contact Name</label>-->
+<!--                                <input type="text" class="form-control" name="emergencyContactName" placeholder="Contact Name" >-->
+<!--                            </div>-->
+<!--                            <div class="form-group col-md-6">-->
+<!--                                <label>Emergency Contact Number</label>-->
+<!--                                <input type="text" class="form-control" name="emergencyContactNum" placeholder="Contact Number" >-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-row">-->
+<!--                            <div class="form-group col-md-12">-->
+<!--                                <label>Certificate Recieving Address (Where do you want your certification recieved)</label>-->
+<!--                                <input type="text" class="form-control" name="recievingAddress" placeholder="Certificate Recieving Address">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div><input type="text"-->
+<!--                                    class="hidden" id="studentData" name="studentData"></div>-->
                     </div>
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-sm"
                                 id="submit-btn">
@@ -119,58 +135,51 @@
                 </form>
             </div>
         </div>
-<!--        <div class="col-lg-12">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <strong class="card-title">Employee</strong>-->
-<!--                </div>-->
-<!--                <div class="card-body">-->
-<!--                    <div class="table-responsive">-->
-<!--                        <table id="quote-datatable"-->
-<!--                               class="table table-striped table-bordered">-->
-<!--                            <thead>-->
-<!--                            <tr>-->
-<!--                                <th>Name</th>-->
-<!--                                <th>Email</th>-->
-<!--                                <th>Telephone</th>-->
-<!--                                <th>City</th>-->
-<!--                                <th>Country</th>-->
-<!--                                <th>Address</th>-->
-<!--                                <th>Week Salary</th>-->
-<!--                                <th>Class of Person</th>-->
-<!--                                <th>Start Date</th>-->
-<!--                                <th>End Date</th>-->
-<!--                                <th>Action</th>-->
-<!--                                <th>Action</th>-->
-<!--                            </tr>-->
-<!--                            </thead>-->
-<!--                            <tbody>-->
-<!--                            <tr th:each="employee : ${employees}">-->
-<!--                                <td th:text="${employee.name}"></td>-->
-<!--                                <td th:text="${employee.email}"></td>-->
-<!--                                <td th:text="${employee.telephone}"></td>-->
-<!--                                <td th:text="${employee.city}"></td>-->
-<!--                                <td th:text="${employee.country}"></td>-->
-<!--                                <td th:text="${employee.address}"></td>-->
-<!--                                <td th:text="${employee.salaryPerWeek}"></td>-->
-<!--                                <td th:text="${employee.classOfPerson}"></td>-->
-<!--                                <td th:text="${employee.startDate}"></td>-->
-<!--                                <td th:text="${employee.endDate}"></td>-->
-<!--                                <td><a th:href="@{employee/delete/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Delete</a></td>-->
-<!--                                <td><a th:href="@{employee/edit/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Edit</a></td>-->
-<!--                            </tr>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Students</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="quote-datatable"
+                                       class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Telephone</th>
+                                        <th>Country</th>
+                                        <th>City</th>
+                                        <th>Address</th>
+                                        <th>Gender</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="student : ${studentList}">
+                                        <td th:text="${student.name}"></td>
+                                        <td th:text="${student.phoneNumber}"></td>
+                                        <td th:text="${student.country}"></td>
+                                        <td th:text="${student.city}"></td>
+                                        <td th:text="${student.permanentAddress}"></td>
+                                        <td th:text="${student.gender}"></td>
+                                        <td><a onclick="getStudentData(${student.id})" th:href="@{student/delete/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                                        <td><a th:href="@{student/edit/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
 </div>
 
 <footer>
     <div th:replace="footer :: myfooter"></div>
 </footer>
+<script src="/Utility/student.js"></script>
 <script>
 
     $('#dob').datepicker('setDate', 'today');
@@ -200,54 +209,119 @@
 
 
 
-    $( "#formSubmit" ).submit( function ( event ) {
+    $( "#submit-btn" ).click( function ( event ) {
+
+        // event.preventDefault();
+        postStudentData();
+
+        // event.preventDefault();
 
 
-        $("#submit-btn").prop("disabled", true);
-
-        var form = $('#fileUploadForm')[0];
-
-        var data = new FormData(form);
-
-        // data.append("studentDto", "This is some extra data, testing");
-
-
-        // var studentDto = GenerateJsonArray('formSubmit');
-        // $('#vendorData').val(JSON.stringify(vendorData));
-        // $( '#rolesData' ).val( JSON.parse( JSON.stringify( checkboxValues.join( "," ) ) ) );
-        var formValue = {};
-        formValue["name"] = $('#name').val();
-        formValue["phoneNumber"] = $('#phoneNumber').val();
-        formValue["country"] = $('#country').val();
-        formValue["city"] = $('#city').val();
-        var formData = new FormData();
-        var file = formData.inputFile;
-        formData.append("file",$(this)[0])
-        formData.append("studentDto",JSON.stringify(formValue));
-        //loader( true );
-        $.ajax({
-            url: "/student/save",
-            type: "POST",
-            data: formData  ,
-            enctype: "multipart/form-data",
-            processData: false,
-            contentType: false,
-            success: function (data) {
-
-                // $("#result").text(data);
-                console.log("SUCCESS : ", data);
-                $("#submit-btn").prop("disabled", false);
-
-            },
-            error: function (e) {
-
-                // $("#result").text(e.responseText);
-                console.log("ERROR : ", e);
-                $("#submit-btn").prop("disabled", false);
-
-            }
-        });
     });
+
+    // function postStudentData(event) {
+    //     // event.preventDefault();
+    //     var studentDto = GenerateJsonArray('formSubmit');
+    //     console.log(studentDto);
+    //     $('#studentData').val(JSON.stringify(studentDto));
+    //     console.log($('#studentData').val());
+    //     console.log('after student data:'+$('#studentData').val());
+    //
+    //     var formData = new FormData($(this)[0]);
+    //
+    //
+    //     $("#submit-btn").prop("disabled", true);
+    //     console.log(formData);
+    //
+    //     $.ajax({
+    //         url: "/student/save",
+    //         type: "POST",
+    //         data: formData  ,
+    //         enctype: "multipart/form-data",
+    //         cache:false ,
+    //         processData: false,
+    //         contentType: false,
+    //         success: function (data) {
+    //
+    //             // $("#result").text(data);
+    //             clearInputFields('formSubmit')
+    //             console.log("SUCCESS : ", data);
+    //             $("#submit-btn").prop("disabled", false);
+    //             event.preventDefault();
+    //
+    //         },
+    //         error: function (e) {
+    //
+    //             // $("#result").text(e.responseText);
+    //             console.log("ERROR : ", e);
+    //             $("#submit-btn").prop("disabled", false);
+    //
+    //         }
+    //     });
+    //
+    // }
+    //
+    //
+    //
+    //
+    // /* Form Data to JsonArray */
+    // function GenerateJsonArray ( form_id ) {
+    //     var formDetails = document.getElementById( form_id );
+    //     var elementlenght = formDetails.elements.length - 1;
+    //     var keyy;
+    //     var valuee;
+    //     var obj = {};
+    //     for ( var i = 0; i <= elementlenght; i++ ) {
+    //         if ( formDetails.elements[ i ].name) {
+    //             keyy = formDetails.elements[ i ].name;
+    //             valuee = formDetails.elements[ i ].value;
+    //             obj[ keyy ] = valuee;
+    //         }
+    //         // if ( formDetails.elements[ i ].type == "checkbox" && formDetails.elements[ i ].checked ) {
+    //         //     keyy = formDetails.elements[ i ].name;
+    //         //     valuee = formDetails.elements[ i ].value;
+    //         //     studentDto[ keyy ] = valuee;
+    //         // }
+    //         // if ( formDetails.elements[ i ].type == "radio" && formDetails.elements[ i ].checked == true ) {
+    //         //     keyy = formDetails.elements[ i ].name;
+    //         //     valuee = formDetails.elements[ i ].value;
+    //         //     studentDto[ keyy ] = valuee;
+    //         // }
+    //     }
+    //     return obj;
+    // }
+    //
+    // function clearInputFields(form_id){
+    //     var formDetails = document.getElementById( form_id );
+    //     var elementlenght = formDetails.elements.length - 1;
+    //     for (i = 0; i < formDetails.length; i++)
+    //     {
+    //         field_type = formDetails[i].type.toLowerCase();
+    //         switch (field_type)
+    //         {
+    //             case "text":
+    //             case "password":
+    //             case "textarea":
+    //             case "file":
+    //             case "hidden":
+    //                 formDetails[i].value = "";
+    //                 break;
+    //             case "radio":
+    //             case "checkbox":
+    //                 if (formDetails[i].checked)
+    //                 {
+    //                     formDetails[i].checked = false;
+    //                 }
+    //                 break;
+    //             case "select-one":
+    //             case "select-multi":
+    //                 formDetails[i].selectedIndex = -1;
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    // }
 
 
 </script>
