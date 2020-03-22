@@ -34,7 +34,7 @@ public class QuoteService {
     public void delete(Long id){
         Quote quote = findOne(id);
         if(quote != null){
-            quote.setDeleted(true);
+            quote.setIsDeleted(true);
             quoteRepository.save(quote);
         }
     }
