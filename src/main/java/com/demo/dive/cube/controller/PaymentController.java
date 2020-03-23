@@ -2,7 +2,12 @@ package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.dto.PaymentDto;
-import com.demo.dive.cube.service.*;
+import com.demo.dive.cube.enums.PaymentMethod;
+import com.demo.dive.cube.enums.PaymentType;
+import com.demo.dive.cube.service.EnumService;
+import com.demo.dive.cube.service.OrderService;
+import com.demo.dive.cube.service.SupplierPaymentService;
+import com.demo.dive.cube.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +33,8 @@ public class PaymentController {
     public ModelAndView getPaymentSupplier(){
         ModelAndView modelAndView = new ModelAndView("supplierPayment");
         modelAndView.addObject("payment",new PaymentDto());
-        modelAndView.addObject("paymentMethods",enumService.findAllPaymentMethod());
-        modelAndView.addObject("paymentTypes",enumService.findAllPaymentType());
+        modelAndView.addObject("paymentMethods",enumService.getEnumList(PaymentMethod.values()));
+        modelAndView.addObject("paymentTypes",enumService.getEnumList(PaymentType.values()));
         modelAndView.addObject("suppliers",supplierService.findAll());
         modelAndView.addObject("suppliersPayment",supplierPaymentService.findAll());
         modelAndView.addObject("orders",orderService.findAll());
@@ -51,8 +56,8 @@ public class PaymentController {
     public ModelAndView edit(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("supplierPayment");
         modelAndView.addObject("payment",supplierPaymentService.findOne(id));
-        modelAndView.addObject("paymentMethods",enumService.findAllPaymentMethod());
-        modelAndView.addObject("paymentTypes",enumService.findAllPaymentType());
+        modelAndView.addObject("paymentMethods",enumService.getEnumList(PaymentMethod.values()));
+        modelAndView.addObject("paymentTypes",enumService.getEnumList(PaymentType.values()));
         modelAndView.addObject("suppliers",supplierService.findAll());
         modelAndView.addObject("suppliersPayment",supplierPaymentService.findAll());
         modelAndView.addObject("orders",orderService.findAll());

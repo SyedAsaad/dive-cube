@@ -1,19 +1,17 @@
 package com.demo.dive.cube.service;
 
-import com.demo.dive.cube.config.Constants;
-import com.demo.dive.cube.enums.PaymentMethod;
-import com.demo.dive.cube.enums.PaymentType;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
-public class EnumService {
+public class EnumService<E extends Enum<E>> {
 
-    public Map<Integer, String> findAllPaymentMethod(){
-        return PaymentMethod.keyValues;
+    public List<String> getEnumList(Enum<E>[] values) {
+        List<String> enumList = new ArrayList<>();
+        Arrays.stream(values).forEach(type->enumList.add(type.name()));
+        return enumList;
     }
-
-    public Map<Integer, String> findAllPaymentType(){ return PaymentType.keyValues; }
-
 }

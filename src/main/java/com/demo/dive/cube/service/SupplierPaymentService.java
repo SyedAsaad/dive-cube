@@ -1,6 +1,5 @@
 package com.demo.dive.cube.service;
 
-import com.demo.dive.cube.config.Constants;
 import com.demo.dive.cube.dto.PaymentDto;
 import com.demo.dive.cube.model.SupplierPayment;
 import com.demo.dive.cube.repository.PaymentRepository;
@@ -72,4 +71,5 @@ public class SupplierPaymentService {
         }
         return paymentDto;
     }
+
 }
