@@ -1,24 +1,26 @@
-package com.demo.dive.cube.model;
+package com.demo.dive.cube.dto;
 
-import javax.persistence.*;
+import com.demo.dive.cube.model.ClassRoom;
+import com.demo.dive.cube.model.Course;
+import com.demo.dive.cube.model.Instructor;
+import com.demo.dive.cube.model.Student;
+
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
 
-@Entity
-@Table(name = "book_course")
-public class BookCourse extends BaseEntity {
+public class BookCourseDto implements Serializable {
 
-    @NotNull
-    @ManyToOne
-    private Student student;
+    private Long id;
 
     @NotNull
-    @ManyToOne
+    private List<Student> studentList;
+
+    @NotNull
     private Course course;
 
-    @ManyToOne(optional = true,fetch = FetchType.LAZY)
     private ClassRoom classRoom;
 
-    @ManyToOne(optional = true,fetch = FetchType.LAZY)
     private Instructor instructor;
 
     @NotNull
@@ -26,16 +28,22 @@ public class BookCourse extends BaseEntity {
     @NotNull
     private String courseTime;
 
-
     private boolean isTransactionExist;
 
-
-    public Student getStudent() {
-        return student;
+    public Long getId() {
+        return id;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
     }
 
     public Course getCourse() {
@@ -54,6 +62,14 @@ public class BookCourse extends BaseEntity {
         this.classRoom = classRoom;
     }
 
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
     public String getCourseDate() {
         return courseDate;
     }
@@ -70,14 +86,6 @@ public class BookCourse extends BaseEntity {
         this.courseTime = courseTime;
     }
 
-    public Instructor getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
     public Boolean getIsTransactionExist() {
         return this.isTransactionExist;
     }
@@ -85,5 +93,4 @@ public class BookCourse extends BaseEntity {
     public void setIsTransactionExist(Boolean isTransactionExist) {
         this.isTransactionExist = isTransactionExist;
     }
-
 }
