@@ -10,17 +10,15 @@ import javax.validation.constraints.Size;
 @Table(name = "course_student")
 public class Student extends BaseEntity {
 
-    private String studentId;
-
     @Column(name = "name", nullable = false)
-    @NotNull(message = "Name cannot be null")
-    @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")
+/*    @NotNull(message = "Name cannot be null")
+    @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")*/
     private String name;
     private String permanentAddress;
 
     @Column(name="phone_number",length = 30)
-    @NotNull
-    @Size(min = 7, max = 20, message = "Phone Number should be at-least 7 digits and at-most 20 digits long")
+/*    @NotNull
+    @Size(min = 7, max = 20, message = "Phone Number should be at-least 7 digits and at-most 20 digits long")*/
     private String phoneNumber;
 
     private String country;
@@ -29,10 +27,10 @@ public class Student extends BaseEntity {
     @Column(name = "date_of_birth")
     private String dob;
     @Column(name = "emergency_contact_no")
-    @NotNull(message = "emergencyContactNum cannot be null")
+   /* @NotNull(message = "emergencyContactNum cannot be null")*/
     private String emergencyContactNum;
 
-    @NotNull(message = "emergencyContactName cannot be null")
+    /*@NotNull(message = "emergencyContactName cannot be null")*/
     @Column(name = "emergency_contact_name")
     private String emergencyContactName;
     private String gender;
@@ -133,13 +131,5 @@ public class Student extends BaseEntity {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
-    }
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
     }
 }

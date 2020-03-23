@@ -15,10 +15,9 @@ public class StudentDto implements Serializable {
     @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")
     private String name;
     private String permanentAddress;
-
     @Size(min = 7, max = 20, message = "Phone Number should be at-least 7 digits and at-most 20 digits long")
     private String phoneNumber;
-
+    private MultipartFile image;
     private String country;
     private String city;
     private String zipCode;
@@ -126,11 +125,11 @@ public class StudentDto implements Serializable {
         this.id = id;
     }
 
-//    public MultipartFile getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(MultipartFile image) {
-//        this.image = image;
-//    }
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
 }
