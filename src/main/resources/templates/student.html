@@ -28,9 +28,8 @@
     <div class="content mt-3">
         <div class="col-lg-12">
             <div class="card">
-                <form id="formSubmit" method="POST" enctype="multipart/form-data">
-
-<!--                                        <input type="hidden" id="id"/>-->
+                <form th:action="@{/student/save}" method="POST" enctype="multipart/form-data" th:object="${studentDto}">
+                        <input type="hidden" th:field="*{id}"/>
                     <div class="card-header">
                         <small>Add </small>Student
                     </div>
@@ -43,7 +42,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label >Name</label> <input
-                                    type="text" class="form-control" name="name" id="name"
+                                    type="text" class="form-control" name="name" th:field="*{name}"
                                     placeholder="Name"  required>
                             </div>
 <!--                            <div class="form-group col-md-6">-->
@@ -97,11 +96,10 @@
                         <div class="form-row">
                             <div class="form-group col-md-9">
                                 <label class="form-control-label">Image :</label>
-                                <input type="file" id="fileUploadForm" name="file" required>
+                                <input type="file" id="fileUploadForm" name="image" required th:field="*{image}">
 <!--                                 <span th:if="${fileError}" style="color: red">File Extension error</span>-->
                             </div>
                         </div>
-                        <div class="form-row"><span style="color: green">File size should be less than 2MB and JPEG or JPG format is allowed</span></div>
 
 <!--                        <div class="form-row">-->
 <!--                            <div class="form-group col-md-6">-->
@@ -164,8 +162,8 @@
                                         <td th:text="${student.city}"></td>
                                         <td th:text="${student.permanentAddress}"></td>
                                         <td th:text="${student.gender}"></td>
-                                        <td><a onclick="getStudentData(${student.id})" th:href="@{student/delete/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-                                        <td><a th:href="@{student/edit/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                                        <td><a th:href="@{/student/delete/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                                        <td><a th:href="@{/student/edit/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -179,7 +177,7 @@
 <footer>
     <div th:replace="footer :: myfooter"></div>
 </footer>
-<script src="/Utility/student.js"></script>
+<!--<script src="/Utility/student.js"></script>-->
 <script>
 
     $('#dob').datepicker('setDate', 'today');
