@@ -1,9 +1,11 @@
 package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
+import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.model.OrderDetail;
 import com.demo.dive.cube.service.ItemService;
 import com.demo.dive.cube.service.OrderDetailService;
+import com.demo.dive.cube.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,32 +21,32 @@ public class OrderDetailController {
     @Autowired
     private ItemService itemService;
 
-    @GetMapping
-    public ModelAndView getOrderDetail(){
+    @GetMapping(value = {"/{orderId}/"})
+    public ModelAndView getOrderDetail(@PathVariable Long orderId){
         ModelAndView modelAndView = new ModelAndView("orderDetail");
         modelAndView.addObject("orderDetail",new OrderDetail());
-        modelAndView.addObject("orderDetail",orderDetailService.findAll());
+        modelAndView.addObject("orderDetails",orderDetailService.findAllByOrderId(orderId));
         modelAndView.addObject("items",itemService.findAll());
         return modelAndView;
     }
 
-    @PostMapping(value = URLConstants.SAVE_URL)
-    public String save(@ModelAttribute OrderDetail orderDetail){
-        orderDetailService.save(orderDetail);
-        return "redirect:/order/detail";
+    @PostMapping(value = {"/{id}"+URLConstants.SAVE_URL,URLConstants.EDIT_URL+URLConstants.SAVE_URL})
+    public String save(@ModelAttribute OrderDetail orderDetail,@PathVariable Long id){
+        Long orderId = orderDetailService.save(orderDetail,id);
+        return "redirect:/order/detail/"+orderId+"/";
     }
 
     @GetMapping(value = URLConstants.DELETE_URL)
     public String delete(@PathVariable Long id){
-        orderDetailService.delete(id);
-        return "redirect:/order/detail";
+        Long orderId = orderDetailService.delete(id);
+        return "redirect:/order/detail/"+orderId+"/";
     }
 
     @GetMapping(value = URLConstants.EDIT_URL)
     public ModelAndView edit(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("orderDetail");
-        modelAndView.addObject("orderDetail",new OrderDetail());
-        modelAndView.addObject("orderDetail",orderDetailService.findAll());
+        modelAndView.addObject("orderDetail",orderDetailService.findOne(id));
+        modelAndView.addObject("orderDetails",orderDetailService.findAllByOrderId(orderDetailService.getOrderByDetailId(id).getId()));
         modelAndView.addObject("items",itemService.findAll());
         return modelAndView;
     }
