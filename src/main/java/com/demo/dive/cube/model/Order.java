@@ -1,6 +1,7 @@
 package com.demo.dive.cube.model;
 
-import com.demo.dive.cube.config.Constants.PaymentMethod;
+
+import com.demo.dive.cube.enums.PaymentMethod;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

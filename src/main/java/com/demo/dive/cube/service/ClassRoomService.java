@@ -29,11 +29,6 @@ public class ClassRoomService {
         }
     }
 
-    public List<String> getAllSections(){
-        List<String> sections = new ArrayList<>();
-        Arrays.stream(ClassSection.values()).forEach(type->sections.add(type.name()));
-        return sections;
-    }
 
     public List<ClassRoom> findAll(){
         return classRoomRepository.findAllByIsDeletedFalse();

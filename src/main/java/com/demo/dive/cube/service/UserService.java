@@ -58,6 +58,7 @@ public class UserService {
             userRepository.save(user);
         }
         catch (Exception e){
+
             throw new ServiceException(e.getMessage(),e);
         }
 
