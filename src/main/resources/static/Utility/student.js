@@ -37,11 +37,6 @@ $( '.removeImg' ).bind( 'click', function () {
     $( ".b64" ).val( "" );
 } );
 
-$(document).ready(function(){
-    if($('#imgSpn').val()=="" && $('#imgSpn').attr('src')==""
-    )$('#showImage').hide();
-});
-
 
 var reader = new FileReader();
 reader.onload = function(r_event) {

@@ -100,7 +100,7 @@
                                 <label class="form-control-label">Image :</label>
 
                                 <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateFile changeFile"
-                                       name="image" required th:field="*{image}">
+                                       name="image" th:required="id==null" th:field="*{image}">
                                  <a href="#" id="removeBtn" th:if="${imageName}" class="btn btn-primary btn-sm removeImg fileinput-exists"
                                                                                                    data-dismiss="fileinput">Remove</a>
 
@@ -199,6 +199,14 @@
         type="text/javascript"></script>
 
 <script>
+
+    $(document).ready(function(){
+        if($('#imgSpn').val()=="" && $('#imgSpn').attr('src')=="") {
+            $('#fileUploadForm').attr('required', true);
+            $('#showImage').hide();
+        }
+
+    });
 
     $('#dob').datepicker('setDate', 'today');
     $('.input-group.date').datepicker({
