@@ -30,18 +30,10 @@ public class StudentController {
     }
 
     @PostMapping(value = URLConstants.SAVE_URL)
-    public String saveStudentInfo(@ModelAttribute StudentDto studentDto){
-        this.studentService.saveStudent(studentDto);
-        return "redirect:/student";
-    }
-   /* public ModelAndView saveStudentInfo( @RequestParam(value = "file") MultipartFile image,
-                                         @RequestParam(value = "name",required = false) String studentData){
+    public ModelAndView saveStudentInfo(@ModelAttribute StudentDto studentDto){
         ModelAndView modelAndView = new ModelAndView("student");
-        Student studentDto = (Student) jsonConverter.mapData(studentData,Student.class);
-//        modelAndView.addObject("student",new Student());
-        modelAndView = studentService.saveNUpdateStudent(studentDto,image,modelAndView);
-        return modelAndView;
-    }*/
+        return studentService.saveNUpdateStudent(studentDto,modelAndView);
+    }
 
     @GetMapping(value = URLConstants.DELETE_URL)
     public String delete(@PathVariable Long id){
@@ -54,6 +46,7 @@ public class StudentController {
         ModelAndView modelAndView = new ModelAndView("student");
         modelAndView.addObject("studentDto",studentService.findStudentById(id));
         modelAndView.addObject("studentList",studentService.findAllStudents());
+        modelAndView.addObject("imageName","/studentImage/"+ studentService.getImageName(id));
         return modelAndView;
     }
 }

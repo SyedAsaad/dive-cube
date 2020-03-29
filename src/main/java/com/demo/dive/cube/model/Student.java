@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 public class Student extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-/*    @NotNull(message = "Name cannot be null")
-    @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")*/
+    @NotNull(message = "Name cannot be null")
+    @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")
     private String name;
     private String permanentAddress;
 
