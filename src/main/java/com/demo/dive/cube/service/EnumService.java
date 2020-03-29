@@ -7,13 +7,4 @@ import java.util.Map;
 
 @Service
 public class EnumService {
-
-    public Map<Integer, String> findAllPaymentMethod(){
-        return Constants.PaymentMethod.keyValues;
-    }
-
-    public Map<Integer, String> findAllPaymentType(){
-        return Constants.PaymentType.keyValues;
-    }
-
 }

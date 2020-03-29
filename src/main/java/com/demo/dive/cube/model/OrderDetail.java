@@ -1,6 +1,8 @@
 package com.demo.dive.cube.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Map;
 
@@ -8,10 +10,22 @@ import java.util.Map;
 @Table(name = "order_detail")
 public class OrderDetail extends BaseEntity {
 
+    @ManyToOne
+    private Order order;
+    @ManyToOne
     private Item item;
+    @Column
     private Double amount;
+    @Column
     private Integer quantity;
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     public Item getItem() {
         return item;
