@@ -34,7 +34,7 @@ public class ItemService {
     public void delete(Long id){
         Item item = findOne(id);
         if(item != null){
-            item.setIsDeleted(true);
+            item.setDeleted(true);
             itemRepository.save(item);
         }
     }

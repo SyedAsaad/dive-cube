@@ -15,7 +15,7 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping
-    public ModelAndView getItem(){
+    public ModelAndView getSupplier(){
         ModelAndView modelAndView = new ModelAndView("item");
         modelAndView.addObject("item",new Item());
         modelAndView.addObject("items",itemService.findAll());

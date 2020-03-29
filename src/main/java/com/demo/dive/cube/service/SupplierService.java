@@ -34,7 +34,7 @@ public class SupplierService {
     public void delete(Long id){
         Supplier supplier = findOne(id);
         if(supplier != null){
-            supplier.setIsDeleted(true);
+            supplier.setDeleted(true);
             supplierRepository.save(supplier);
         }
     }

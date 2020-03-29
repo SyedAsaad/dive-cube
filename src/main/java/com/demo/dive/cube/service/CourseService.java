@@ -34,7 +34,7 @@ public class CourseService {
     public void delete(Long id){
         Course course = findOne(id);
         if(course != null){
-            course.setIsDeleted(true);
+            course.setDeleted(true);
             courseRepository.save(course);
         }
     }

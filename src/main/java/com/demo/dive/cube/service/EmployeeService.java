@@ -44,7 +44,7 @@ public class EmployeeService {
     public void delete(Long id){
         Employee employee = findOne(id);
         if(employee != null){
-            employee.setIsDeleted(true);
+            employee.setDeleted(true);
             employeeRepository.save(employee);
         }
     }

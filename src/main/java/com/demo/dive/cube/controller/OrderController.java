@@ -1,6 +1,5 @@
 package com.demo.dive.cube.controller;
 
-import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.service.EnumService;
 import com.demo.dive.cube.service.ItemService;
@@ -8,50 +7,55 @@ import com.demo.dive.cube.service.OrderService;
 import com.demo.dive.cube.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("order")
 public class OrderController {
+
+    private static final String AJAX_HEADER_NAME = "X-Requested-With";
+    private static final String AJAX_HEADER_VALUE = "XMLHttpRequest";
 
     @Autowired
     private OrderService orderService;
 
     @Autowired
+    private EnumService enumService;
+
+    @Autowired
     private SupplierService supplierService;
 
-    @GetMapping
-    public ModelAndView getOrder(){
-        ModelAndView modelAndView = new ModelAndView("order");
+    @Autowired
+    private ItemService itemService;
+
+    @GetMapping("/order")
+    private ModelAndView viewOrder(){
+        ModelAndView modelAndView = new ModelAndView("supplierOrder");
         modelAndView.addObject("order",new Order());
-        modelAndView.addObject("orders",orderService.findAll());
         modelAndView.addObject("suppliers",supplierService.findAll());
-        modelAndView.addObject("paymentMethods",orderService.getAllPaymentMethods());
-        return modelAndView;
+        modelAndView.addObject("paymentMethods",enumService.findAllPaymentMethod());
+        modelAndView.addObject("items",itemService.findAll());
+        return  modelAndView;
     }
 
-    @PostMapping(value = URLConstants.SAVE_URL)
-    public String save(@ModelAttribute Order order){
-        orderService.save(order);
-        return "redirect:/order";
+    @PostMapping(path = {"/order/addItem"})
+    public String addOrder(Order order, HttpServletRequest request) {
+        order.addOrderDetail();
+        if (AJAX_HEADER_VALUE.equals(request.getHeader(AJAX_HEADER_NAME))) {
+            // It is an Ajax request, render only #items fragment of the page.
+            return "supplierOrder::#orderDetail";
+        } else {
+            // It is a standard HTTP request, render whole page.
+            return "supplierOrder";
+        }
     }
 
-    @GetMapping(value = URLConstants.DELETE_URL)
-    public String delete(@PathVariable Long id){
-        orderService.delete(id);
-        return "redirect:/order";
-    }
-
-    @GetMapping(value = URLConstants.EDIT_URL)
-    public ModelAndView edit(@PathVariable Long id){
-        ModelAndView modelAndView = new ModelAndView("order");
-        modelAndView.addObject("order",orderService.findOne(id));
-        modelAndView.addObject("orders",orderService.findAll());
-        modelAndView.addObject("suppliers",supplierService.findAll());
-        modelAndView.addObject("paymentMethods",orderService.getAllPaymentMethods());
-        return modelAndView;
+    @PostMapping("/order/supplier/save")
+    public String addOrderList(@ModelAttribute Order order, HttpServletRequest request) {
+        return null;
     }
 }
