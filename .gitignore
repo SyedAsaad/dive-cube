@@ -1,4 +1,5 @@
 HELP.md
+studentImages
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
