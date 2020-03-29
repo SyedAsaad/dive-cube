@@ -30,9 +30,10 @@ public class StudentController {
     }
 
     @PostMapping(value = URLConstants.SAVE_URL)
-    public ModelAndView saveStudentInfo(@ModelAttribute StudentDto studentDto){
+    public String saveStudentInfo(@ModelAttribute StudentDto studentDto){
         ModelAndView modelAndView = new ModelAndView("student");
-        return studentService.saveNUpdateStudent(studentDto,modelAndView);
+        studentService.saveNUpdateStudent(studentDto,modelAndView);
+        return "redirect:/student";
     }
 
     @GetMapping(value = URLConstants.DELETE_URL)

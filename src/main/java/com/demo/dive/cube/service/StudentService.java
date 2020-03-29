@@ -5,6 +5,7 @@ import com.demo.dive.cube.config.exception.BadRequestException;
 import com.demo.dive.cube.dto.StudentDto;
 import com.demo.dive.cube.model.Student;
 import com.demo.dive.cube.repository.StudentRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,26 +63,19 @@ public class StudentService {
         try {
             modelAndView.addObject("studentDto", new StudentDto());
             if (studentDto != null && studentDto.getImage() != null) {
-                if (UtilService.isValidFile(studentDto.getImage(), 2000L, 1786000L,
-                        new ArrayList<String>() {{
-                            add("JPEG");
-                            add("JPG");
-                        }})) {
                     if (studentDto.getId() != null)
                         existStudent = studentRepository.findByIdAndIsDeletedFalse(studentDto.getId());
                     if (existStudent != null) {
                         getStudentData(existStudent, studentDto);
-                        fileName = existStudent.getImageName() != null ? existStudent.getImageName() : System.currentTimeMillis() + "-" + studentDto.getImage().getOriginalFilename();
-                        String filePath = uploadStudentImage(studentDto.getImage(), fileName);
-                        existStudent.setImageName(filePath);
+                        if(!(studentDto.getId()!=null && studentDto.getImage().getOriginalFilename().isEmpty())) {
+                            fileName = existStudent.getImageName() != null ? existStudent.getImageName() : System.currentTimeMillis() + "-" + studentDto.getImage().getOriginalFilename();
+                            String filePath = uploadStudentImage(studentDto.getImage(), fileName);
+                            existStudent.setImageName(filePath);
+                        }
                         studentRepository.save(existStudent);
 
                     }
 
-                } else {
-                    modelAndView.addObject("studentDto", studentDto);
-                    modelAndView.addObject("fileError", true);
-                }
             }
         } catch (Exception e) {
             deleteStudentImage(fileName);
@@ -123,7 +117,7 @@ public class StudentService {
 
                 studentDto.setId(student.getId());
                 String fileName = student.getImageName().substring(student.getImageName().indexOf("-")+1,student.getImageName().length());
-                MultipartFile multipartFile = new MockMultipartFile(fileName,student.getImageName(),"image/jpeg", new FileInputStream(fileLocation+student.getImageName()));
+                MultipartFile multipartFile = new MockMultipartFile(fileName,student.getImageName(),"image/jpeg", IOUtils.toByteArray(fileLocation + student.getImageName()));
                 studentDto.setImage(multipartFile);
                 BeanUtils.copyProperties(student, studentDto);
                 return studentDto;
