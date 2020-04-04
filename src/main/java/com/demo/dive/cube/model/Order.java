@@ -15,6 +15,9 @@ public class Order extends BaseEntity {
     @Column
     private String title;
 
+    @Column
+    private String orderId;
+
     @ManyToOne
     private Supplier supplier;
 
@@ -84,6 +87,14 @@ public class Order extends BaseEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }
 

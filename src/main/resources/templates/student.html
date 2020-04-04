@@ -39,6 +39,26 @@
 <!--                                <span style="color: red" th:attr="${errorList}"></span>-->
 <!--                            </div>-->
 <!--                        </div>-->
+                        <div class="form-row" id="showImage" >
+                            <img class="form-control-file" id="imgSpn"style="height: auto;width: 8%" th:src="${imageName}" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Image :</label>
+
+                                <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateFile changeFile"
+                                       name="image" th:required="id==null" th:field="*{image}">
+                                <a href="#" id="removeBtn" th:if="${imageName}" class="btn btn-primary btn-sm removeImg fileinput-exists"
+                                   onclick="fileRequiredTrue()"
+                                   data-dismiss="fileinput">Remove</a>
+
+                                <span style="color: red; font-size: 13px;float: left;width: 55%" id="fileEr"></span>
+                                <br/>
+                                <span style="color: #2991d9; font-size: 12px;">Max file size 1MB, Only JPEG & PNG allow</span>
+                            </div>
+
+                        </div>
+
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label >Name</label> <input
@@ -55,8 +75,12 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Country</label>
-                                <input type="text" class="form-control" name="country" id="country" th:field="*{country}"
-                                       placeholder="Country Name">
+                                <select class="standardSelect form-control" id="country" name="country" th:field="*{country}">
+                                    <option value="">Select Country</option>
+                                    <option th:each="item : ${countries}"
+                                            th:value="${item.name}"
+                                            th:text="${item.name}"></option>
+                                </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label >City</label> <input
@@ -95,26 +119,6 @@
                                        th:field="*{dob}">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label">Image :</label>
-
-                                <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateFile changeFile"
-                                       name="image" th:required="id==null" th:field="*{image}">
-                                 <a href="#" id="removeBtn" th:if="${imageName}" class="btn btn-primary btn-sm removeImg fileinput-exists"
-                                                                                                   data-dismiss="fileinput">Remove</a>
-
-                                    <span style="color: red; font-size: 13px;float: left;width: 55%" id="fileEr"></span>
-                                <br/>
-                                <span style="color: #2991d9; font-size: 12px;">Max file size 1MB, Only JPEG & PNG allow</span>
-                                </div>
-
-                            </div>
-
-                    <div class="form-row" id="showImage" >
-                        <img class="form-control-file" id="imgSpn"style="height: auto;width: 8%" th:src="${imageName}" />
-                    </div>
-
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Emergency Contact Name</label>
@@ -202,11 +206,15 @@
 
     $(document).ready(function(){
         if($('#imgSpn').val()=="" && $('#imgSpn').attr('src')=="") {
-            $('#fileUploadForm').attr('required', true);
-            $('#showImage').hide();
+            fileRequiredTrue();
         }
 
     });
+
+    function fileRequiredTrue(){
+        $('#fileUploadForm').attr('required', true);
+        $('#showImage').hide();
+    }
 
     $('#dob').datepicker('setDate', 'today');
     $('.input-group.date').datepicker({

@@ -35,7 +35,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class=" form-control-label">Item</label>
-                                <select class="form-control" id="supplierId" name="item" th:field="*{item}">
+                                <select class="standardSelect form-control" id="supplierId" name="item" th:field="*{item}">
                                     <option value="">Select Item</option>
                                     <option th:each="item : ${items}"
                                             th:value="${item.id}"

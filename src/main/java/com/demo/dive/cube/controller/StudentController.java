@@ -4,6 +4,7 @@ import com.demo.dive.cube.config.JsonConverter;
 import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.dto.StudentDto;
 import com.demo.dive.cube.model.Student;
+import com.demo.dive.cube.service.CommonService;
 import com.demo.dive.cube.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,14 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private CommonService commonService;
+
     @GetMapping
     public ModelAndView getStudents(){
         ModelAndView modelAndView = new ModelAndView("student");
         modelAndView.addObject("studentDto",new StudentDto());
+        modelAndView.addObject("countries",commonService.getCountryData());
         modelAndView.addObject("studentList",studentService.findAllStudents());
         return modelAndView;
     }
@@ -45,6 +50,7 @@ public class StudentController {
     @GetMapping(value = URLConstants.EDIT_URL)
     public ModelAndView edit(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("student");
+        modelAndView.addObject("countries",commonService.getCountryData());
         modelAndView.addObject("studentDto",studentService.findStudentById(id));
         modelAndView.addObject("studentList",studentService.findAllStudents());
         modelAndView.addObject("imageName","/studentImage/"+ studentService.getImageName(id));

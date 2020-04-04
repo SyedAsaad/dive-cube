@@ -28,11 +28,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/saveUser")
-    public String save(
-           @Valid @ModelAttribute UserDto user){
+    public String save(@ModelAttribute UserDto user){
 
         userService.saveUser(user);
-        return "redirect:/";
+        return "redirect:/registration";
     }
     @RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
