@@ -20,6 +20,7 @@ public class OrderService {
     public void save(Order order){
         if(order != null){
             if(order.getId() == null){
+                order.setOrderId(generateOrderId());
                 orderRepository.save(order);
             }
             else{
@@ -31,6 +32,16 @@ public class OrderService {
             }
         }
     }
+
+    private String generateOrderId() {
+        String orderId;
+        Long id= orderRepository.getHighestId();
+
+            orderId = "SO-"+id;
+
+            return orderId;
+    }
+
 
     public List<Order> findAll(){
         return orderRepository.findAllByIsDeletedFalse();

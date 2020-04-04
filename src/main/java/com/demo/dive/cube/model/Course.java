@@ -11,7 +11,7 @@ public class Course extends BaseEntity {
     private String courseName;
 
     @Column
-    private Integer coursePrice;
+    private Double coursePrice;
 
     public String getCourseName() {
         return courseName;
@@ -21,11 +21,11 @@ public class Course extends BaseEntity {
         this.courseName = courseName;
     }
 
-    public Integer getCoursePrice() {
+    public Double getCoursePrice() {
         return coursePrice;
     }
 
-    public void setCoursePrice(Integer coursePrice) {
+    public void setCoursePrice(Double coursePrice) {
         this.coursePrice = coursePrice;
     }
 }

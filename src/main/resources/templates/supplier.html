@@ -46,9 +46,13 @@
                                     <input type="text" class="form-control" name="telephone" placeholder="Telephone" th:field="*{telephone}">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label >Country</label> <input
-                                        type="text" class="form-control" name="country"
-                                        placeholder="Country" th:field="*{country}">
+                                    <label >Country</label>
+									<select class="standardSelect form-control" id="country" name="country" th:field="*{country}">
+										<option value="">Select Country</option>
+										<option th:each="item : ${countries}"
+												th:value="${item.name}"
+												th:text="${item.name}"></option>
+									</select>
                                 </div>
                             </div>
                         <div class="form-row">

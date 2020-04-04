@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "book_course")
 public class BookCourse extends BaseEntity {
 
+    private String bookingId;
+
     @NotNull
     @ManyToOne
     private Student student;
@@ -86,4 +88,11 @@ public class BookCourse extends BaseEntity {
         this.isTransactionExist = isTransactionExist;
     }
 
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
 }

@@ -33,7 +33,7 @@
                         <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label class=" form-control-label">Dive Type :</label>
-                                    <select class="form-control" id="diveType" name="diveType" th:field="*{diveType}">
+                                    <select class="standardSelect form-control" id="diveType" name="diveType" th:field="*{diveType}">
                                         <option value="">Select Dive Type</option>
                                         <option th:each="item : ${diveTypes}"
                                                 th:value="${item.id}"
