@@ -25,6 +25,7 @@
             </a>
         </div>
     </header>
+
 <!--<form th:action="@{/}" method="get">-->
 <!--    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>-->
 <!--</form>-->
@@ -52,6 +53,7 @@
                             <label >Email</label> <input
                                 type="email" class="form-control" name="email"
                                 placeholder="Email" th:field="*{email}">
+                            <span id="result"></span>
                         </div>
                     </div>
                     <div class="form-row">
@@ -72,7 +74,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Password" th:field="*{password}">
+                            <input type="password" class="form-control" name="password" placeholder="Password"
+                                   th:field="*{password}" th:min="6" th:max="20">
                         </div>
                     </div>
                 </div>
@@ -90,8 +93,33 @@
         </div>
     </div>
 </div>
+</div>
     <footer>
         <div th:replace="footer :: myfooter"></div>
     </footer>
+
+<script>
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
+    function validate() {
+        var $result = $("#result");
+        var email = $("#email").val();
+        $result.text("");
+
+        if (validateEmail(email)) {
+            $result.text(email + " is valid :)");
+            $result.css("color", "green");
+        } else {
+            $result.text(email + " is not valid email");
+            $result.css("color", "red");
+        }
+        return false;
+    }
+
+
+</script>
 </body>
 </html>

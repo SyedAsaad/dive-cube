@@ -3,6 +3,7 @@ package com.demo.dive.cube.service;
 import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.model.OrderDetail;
 import com.demo.dive.cube.repository.OrderDetailRepository;
+import com.demo.dive.cube.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class OrderDetailService {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
     public Long save(OrderDetail orderDetail,Long orderId){
         Order order = null;
         if(orderDetail != null){
@@ -24,6 +28,8 @@ public class OrderDetailService {
                 order = orderService.findOne(orderId);
                 orderDetail.setOrder(order);
                 orderDetailRepository.save(orderDetail);
+//                order.getOrderDetailList().add(orderDetail);
+
             }
             else{
                 OrderDetail orderDetailExist = findOne(orderDetail.getId());
@@ -35,7 +41,7 @@ public class OrderDetailService {
                 }
             }
         }
-
+        orderService.save(order);
         return order.getId();
     }
 
@@ -55,8 +61,8 @@ public class OrderDetailService {
     public Long delete(Long id){
         OrderDetail orderDetail = findOne(id);
         if(orderDetail != null){
-            orderDetail.setIsDeleted(true);
-            orderDetailRepository.save(orderDetail);
+            orderDetailRepository.delete(orderDetail);
+            orderService.save(orderService.findOne(orderDetail.getOrder().getId()));
             return orderDetail.getOrder().getId();
         }
         return null;

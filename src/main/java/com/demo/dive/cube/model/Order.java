@@ -30,8 +30,8 @@ public class Order extends BaseEntity {
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
-    @OneToMany
-    @JoinColumn(name="id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true,mappedBy = "order")
+    @Column(name="order_detail")
     private List<OrderDetail> orderDetailList = new ArrayList<>();
 
     public Supplier getSupplier() {
