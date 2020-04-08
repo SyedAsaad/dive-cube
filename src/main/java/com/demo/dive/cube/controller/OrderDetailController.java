@@ -1,11 +1,9 @@
 package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
-import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.model.OrderDetail;
 import com.demo.dive.cube.service.ItemService;
 import com.demo.dive.cube.service.OrderDetailService;
-import com.demo.dive.cube.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
