@@ -1,9 +1,6 @@
 package com.demo.dive.cube.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Map;
 
 @Entity
@@ -11,6 +8,7 @@ import java.util.Map;
 public class OrderDetail extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(name = "order_detail")
     private Order order;
     @ManyToOne
     private Item item;

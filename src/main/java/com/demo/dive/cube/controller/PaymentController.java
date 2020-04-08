@@ -37,7 +37,7 @@ public class PaymentController {
         modelAndView.addObject("paymentMethods",enumService.getEnumList(PaymentMethod.values()));
         modelAndView.addObject("paymentTypes",enumService.getEnumList(PaymentType.values()));
         modelAndView.addObject("suppliersPayment", paymentService.findAll(orderId));
-        modelAndView.addObject("orders",orderService.findAll());
+//        modelAndView.addObject("orders",orderService.findAll());
         return modelAndView;
     }
     @PostMapping(value = {"/{id}"+ URLConstants.SAVE_URL,URLConstants.EDIT_URL+URLConstants.SAVE_URL})
@@ -60,7 +60,7 @@ public class PaymentController {
         modelAndView.addObject("paymentMethods",enumService.getEnumList(PaymentMethod.values()));
         modelAndView.addObject("paymentTypes",enumService.getEnumList(PaymentType.values()));
         modelAndView.addObject("suppliersPayment", paymentService.findAll(payment.getOrderId()));
-        modelAndView.addObject("orders",orderService.findAll());
+//        modelAndView.addObject("orders",orderService.findAll());
         return modelAndView;
     }
 }
