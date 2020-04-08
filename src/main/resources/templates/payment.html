@@ -23,69 +23,56 @@
     <div class="content mt-3">
         <div class="col-lg-12">
             <div class="card">
-                <form th:action="@{/payment/supplier/save}" method="post" th:object="${payment}">
-                    <input type="hidden" />
+                <form th:action="@{save}" method="post" th:object="${payment}">
+                    <input type="hidden" th:field="*{id}"/>
                     <div class="card-header">
-                        <small>Supplier Payment </small>Entry
+                        <small>Payment </small>Entry
                     </div>
                     <div class="card-body card-block">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class=" form-control-label">Order/Course Name: </label>
+                                <input type="text"
+                                       class="form-control" name="orderId" id="orderId"
+                                       th:field="*{orderId}" required readonly>
+
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                     <label class=" form-control-label">Payment Method</label>
                                     <select class="form-control" id="paymentMethod" name="paymentMethod"
-                                            th:field="*{paymentMethod}">
+                                            th:field="*{paymentMethod}" required>
                                         <option value="" selected>Select Payment Method</option>
                                         <option th:each="type : ${paymentMethods}"
                                                 th:value="${type}"
                                                 th:text="${type}"></option>
                                     </select>
-<!--                                </div>-->
                             </div>
 
                             <div class="form-group col-md-6">
-<!--                                <div class="col col-md-3">-->
                                     <label class=" form-control-label">Payment Type</label>
                                 <select class="form-control" id="paymentType" name="paymentType"
-                                        th:field="*{paymentType}">
+                                        th:field="*{paymentType}" required>
                                     <option value="" selected>Select Payment Type</option>
                                     <option th:each="type : ${paymentTypes}"
                                             th:value="${type}"
                                             th:text="${type}"></option>
                                 </select>
-<!--                                </div>-->
                             </div>
                         </div>
                         <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label>Amount</label>
+                                <input type="text" class="form-control" name="amount" placeholder="Amount"
+                                       th:field="*{amount}" onkeypress="return onlyNumberKey(event)">
+                            </div>
                             <div class="form-group col-md-6">
                                 <label class="form-control-label">Payment Date : </label>
                                 <input type="text"
                                        class="form-control" name="paymentDate" id="paymentDate"
                                        th:field="*{paymentDate}">
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label class=" form-control-label">Order</label>
-                                <select class="form-control" id="order" name="order" th:field="*{orderId}">
-                                    <option value="">Select Order</option>
-
-                                </select>
-
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class=" form-control-label">Supplier</label>
-                                <select class="form-control" id="supplierId" name="supplierId" th:field="*{supplierId}">
-                                    <option value="">Select Supplier</option>
-                                    <option th:each="item : ${suppliers}"
-                                            th:value="${item.id}"
-                                            th:text="${item.name}"></option>
-                                </select>
-
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Amount</label>
-                                <input type="text" class="form-control" name="amount" placeholder="Amount" th:field="*{amount}">
                             </div>
 
                         </div>
@@ -109,28 +96,27 @@
                     <strong class="card-title">Supplier Payment</strong>
                 </div>
                 <div class="card-body">
-                    <table id="supplier-datatable"
+                    <table id="quote-datatable"
                            class="table table-striped table-bordered">
                         <thead>
                         <tr>
+                            <th>Order/Course Id:</th>
                             <th>Date</th>
                             <th>Payment Method</th>
                             <th>Payment Type</th>
-                            <th>Supplier</th>
                             <th>Amount</th>
-                            <th>Action</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="payment : ${suppliersPayment}">
+                            <td th:text="${payment.orderId}"></td>
                             <td th:text="${payment.paymentDate}"></td>
                             <td th:text="${payment.paymentMethod}"></td>
                             <td th:text="${payment.paymentType}"></td>
-                            <td th:text="${payment.supplierId.name}"></td>
                             <td th:text="${payment.amount}"></td>
-                            <td><a th:href="@{/payment/supplier/delete/{id}(id=${payment.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-                            <td><a th:href="@{/payment/supplier/edit/{id}(id=${payment.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                            <td><a th:href="@{/payment/delete/{id}(id=${payment.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/payment/edit/{id}(id=${payment.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -157,7 +143,13 @@
         autoclose : true
 
     });
-    $('#supplier-datatable').DataTable({
+
+</script>
+<footer>
+    <div th:replace="footer :: myfooter"></div>
+</footer>
+<script>
+    $('#quote-datatable').DataTable({
         "paging" : true,
         "lengthChange" : true,
         "searching" : true,
@@ -168,10 +160,16 @@
         "pageLength" : 10,
         "order" : [ [ 1, 'asc' ] ]
     });
+
+    function onlyNumberKey(evt) {
+
+        // Only ASCII charactar in that range allowed
+        var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+            return false;
+        return true;
+    }
 </script>
-<footer>
-    <div th:replace="footer :: myfooter"></div>
-</footer>
 </body>
 </html>
 

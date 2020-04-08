@@ -2,7 +2,9 @@ package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.model.Item;
+import com.demo.dive.cube.service.CommonService;
 import com.demo.dive.cube.service.ItemService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +16,12 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private CommonService commonService;
+
     @GetMapping
-    public ModelAndView getItem(){
+    public ModelAndView getItem() throws JsonProcessingException {
+        commonService.getCountryData();
         ModelAndView modelAndView = new ModelAndView("item");
         modelAndView.addObject("item",new Item());
         modelAndView.addObject("items",itemService.findAll());

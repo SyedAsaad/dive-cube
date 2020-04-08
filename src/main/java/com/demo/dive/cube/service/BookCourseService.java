@@ -37,6 +37,7 @@ public class BookCourseService {
 
     public BookCourse findOne(Long id){ return bookCourseRepository.findByIdAndIsDeletedFalse(id); }
 
+
     public ModelAndView addDependentDetails(ModelAndView modelAndView) {
         modelAndView.addObject("bookCourseList",findAll());
         modelAndView.addObject("students",studentService.findAllStudents());
@@ -96,14 +97,24 @@ public class BookCourseService {
                     bookCourse.setCourseDate(bookCourseDto.getCourseDate());
                     bookCourse.setCourseTime(bookCourseDto.getCourseTime());
                     bookCourse.setStudent(bookCourseDto.getStudentList().get(i));
+                    bookCourse.setBookingId(generateBookingId());
                     saveCourseBooking(bookCourse);
                     i++;
                 }
             }
         }
         catch (Exception e){
-
+        System.out.println(e.getStackTrace());
         }
+
+    }
+
+    private String generateBookingId() {
+        Long id= bookCourseRepository.getHighestId();
+        if(id!=null)
+        return "BC-"+id;
+        else
+            return "BC01";
 
     }
 }

@@ -33,7 +33,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class=" form-control-label">Course :</label>
-                                <select class="form-control" id="course" name="course" th:field="*{course}" required>
+                                <select class="standardSelect form-control" id="course" name="course" th:field="*{course}" required>
                                     <option value="" selected>Select Courses</option>
                                     <option th:each="item : ${courses}"
                                             th:value="${item.id}"
@@ -46,7 +46,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class=" form-control-label">Student :</label>
-                                <select class="form-control" id="sudent" name="student" th:field="*{studentList}" multiple="multiple" required>
+                                <select class="standardSelect form-control" id="sudent" name="student" th:field="*{studentList}" multiple="multiple" required>
                                     <option th:each="item : ${students}"
                                             th:value="${item.id}"
                                             th:text="${item.name}"></option>
@@ -57,7 +57,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class=" form-control-label">Class (Opional):</label>
-                                <select class="form-control" id="classRoom" name="classRoom" th:field="*{classRoom}">
+                                <select class="standardSelect form-control" id="classRoom" name="classRoom" th:field="*{classRoom}">
                                     <option value="" selected>Select Class Room</option>
                                     <option th:each="item : ${classRooms}"
                                             th:value="${item.id}"
@@ -69,7 +69,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class=" form-control-label">Instructor (Opional):</label>
-                                <select class="form-control" id="instructor" name="instructor" th:field="*{instructor}">
+                                <select class="standardSelect form-control" id="instructor" name="instructor" th:field="*{instructor}">
                                     <option value="" selected>Select Instructor</option>
                                     <option th:each="item : ${instructors}"
                                             th:value="${item.id}"
@@ -138,6 +138,7 @@
                             <th>Action</th>
                             <th>Action</th>
                             <th>Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -147,7 +148,8 @@
                             <td th:text="${bookCourse.classRoom!=null?bookCourse.classRoom.room:''}"></td>
                             <td th:text="${bookCourse.instructor!=null?bookCourse.instructor.instructorName:''}"></td>
                             <td th:text="${bookCourse.courseDate} +${' '} + ${bookCourse.courseTime}"></td>
-                            <td><a th:href="@{course/payment/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Payment</a></td>
+                            <td><a th:href="@{/payment/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Payment</a></td>
+                            <td><a th:href="@{/process/certificate/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Process Certificate</a></td>
                             <td><a th:href="@{course/delete/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Delete</a></td>
                             <td><a th:href="@{course/edit/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
