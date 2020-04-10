@@ -114,7 +114,13 @@ public class BookCourseService {
         if(id!=null)
         return "BC-"+id;
         else
-            return "BC01";
+            return "BC-01";
 
+    }
+
+    public void updateCourseStatus(Long id) {
+        BookCourse bookCourse = findOne(id);
+        bookCourse.setIsCompleted(Boolean.TRUE);
+        bookCourseRepository.save(bookCourse);
     }
 }

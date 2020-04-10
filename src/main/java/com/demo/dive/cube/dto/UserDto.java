@@ -37,7 +37,7 @@ public class UserDto {
 
     @Column(name="password",length = 30)
     @NotNull(message = "Password  cannot be null")
-    @Size(min = 7, max = 20, message = "Password should be at-least 7 digits and at-most 20 digits long")
+    @Size(min = 7, max = 120, message = "Password should be at-least 7 digits and at-most 20 digits long")
     private String password;
 
     public Long getId() {

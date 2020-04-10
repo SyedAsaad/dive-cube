@@ -149,8 +149,8 @@
 									<td th:text="${employee.classOfPerson}"></td>
 									<td th:text="${employee.startDate}"></td>
 									<td th:text="${employee.endDate}"></td>
-									<td><a th:href="@{employee/delete/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-									<td><a th:href="@{employee/edit/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+									<td><a th:href="@{/employee/delete/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+									<td><a th:href="@{/employee/edit/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Edit</a></td>
 								</tr>
 							</tbody>
 						</table>

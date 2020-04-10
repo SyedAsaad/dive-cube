@@ -20,6 +20,8 @@ public class Supplier extends BaseEntity{
     @Column
     private String company;
 
+    private String accountNum;
+
     public String getName() {
         return name;
     }
@@ -74,5 +76,13 @@ public class Supplier extends BaseEntity{
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 }

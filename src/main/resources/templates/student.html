@@ -40,7 +40,7 @@
 <!--                            </div>-->
 <!--                        </div>-->
                         <div class="form-row" id="showImage" >
-                            <img class="form-control-file" id="imgSpn"style="height: auto;width: 8%" th:src="${imageName}" />
+                            <img class="form-control-file" id="imgSpn"style="height: auto;width: 10%" th:src="${imageName}" />
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -52,13 +52,14 @@
                                    onclick="fileRequiredTrue()"
                                    data-dismiss="fileinput">Remove</a>
 
+
                                 <span style="color: red; font-size: 13px;float: left;width: 55%" id="fileEr"></span>
                                 <br/>
                                 <span style="color: #2991d9; font-size: 12px;">Max file size 1MB, Only JPEG & PNG allow</span>
                             </div>
 
                         </div>
-
+                        <hr>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label >Name</label> <input

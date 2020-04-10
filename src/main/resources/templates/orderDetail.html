@@ -151,6 +151,20 @@
 <footer>
     <div th:replace="footer :: myfooter"></div>
 </footer>
+<script>
+
+    $('#detail-datatable').DataTable({
+        "paging" : true,
+        "lengthChange" : true,
+        "searching" : true,
+        "ordering" : true,
+        "info" : false,
+        "responsive" : true,
+        "autoWidth" : false,
+        "pageLength" : 10,
+        "order" : [ [ 1, 'asc' ] ]
+    });
+    </script>
 </body>
 </html>
 

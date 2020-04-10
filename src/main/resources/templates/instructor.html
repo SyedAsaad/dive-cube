@@ -67,8 +67,8 @@
                         <tbody>
                         <tr th:each="instructor : ${instructors}">
                             <td th:text="${instructor.instructorName}"></td>
-                            <td><a th:href="@{instructor/delete/{id}(id=${instructor.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-                            <td><a th:href="@{instructor/edit/{id}(id=${instructor.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                            <td><a th:href="@{/instructor/delete/{id}(id=${instructor.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/instructor/edit/{id}(id=${instructor.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>

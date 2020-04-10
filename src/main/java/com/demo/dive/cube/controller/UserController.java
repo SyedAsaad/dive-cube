@@ -1,5 +1,6 @@
 package com.demo.dive.cube.controller;
 
+import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.config.UtilService;
 import com.demo.dive.cube.dto.AuthenticationRequestDto;
 import com.demo.dive.cube.dto.UserDto;
@@ -21,18 +22,32 @@ public class UserController {
 
     @GetMapping(value = "/registration")
     private ModelAndView registrationView(){
-        ModelAndView m = new ModelAndView();
+        ModelAndView m = new ModelAndView("registration");
         m.addObject("user",new UserDto());
-        m.setViewName("registration");
+        m.addObject("userList",userService.findAll());
         return m;
     }
 
     @PostMapping(value = "/saveUser")
     public String save(@ModelAttribute UserDto user){
 
-        userService.saveUser(user);
+        userService.saveNupdateUser(user);
         return "redirect:/registration";
     }
+    @GetMapping(value = "/user"+ URLConstants.EDIT_URL)
+    private ModelAndView editUser(@PathVariable Long id){
+        ModelAndView modelAndView =  new ModelAndView("registration");
+        modelAndView.addObject("user",userService.getUserDto(userService.findOne(id)));
+        modelAndView.addObject("userList",userService.findAll());
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/user"+ URLConstants.DELETE_URL)
+    private String deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+        return "redirect:/registration";
+    }
+
     @RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
 

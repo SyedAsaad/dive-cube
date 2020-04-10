@@ -39,6 +39,12 @@ public class BookCourseController {
         return "redirect:/book/course";
     }
 
+    @GetMapping(value = "/completed/{id}")
+    private String updateCourseStatus(@PathVariable Long id){
+        bookCourseService.updateCourseStatus(id);
+        return "redirect:/book/course";
+    }
+
     @GetMapping(value = URLConstants.EDIT_URL)
     private ModelAndView editBookCourse(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("bookCourse");
