@@ -36,6 +36,7 @@
             <form autocomplete="off" action="#" th:action="@{/saveUser}"
                   th:object="${user}" method="post" class="form-horizontal"
                   role="form">
+                <input type="hidden" th:field="*{id}"/>
                 <div class="card-header">
                     <small>Register User</small>
                 </div>
@@ -55,30 +56,29 @@
                                 placeholder="Email" th:field="*{email}">
                             <span id="result"></span>
                         </div>
-                    </div>
-                    <div class="form-row">
-
-                        <div class="form-group col-md-6">
-                            <label >Address</label> <input
-                                type="text" class="form-control" name="address"
-                                placeholder="Address" th:field="*{address}">
-                        </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Phone Number</label>
                             <input type="text" class="form-control" name="phoneNumber" placeholder="Phone Number" th:field="*{phoneNumber}">
                         </div>
-
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" th:if="!${id}">
                         <div class="form-group col-md-6">
                             <label>Password</label>
                             <input type="password" class="form-control" name="password" placeholder="Password"
                                    th:field="*{password}" th:min="6" th:max="20">
                         </div>
                     </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <label >Address</label> <input
+                                type="text" class="form-control" name="address"
+                                placeholder="Address" th:field="*{address}">
+                        </div>
+                    </div>
                 </div>
+
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary btn-sm"
                             id="submit-btn">
@@ -92,6 +92,36 @@
             </form>
         </div>
     </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Booking Course List</strong>
+                </div>
+                <div class="card-body">
+                    <table id="quote-datatable"
+                           class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Phone Number </th>
+                            <th>Action</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${userList}">
+                            <td th:text="${user.firstName}+${' '} + ${user.lastName}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.phoneNumber}"></td>
+                            <td><a th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/user/edit/{id}(id=${user.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 </div>
 </div>
     <footer>
@@ -117,7 +147,18 @@
             $result.css("color", "red");
         }
         return false;
-    }
+    };
+    $('#quote-datatable').DataTable({
+        "paging" : true,
+        "lengthChange" : true,
+        "searching" : true,
+        "ordering" : true,
+        "info" : false,
+        "responsive" : true,
+        "autoWidth" : false,
+        "pageLength" : 10,
+        "order" : [ [ 1, 'asc' ] ]
+    });
 
 
 </script>

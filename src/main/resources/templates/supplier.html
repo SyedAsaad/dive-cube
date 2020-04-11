@@ -66,7 +66,13 @@
                                     placeholder="Contact Person" th:field="*{contactPerson}">
                             </div>
                         </div>
-                        <div class="form-row">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label >Account Number :</label>
+								<input type="text" class="form-control" name="accNo" placeholder="" th:field="*{accountNum}" data-inputmask="'mask': '9999 9999 9999 9999'">
+							</div>
+						</div>
+						<div class="form-row">
                             <div class="form-group col-md-12">
                                 <label>Address</label>
                                 <input type="text" class="form-control" name="telephone" placeholder="Address" th:field="*{address}">
@@ -116,8 +122,8 @@
 									<td th:text="${supplier.company}"></td>
 									<td th:text="${supplier.contactPerson}"></td>
 									<td th:text="${supplier.address}"></td>
-									<td><a th:href="@{supplier/delete/{id}(id=${supplier.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-									<td><a th:href="@{supplier/edit/{id}(id=${supplier.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+									<td><a th:href="@{/supplier/delete/{id}(id=${supplier.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+									<td><a th:href="@{/supplier/edit/{id}(id=${supplier.id})}" class="btn btn-danger btn-sm">Edit</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -131,6 +137,7 @@
 	<div th:replace="footer :: myfooter"></div>
 </footer>
 	<script>
+		$(":input").inputmask();
 		$('#supplier-datatable').DataTable({
 			"scrollX":true,
 			"paging" : true,

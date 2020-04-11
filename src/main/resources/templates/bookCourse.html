@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class=" form-control-label">Class (Opional):</label>
+                                <label class=" form-control-label">Class (Optional):</label>
                                 <select class="standardSelect form-control" id="classRoom" name="classRoom" th:field="*{classRoom}">
                                     <option value="" selected>Select Class Room</option>
                                     <option th:each="item : ${classRooms}"
@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class=" form-control-label">Instructor (Opional):</label>
+                                <label class=" form-control-label">Instructor (Optional):</label>
                                 <select class="standardSelect form-control" id="instructor" name="instructor" th:field="*{instructor}">
                                     <option value="" selected>Select Instructor</option>
                                     <option th:each="item : ${instructors}"
@@ -126,7 +126,7 @@
                     <strong class="card-title">Booking Course List</strong>
                 </div>
                 <div class="card-body">
-                    <table id="supplier-datatable"
+                    <table id="quote-datatable"
                            class="table table-striped table-bordered">
                         <thead>
                         <tr>
@@ -149,9 +149,10 @@
                             <td th:text="${bookCourse.instructor!=null?bookCourse.instructor.instructorName:''}"></td>
                             <td th:text="${bookCourse.courseDate} +${' '} + ${bookCourse.courseTime}"></td>
                             <td><a th:href="@{/payment/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Payment</a></td>
-                            <td><a th:href="@{/process/certificate/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Process Certificate</a></td>
-                            <td><a th:href="@{course/delete/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-                            <td><a th:href="@{course/edit/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                            <td th:if="!${bookCourse.isCompleted}"><a th:href="@{/course/completed/{id}/(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Completed</a></td>
+                            <td th:if="${bookCourse.isCompleted}"><a th:href="@{/process/certificate/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Process Certificate</a></td>
+                            <td><a th:href="@{/course/delete/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/course/edit/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -178,7 +179,13 @@
 
     });
 
-    $('#supplier-datatable').DataTable({
+
+</script>
+<footer>
+    <div th:replace="footer :: myfooter"></div>
+</footer>
+<script>
+    $('#quote-datatable').DataTable({
         "paging" : true,
         "lengthChange" : true,
         "searching" : true,
@@ -190,9 +197,6 @@
         "order" : [ [ 1, 'asc' ] ]
     });
 </script>
-<footer>
-    <div th:replace="footer :: myfooter"></div>
-</footer>
 </body>
 </html>
 

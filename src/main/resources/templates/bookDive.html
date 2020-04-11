@@ -131,8 +131,8 @@
                             <td th:text="${book.depositAmount}"></td>
                             <td th:text="${book.tripDate} + ${book.tripTime}"></td>
 
-                            <td><a th:href="@{dive/delete/{id}(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-                            <td><a th:href="@{dive/edit/{id}(id=${book.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                            <td><a th:href="@{/dive/delete/{id}(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/dive/edit/{id}(id=${book.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -141,6 +141,9 @@
         </div>
     </div>
 </div>
+<footer>
+    <div th:replace="footer :: myfooter"></div>
+</footer>
 <script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
 <script th:src="@{/assets/js/lib/bootstrap-datepicker.js}"></script>
 
@@ -171,9 +174,7 @@
         "order" : [ [ 1, 'asc' ] ]
     });
 </script>
-<footer>
-    <div th:replace="footer :: myfooter"></div>
-</footer>
+
 </body>
 </html>
 

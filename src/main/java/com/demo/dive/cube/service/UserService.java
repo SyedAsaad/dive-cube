@@ -43,26 +43,26 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveUser(UserDto userDto) {
+    public void saveNupdateUser(UserDto userDto) {
         try {
             User user = new User();
             if(userDto.getId() != null) {
                 user = userRepository.findById(userDto.getId()).get();
                 if(user==null)
                     throw new RecordNotFoundException("User not found");
+                userDto.setPassword(user.getPassword());
 
             }
+            else{
+                user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+            }
             BeanUtils.copyProperties(userDto,user);
-            user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             user.setEnabled(true);
             userRepository.save(user);
         }
         catch (Exception e){
-
             throw new ServiceException(e.getMessage(),e);
         }
-
-
     }
 
     public Boolean authenticate(AuthenticationRequestDto authenticationDto) {
@@ -119,5 +119,32 @@ public class UserService {
 
     public User findUserByUsername(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public UserDto getUserDto(User user){
+        UserDto userDto = new UserDto();
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setAddress(user.getAddress());
+        userDto.setEmail(user.getEmail());
+//        userDto.setPassword(user.getPassword());
+        userDto.setId(user.getId());
+        userDto.setPhoneNumber(user.getPhoneNumber());
+        return userDto;
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    public User findOne(Long id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public void deleteUser(Long id){
+        User user = userRepository.findById(id).orElse(null);
+        if(user!=null){
+            userRepository.delete(user);
+        }
     }
 }
