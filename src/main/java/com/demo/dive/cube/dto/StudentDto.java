@@ -96,9 +96,7 @@ public class StudentDto implements Serializable {
         return emergencyContactName;
     }
 
-    public void setEmergencyContactName(String emergencyContactName) {
-        this.emergencyContactName = emergencyContactName;
-    }
+    public void setEmergencyContactName(String emergencyContactName) { this.emergencyContactName = emergencyContactName; }
 
     public String getGender() {
         return gender;
@@ -115,7 +113,6 @@ public class StudentDto implements Serializable {
     public void setRecievingAddress(String recievingAddress) {
         this.recievingAddress = recievingAddress;
     }
-
 
     public Long getId() {
         return id;

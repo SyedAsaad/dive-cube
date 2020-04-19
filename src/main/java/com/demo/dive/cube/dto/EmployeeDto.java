@@ -1,53 +1,41 @@
-package com.demo.dive.cube.model;
+package com.demo.dive.cube.dto;
 
 import com.demo.dive.cube.enums.EmployementType;
+import com.demo.dive.cube.model.Shift;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.time.LocalDate;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="employee")
-public class Employee extends BaseEntity {
-    @Column
+public class EmployeeDto {
+
+    private Long id;
+
     private String name;
-    @Column
+
     private String address;
-    @Column
+
     private String telephone;
-    @Column(name = "email",unique = true)
+
     private String email;
-    @Column
+
     private String city;
-    @Column
+
     private String country;
-    @Column
+
     private Integer salaryPerWeek;
-    @Column
+
     private String classOfPerson;
-    @Column
+
     private EmployementType employementType;
-    @Column
+
     private String startDate;
-    @Column
+
     private String endDate;
 
-    public String getStartDate() {
-        return startDate;
-    }
+    @Size(min = 7, max = 100, message = "Password should be at-least 7 digits and at-most 20 digits long")
+    private String password;
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
+    private Shift shift;
 
     public String getName() {
         return name;
@@ -119,5 +107,45 @@ public class Employee extends BaseEntity {
 
     public void setEmployementType(EmployementType employementType) {
         this.employementType = employementType;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Shift getShift() {
+        return shift;
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
 }

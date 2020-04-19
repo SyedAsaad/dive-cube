@@ -1,7 +1,14 @@
 package com.demo.dive.cube.service;
 
+import com.demo.dive.cube.dto.EmployeeDto;
+import com.demo.dive.cube.dto.InstructorDto;
+import com.demo.dive.cube.dto.UserDto;
+import com.demo.dive.cube.enums.UserType;
+import com.demo.dive.cube.model.Employee;
 import com.demo.dive.cube.model.Instructor;
+import com.demo.dive.cube.model.User;
 import com.demo.dive.cube.repository.InstructorRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +20,42 @@ public class InstructorService {
     @Autowired
     private InstructorRepository instructorRepository;
 
-    public void save(Instructor instructor){
-        if(instructor != null){
-            if(instructor.getId() == null){
-                instructorRepository.save(instructor);
+    @Autowired
+    private UserService userService;
+
+    public void save(InstructorDto instructorDto){
+        Instructor instructorExist = new Instructor();
+        if(instructorDto != null){
+            if(instructorDto.getId() == null){
+                UserDto userDto = getUserDto(instructorDto);
+                userService.saveNupdateUser(userDto, UserType.INSTRUCTOR);
+                instructorExist.setEmail(instructorDto.getEmail());
+                instructorExist.setInstructorName(instructorDto.getInstructorName());
+                instructorRepository.save(instructorExist);
             }
             else{
-                Instructor instructorExist = findOne(instructor.getId());
+                 instructorExist = findOne(instructorDto.getId());
                 if(instructorExist != null){
-                    instructorExist = instructor;
+                    UserDto userDto = getUserDto(instructorDto);
+                    userDto.setId(userService.findUserByUsername(instructorExist.getEmail()).getId());
+                    userService.saveNupdateUser(userDto, UserType.INSTRUCTOR);
+                    instructorExist.setEmail(instructorDto.getEmail());
+                    instructorExist.setInstructorName(instructorDto.getInstructorName()) ;
                     instructorRepository.save(instructorExist);
                 }
             }
         }
+    }
+
+    private UserDto getUserDto(InstructorDto instructorDto){
+        UserDto userDto =  new UserDto();
+        userDto.setName(instructorDto.getInstructorName());
+        userDto.setPassword(instructorDto.getPassword());
+        userDto.setPhoneNumber(instructorDto.getPhoneNumber());
+        userDto.setEmail(instructorDto.getEmail());
+        userDto.setAddress(instructorDto.getAddress());
+        userDto.setShift(instructorDto.getShift());
+        return userDto;
     }
 
     public List<Instructor> findAll(){
@@ -42,5 +72,15 @@ public class InstructorService {
 
     public Instructor findOne(Long id){
         return instructorRepository.findOneByIdAndIsDeletedFalse(id);
+    }
+
+    public InstructorDto getInstructorDto(Instructor instructor){
+        InstructorDto instructorDto = new InstructorDto();
+        User user = userService.findUserByUsername(instructor.getEmail());
+        instructorDto.setAddress(user.getAddress());
+        instructorDto.setPhoneNumber(user.getPhoneNumber());
+        instructorDto.setAddress(user.getAddress());
+        BeanUtils.copyProperties(instructor,instructorDto);
+        return instructorDto;
     }
 }
