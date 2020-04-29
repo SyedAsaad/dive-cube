@@ -12,6 +12,8 @@ public interface BookCourseRepository extends CrudRepository<BookCourse,Long> {
 
     BookCourse findByIdAndIsDeletedFalse(Long id);
 
+    BookCourse findByIsCompletedFalseAndStudent_Id(Long id);
+
     @Query(value = "SELECT MAX(seq.next_val) FROM hibernate_sequence seq",nativeQuery = true)
     Long getHighestId();
 }

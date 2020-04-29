@@ -149,7 +149,7 @@
                             <td th:text="${bookCourse.instructor!=null?bookCourse.instructor.instructorName:''}"></td>
                             <td th:text="${bookCourse.courseDate} +${' '} + ${bookCourse.courseTime}"></td>
                             <td><a th:href="@{/payment/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Payment</a></td>
-                            <td th:if="!${bookCourse.isCompleted}"><a th:href="@{/course/completed/{id}/(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Completed</a></td>
+                            <td th:if="!${bookCourse.isCompleted}"><a th:href="@{/book/course/completed/{id}/(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Completed</a></td>
                             <td th:if="${bookCourse.isCompleted}"><a th:href="@{/process/certificate/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Process Certificate</a></td>
                             <td><a th:href="@{/course/delete/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Delete</a></td>
                             <td><a th:href="@{/course/edit/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Edit</a></td>

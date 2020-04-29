@@ -120,4 +120,7 @@ public class Employee extends BaseEntity {
     public void setEmployementType(EmployementType employementType) {
         this.employementType = employementType;
     }
+
+
 }
+

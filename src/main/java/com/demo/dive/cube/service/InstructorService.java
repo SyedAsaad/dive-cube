@@ -80,6 +80,7 @@ public class InstructorService {
         instructorDto.setAddress(user.getAddress());
         instructorDto.setPhoneNumber(user.getPhoneNumber());
         instructorDto.setAddress(user.getAddress());
+        instructorDto.setShift(user.getShift());
         BeanUtils.copyProperties(instructor,instructorDto);
         return instructorDto;
     }

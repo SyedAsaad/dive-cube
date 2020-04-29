@@ -28,7 +28,7 @@ public class BookCourseController {
 
     @PostMapping(value = URLConstants.SAVE_URL)
     private String saveBookCourse(@ModelAttribute BookCourseDto bookCourse){
-        System.out.println(bookCourse);
+//        System.out.println(bookCourse);
         bookCourseService.getBookCourseNdSave(bookCourse);
         return "redirect:/book/course";
     }

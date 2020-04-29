@@ -1,6 +1,10 @@
 package com.demo.dive.cube.service;
 
+import antlr.RecognitionException;
+import com.demo.dive.cube.config.exception.RecordNotFoundException;
+import com.demo.dive.cube.config.exception.ServiceException;
 import com.demo.dive.cube.dto.BookCourseDto;
+import com.demo.dive.cube.enums.CourseStatus;
 import com.demo.dive.cube.model.BookCourse;
 import com.demo.dive.cube.model.Student;
 import com.demo.dive.cube.repository.BookCourseRepository;
@@ -89,16 +93,18 @@ public class BookCourseService {
             if(bookCourseDto!=null){
                 int i=0;
                 while(bookCourseDto.getStudentList().size()>i){
-                    BookCourse bookCourse = new BookCourse();
-                    bookCourse.setCourse(bookCourseDto.getCourse());
-                    bookCourse.setId(bookCourseDto.getId());
-                    bookCourse.setClassRoom(bookCourseDto.getClassRoom());
-                    bookCourse.setInstructor(bookCourseDto.getInstructor());
-                    bookCourse.setCourseDate(bookCourseDto.getCourseDate());
-                    bookCourse.setCourseTime(bookCourseDto.getCourseTime());
-                    bookCourse.setStudent(bookCourseDto.getStudentList().get(i));
-                    bookCourse.setBookingId(generateBookingId());
-                    saveCourseBooking(bookCourse);
+                    if(checkPreviousCourseStatus(bookCourseDto.getStudentList().get(i)).equals(CourseStatus.COMPLETED)){
+                        BookCourse bookCourse = new BookCourse();
+                        bookCourse.setCourse(bookCourseDto.getCourse());
+                        bookCourse.setId(bookCourseDto.getId());
+                        bookCourse.setClassRoom(bookCourseDto.getClassRoom());
+                        bookCourse.setInstructor(bookCourseDto.getInstructor());
+                        bookCourse.setCourseDate(bookCourseDto.getCourseDate());
+                        bookCourse.setCourseTime(bookCourseDto.getCourseTime());
+                        bookCourse.setStudent(bookCourseDto.getStudentList().get(i));
+                        bookCourse.setBookingId(generateBookingId());
+                        saveCourseBooking(bookCourse);
+                    }
                     i++;
                 }
             }
@@ -108,6 +114,21 @@ public class BookCourseService {
         }
 
     }
+
+    private CourseStatus checkPreviousCourseStatus(Student student) {
+        if(student.getId()!=null){
+            BookCourse bookCourse = bookCourseRepository.findByIsCompletedFalseAndStudent_Id(student.getId());
+            if(bookCourse==null)
+                 return CourseStatus.COMPLETED;
+            else
+                return CourseStatus.IN_PROGRESS;
+        }
+        else{
+            throw new RecordNotFoundException("Student not found");
+        }
+
+    }
+
 
     private String generateBookingId() {
         Long id= bookCourseRepository.getHighestId();
