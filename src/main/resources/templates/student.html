@@ -34,19 +34,14 @@
                         <small>Add </small>Student
                     </div>
                     <div class="card-body card-block">
-<!--                        <div class="form-row">-->
-<!--                            <div th:if="${errorList}">-->
-<!--                                <span style="color: red" th:attr="${errorList}"></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <div class="form-row" id="showImage" >
-                            <img class="form-control-file" id="imgSpn"style="height: auto;width: 10%" th:src="${imageName}" />
+                            <img class="form-control-file" id="imgSpn"style="height: auto;width: 15%" th:src="${imageName}" />
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="form-control-label">Image :</label>
 
-                                <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateFile changeFile"
+                                <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateImageFile changeFile"
                                        name="image" th:required="id==null" th:field="*{image}">
                                 <a href="#" id="removeBtn" th:if="${imageName}" class="btn btn-primary btn-sm removeImg fileinput-exists"
                                    onclick="fileRequiredTrue()"
@@ -61,39 +56,75 @@
                         </div>
                         <hr>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label >Name</label> <input
-                                    type="text" class="form-control" name="name" th:field="*{name}"
-                                    placeholder="Name"  required>
+                            <div class="form-group col-md-4">
+                                <label >First Name<span style="color: red;"><b>*</b></span></label>
+                                <input type="text" class="form-control" name="firstName" th:field="*{firstName}"
+                                    placeholder="First Name"  required>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label >Phone Number</label> <input
-                                    type="text" class="form-control" name="phoneNumber" id="phoneNumber"
-                                    th:field="*{phoneNumber}"
-                                    placeholder="Phone Number" >
+                            <div class="form-group col-md-4">
+                                <label >Middle Name</label> <input
+                                    type="text" class="form-control" name="middleName" th:field="*{middleName}"
+                                    placeholder="Middle Name"  >
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label >Last Name <span style="color: red;"><b>*</b></span></label> <input
+                                    type="text" class="form-control" name="lastName" th:field="*{lastName}"
+                                    placeholder="Last Name"  required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label>Country</label>
-                                <select class="standardSelect form-control" id="country" name="country" th:field="*{country}">
+                                <label >Email<span style="color: red;"><b>*</b></span></label> <input
+                                    type="text" class="form-control" name="email" id="email"
+                                    th:field="*{email}"
+                                    placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class=" form-control-label">Gender <span style="color: red;"><b>*</b></span></label>
+                                <select class="form-control" id="gender" name="gender" th:field="*{gender}" required>
+                                    <option value="" selected>Select Gender</option>
+                                    <option value="Male" >Male</option>
+                                    <option value="Female" >Female</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Date Of Birth <span style="color: red;"><b>*</b></span> </label>
+
+                                <input type="text"
+                                       class="form-control" name="dob" id="dob"
+                                       th:field="*{dob}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Country <span style="color: red;"><b>*</b></span></label>
+                                <select class="standardSelect form-control" id="country" name="country" th:field="*{country}" required>
                                     <option value="">Select Country</option>
                                     <option th:each="item : ${countries}"
                                             th:value="${item.name}"
                                             th:text="${item.name}"></option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label >City</label> <input
+                            <div class="form-group col-md-4">
+                                <label >State</label> <input
+                                    type="text" class="form-control" name="state" id="state" th:field="*{state}"
+                                    placeholder="State Name">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label >City <span style="color: red;"><b>*</b></span></label> <input
                                     type="text" class="form-control" name="city" id="city" th:field="*{city}"
-                                    placeholder="City Name">
+                                    placeholder="City Name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-9">
-                                <label>Address</label>
+                                <label>Address<span style="color: red;"><b>*</b></span></label>
                                 <input type="text" class="form-control" name="permanentAddress"
-                                       th:field="*{permanentAddress}" placeholder="Address">
+                                       th:field="*{permanentAddress}" placeholder="Address" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label >Zip Code</label> <input
@@ -103,33 +134,29 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class=" form-control-label">Gender :</label>
-                                <select class="form-control" id="gender" name="gender" th:field="*{gender}" required>
-                                    <option value="" selected>Select Gender</option>
-                                    <option value="Male" >Male</option>
-                                    <option value="Female" >Female</option>
-                                </select>
-
+                                <label >Contact Number <span style="color: red;"><b>*</b></span></label> <input
+                                    type="text" class="form-control" name="phoneNumber" id="phoneNumber"
+                                    th:field="*{phoneNumber}"
+                                    placeholder="Contact Number" required>
                             </div>
-
                             <div class="form-group col-md-6">
-                                <label class="form-control-label">Date Of Birth : </label>
-
-                                <input type="text"
-                                       class="form-control" name="dob" id="dob"
-                                       th:field="*{dob}">
+                                <label>Alternate Contact Number</label> <input
+                                    type="text" class="form-control" name="altPhoneNumber" id="altPhoneNumber"
+                                    th:field="*{altPhoneNumber}"
+                                    placeholder="Contact Number" >
                             </div>
                         </div>
+
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label>Emergency Contact Name</label>
+                                <label>Emergency Contact Name <span style="color: red;"><b>*</b></span></label>
                                 <input type="text" class="form-control" name="emergencyContactName"
-                                       th:field="*{emergencyContactName}" placeholder="Contact Name" >
+                                       th:field="*{emergencyContactName}" placeholder="Contact Name" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Emergency Contact Number</label>
+                                <label>Emergency Contact Number <span style="color: red;"><b>*</b></span></label>
                                 <input type="text" class="form-control" name="emergencyContactNum"
-                                       th:field="*{emergencyContactNum}" placeholder="Contact Number" >
+                                       th:field="*{emergencyContactNum}" placeholder="Contact Number" required>
                             </div>
                         </div>
                         <div class="form-row">
@@ -178,7 +205,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="student : ${studentList}">
-                                        <td th:text="${student.name}"></td>
+                                        <td th:text="${student.firstName}+''+(${student.middleName}!=null ? ${student.middleName}+'':'' )+${student.lastName}"></td>
                                         <td th:text="${student.phoneNumber}"></td>
                                         <td th:text="${student.country}"></td>
                                         <td th:text="${student.city}"></td>
@@ -199,7 +226,7 @@
 <footer>
     <div th:replace="footer :: myfooter"></div>
 </footer>
-<script src="/Utility/student.js"></script>
+<script src="/Utility/util.js"></script>
 <script src="/assets/bootstrap-fileinput/bootstrap-fileinput.js"
         type="text/javascript"></script>
 

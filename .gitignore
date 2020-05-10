@@ -1,5 +1,6 @@
 HELP.md
 studentImages
+claimForms
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**

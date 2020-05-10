@@ -1,18 +1,17 @@
 package com.demo.dive.cube.model;
 
+import com.demo.dive.cube.enums.CertificationLevel;
 import com.demo.dive.cube.enums.CertificationType;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "process_certificate")
 public class ProcessCertification extends BaseEntity {
 
-    @OneToOne
-    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="book_course_id", unique= true, nullable=false, insertable=true, updatable=true)
     private BookCourse bookCourse;
 
     private String dateOfCertificate;
@@ -20,6 +19,8 @@ public class ProcessCertification extends BaseEntity {
     private String dateOfProcessing;
 
     private CertificationType certificationType;
+
+    private CertificationLevel certificationLevel;
 
     public BookCourse getBookCourse() {
         return bookCourse;
@@ -51,5 +52,13 @@ public class ProcessCertification extends BaseEntity {
 
     public void setCertificationType(Integer i) {
         this.certificationType = CertificationType.values()[i];
+    }
+
+    public CertificationLevel getCertificationLevel() {
+        return certificationLevel;
+    }
+
+    public void setCertificationLevel(Integer i) {
+        this.certificationLevel = CertificationLevel.values()[i];
     }
 }

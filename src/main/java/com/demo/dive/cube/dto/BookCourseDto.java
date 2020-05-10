@@ -4,6 +4,7 @@ import com.demo.dive.cube.model.ClassRoom;
 import com.demo.dive.cube.model.Course;
 import com.demo.dive.cube.model.Instructor;
 import com.demo.dive.cube.model.Student;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -14,10 +15,12 @@ public class BookCourseDto implements Serializable {
     private Long id;
 
     @NotNull
-    private List<Student> studentList;
+    private Student student;
 
     @NotNull
     private Course course;
+
+    private MultipartFile claimFile;
 
     private ClassRoom classRoom;
 
@@ -38,12 +41,12 @@ public class BookCourseDto implements Serializable {
         this.id = id;
     }
 
-    public List<Student> getStudentList() {
-        return studentList;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Course getCourse() {
@@ -92,5 +95,13 @@ public class BookCourseDto implements Serializable {
 
     public void setIsTransactionExist(Boolean isTransactionExist) {
         this.isTransactionExist = isTransactionExist;
+    }
+
+    public MultipartFile getClaimFile() {
+        return claimFile;
+    }
+
+    public void setClaimFile(MultipartFile claimFile) {
+        this.claimFile = claimFile;
     }
 }

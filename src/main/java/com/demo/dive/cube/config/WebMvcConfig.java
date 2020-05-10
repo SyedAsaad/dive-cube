@@ -1,14 +1,10 @@
 package com.demo.dive.cube.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import javax.servlet.MultipartConfigElement;
 import java.io.File;
 
 @Configuration
@@ -57,9 +53,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     String absPath = directory.getAbsolutePath();
 
     String readPath =  String.format("%sstudentImages/", absPath.replace("\\", "/").replace(".", ""));
-	  String formatted = readPath;
+    String filePath =  String.format("%sclaimForms/", absPath.replace("\\", "/").replace(".", ""));
+    String formatted = readPath;
+    String formattedPath = filePath;
 
       registry.addResourceHandler("/studentImage/**").addResourceLocations(String.format("file:///%s", formatted));
+    registry.addResourceHandler("/claimForms/**").addResourceLocations(String.format("file:///%s", formattedPath));
 
   }
 
