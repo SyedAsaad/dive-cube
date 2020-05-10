@@ -23,7 +23,7 @@ public class ItemController {
     public ModelAndView getItem() throws JsonProcessingException {
         commonService.getCountryData();
         ModelAndView modelAndView = new ModelAndView("item");
-        modelAndView.addObject("item",new Item());
+        modelAndView.addObject("item",new Item(itemService.generateItemId()));
         modelAndView.addObject("items",itemService.findAll());
         return modelAndView;
     }

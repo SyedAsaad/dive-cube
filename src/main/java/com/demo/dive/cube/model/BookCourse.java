@@ -10,12 +10,14 @@ public class BookCourse extends BaseEntity {
     private String bookingId;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Student student;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Course course;
+
+    private boolean isCompleted;
 
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
     private ClassRoom classRoom;
@@ -30,6 +32,8 @@ public class BookCourse extends BaseEntity {
 
 
     private boolean isTransactionExist;
+
+    private String fileName;
 
 
     public Student getStudent() {
@@ -94,5 +98,21 @@ public class BookCourse extends BaseEntity {
 
     public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public boolean getIsCompleted() {
+        return this.isCompleted;
+    }
+
+    public void setIsCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

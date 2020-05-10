@@ -66,7 +66,7 @@ public class StudentService {
                     if (studentDto.getId() != null)
                         existStudent = studentRepository.findByIdAndIsDeletedFalse(studentDto.getId());
                     if (existStudent != null) {
-                        getStudentData(existStudent, studentDto);
+                        BeanUtils.copyProperties(studentDto,existStudent);
                         if(!(studentDto.getId()!=null && studentDto.getImage().getOriginalFilename().isEmpty())) {
                             fileName = existStudent.getImageName() != null ? existStudent.getImageName() : System.currentTimeMillis() + "-" + studentDto.getImage().getOriginalFilename();
                             String filePath = uploadStudentImage(studentDto.getImage(), fileName);
@@ -84,23 +84,6 @@ public class StudentService {
         return modelAndView;
     }
 
-    private void getStudentData(Student existStudent, StudentDto studentDto) {
-        try {
-            existStudent.setName(studentDto.getName());
-            existStudent.setGender(studentDto.getGender());
-            existStudent.setCountry(studentDto.getCountry());
-            existStudent.setDob(studentDto.getDob());
-            existStudent.setPermanentAddress(studentDto.getPermanentAddress());
-            existStudent.setCity(studentDto.getCity());
-            existStudent.setEmergencyContactName(studentDto.getEmergencyContactName());
-            existStudent.setEmergencyContactNum(studentDto.getEmergencyContactNum());
-            existStudent.setPhoneNumber(studentDto.getPhoneNumber());
-            existStudent.setRecievingAddress(studentDto.getRecievingAddress());
-            existStudent.setZipCode(studentDto.getZipCode());
-        }catch (Exception e){}
-    }
-
-
     public void deleteStudent(Long id){
         Student student = studentRepository.findByIdAndIsDeletedFalse(id);
         student.setIsDeleted(true);
@@ -116,9 +99,9 @@ public class StudentService {
                 Student student = studentRepository.findByIdAndIsDeletedFalse(id);
 
                 studentDto.setId(student.getId());
-                String fileName = student.getImageName().substring(student.getImageName().indexOf("-")+1,student.getImageName().length());
-                MultipartFile multipartFile = new MockMultipartFile(fileName,student.getImageName(),"image/jpeg", IOUtils.toByteArray(fileLocation + student.getImageName()));
-                studentDto.setImage(multipartFile);
+//                String fileName = student.getImageName().substring(student.getImageName().indexOf("-")+1,student.getImageName().length());
+//                MultipartFile multipartFile = new MockMultipartFile(fileName,student.getImageName(),"image/jpeg", IOUtils.toByteArray(fileLocation + student.getImageName()));
+//                studentDto.setImage(multipartFile);
                 BeanUtils.copyProperties(student, studentDto);
                 return studentDto;
             }
