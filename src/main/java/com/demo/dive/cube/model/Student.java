@@ -10,39 +10,52 @@ import javax.validation.constraints.Size;
 @Table(name = "course_student")
 public class Student extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
-    @NotNull(message = "Name cannot be null")
-    @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")
-    private String name;
+    private String firstName;
+    private String middleName;
+    private String lastName;
     private String permanentAddress;
+    private String email;
 
-    @Column(name="phone_number",length = 30)
-/*    @NotNull
-    @Size(min = 7, max = 20, message = "Phone Number should be at-least 7 digits and at-most 20 digits long")*/
+    @Column(name = "phone_number", length = 30)
     private String phoneNumber;
-
+    private String altPhoneNumber;
     private String country;
+    private String state;
     private String city;
     private String zipCode;
     @Column(name = "date_of_birth")
     private String dob;
     @Column(name = "emergency_contact_no")
-   /* @NotNull(message = "emergencyContactNum cannot be null")*/
     private String emergencyContactNum;
 
-    /*@NotNull(message = "emergencyContactName cannot be null")*/
     @Column(name = "emergency_contact_name")
     private String emergencyContactName;
     private String gender;
     private String recievingAddress;
     private String imageName;
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPermanentAddress() {
@@ -53,6 +66,14 @@ public class Student extends BaseEntity {
         this.permanentAddress = permanentAddress;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -61,12 +82,28 @@ public class Student extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getAltPhoneNumber() {
+        return altPhoneNumber;
+    }
+
+    public void setAltPhoneNumber(String altPhoneNumber) {
+        this.altPhoneNumber = altPhoneNumber;
+    }
+
     public String getCountry() {
         return country;
     }
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getCity() {

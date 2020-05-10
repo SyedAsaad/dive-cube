@@ -5,6 +5,7 @@ import com.demo.dive.cube.dto.BookCourseDto;
 import com.demo.dive.cube.model.BookCourse;
 import com.demo.dive.cube.service.BookCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +18,8 @@ public class BookCourseController {
 
     @Autowired
     private BookCourseService bookCourseService;
+    @Value("${book.course.file.path}")
+    private String fileLocation;
 
 
     @GetMapping
@@ -27,9 +30,9 @@ public class BookCourseController {
     }
 
     @PostMapping(value = URLConstants.SAVE_URL)
-    private String saveBookCourse(@ModelAttribute BookCourseDto bookCourse){
-        System.out.println(bookCourse);
-        bookCourseService.getBookCourseNdSave(bookCourse);
+    private String saveBookCourse(@ModelAttribute BookCourseDto bookCourseDto){
+//        System.out.println(bookCourse);
+        bookCourseService.saveCourseBooking(bookCourseDto,bookCourseDto.getClaimFile());
         return "redirect:/book/course";
     }
 
@@ -49,6 +52,7 @@ public class BookCourseController {
     private ModelAndView editBookCourse(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("bookCourse");
         modelAndView.addObject("bookCourse",bookCourseService.getBookCourseDto(id));
+        modelAndView.addObject("fileName","/"+fileLocation+ bookCourseService.getFileNameById(id));
         return bookCourseService.addDependentDetails(modelAndView);
     }
 }

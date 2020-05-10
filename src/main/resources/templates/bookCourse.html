@@ -24,12 +24,40 @@
     <div class="content mt-3">
         <div class="col-lg-12">
             <div class="card">
-                <form th:action="@{/book/course/save}" method="post" th:object="${bookCourse}">
+                <form th:action="@{/book/course/save}" method="post" enctype="multipart/form-data" th:object="${bookCourse}">
                     <input type="hidden" th:field="*{id}"/>
                     <div class="card-header">
                         <small>Book Course </small>Entry
                     </div>
                     <div class="card-body card-block">
+
+                        <div class="form-row" id="showImage" >
+                            <div class="form-group col-md-6">
+                            <a  id="fileSpn" th:href="${fileName}" >
+                                <span style="color: red;">Pdf File</span>
+                            </a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row">
+
+
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Select File :</label>
+
+                                <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateFile changeFile" accept="application/pdf"
+                                       name="claimFile" th:required="id==null" th:field="*{claimFile}">
+                                <a href="#" id="removeBtn" th:if="${fileName}" class="btn btn-primary btn-sm removeFile fileinput-exists"
+                                   onclick="fileRequiredTrue()"
+                                   data-dismiss="fileinput">Remove</a>
+
+
+                                <span style="color: red; font-size: 13px;float: left;width: 55%" id="fileEr"></span>
+                                <br/>
+                                <span style="color: #2991d9; font-size: 12px;">Max file size 2MB, Only Pdf allow</span>
+                                <hr>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class=" form-control-label">Course :</label>
@@ -46,10 +74,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class=" form-control-label">Student :</label>
-                                <select class="standardSelect form-control" id="sudent" name="student" th:field="*{studentList}" multiple="multiple" required>
-                                    <option th:each="item : ${students}"
-                                            th:value="${item.id}"
-                                            th:text="${item.name}"></option>
+                                <select class="form-control" id="sudent" name="student" th:field="*{student}" required>
+                                    <option value="" selected>Select Student</option>
+                                    <option th:each="student : ${students}"
+                                            th:value="${student.id}"
+                                            th:text="${student.firstName}+''+(${student.middleName}!=null ? ${student.middleName}+'':'' )+${student.lastName}"></option>
                                 </select>
 
                             </div>
@@ -98,7 +127,7 @@
 
                                 <input type="time"
                                        class="form-control" name="courseDate" id="courseDate"
-                                       th:field="*{courseTime}">
+                                       th:field="*{courseTime}" required>
 
                             </div>
 
@@ -143,16 +172,16 @@
                         </thead>
                         <tbody>
                         <tr th:each="bookCourse : ${bookCourseList}">
-                            <td th:text="${bookCourse.student.name}"></td>
+                            <td th:text="${bookCourse.student.firstName}"></td>
                             <td th:text="${bookCourse.course.courseName}"></td>
                             <td th:text="${bookCourse.classRoom!=null?bookCourse.classRoom.room:''}"></td>
                             <td th:text="${bookCourse.instructor!=null?bookCourse.instructor.instructorName:''}"></td>
                             <td th:text="${bookCourse.courseDate} +${' '} + ${bookCourse.courseTime}"></td>
                             <td><a th:href="@{/payment/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Payment</a></td>
-                            <td th:if="!${bookCourse.isCompleted}"><a th:href="@{/course/completed/{id}/(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Completed</a></td>
+                            <td th:if="!${bookCourse.isCompleted}"><a th:href="@{/book/course/completed/{id}/(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Completed</a></td>
                             <td th:if="${bookCourse.isCompleted}"><a th:href="@{/process/certificate/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Process Certificate</a></td>
-                            <td><a th:href="@{/course/delete/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-                            <td><a th:href="@{/course/edit/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                            <td><a th:href="@{/book/course/delete/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/book/course/edit/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -163,6 +192,7 @@
 </div>
 <script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
 <script th:src="@{/assets/js/lib/bootstrap-datepicker.js}"></script>
+<script src="/Utility/util.js"></script>
 
 
 <script>
@@ -178,8 +208,18 @@
         autoclose : true
 
     });
+    function fileRequiredTrue(){
+        $('#fileUploadForm').attr('required', true);
+        $('#showImage').hide();
 
+    }
 
+    $(document).ready(function(){
+        if($('#fileSpn').val()=="" && $('#fileSpn').attr('href')=="") {
+            fileRequiredTrue();
+        }
+
+    });
 </script>
 <footer>
     <div th:replace="footer :: myfooter"></div>

@@ -9,4 +9,6 @@ public interface BookDiveRepository extends JpaRepository<BookDive,Long> {
 
     BookDive findByIdAndIsDeletedFalse(Long id);
     List<BookDive> findAllByIsDeletedFalse();
+
+    List<BookDive> findAllByOrderById();
 }
