@@ -16,7 +16,7 @@ public class Employee extends BaseEntity {
     private String address;
     @Column
     private String telephone;
-    @Column
+    @Column(name = "email",unique = true)
     private String email;
     @Column
     private String city;
@@ -120,4 +120,7 @@ public class Employee extends BaseEntity {
     public void setEmployementType(EmployementType employementType) {
         this.employementType = employementType;
     }
+
+
 }
+

@@ -1,17 +1,15 @@
 package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
+import com.demo.dive.cube.enums.PaymentMethod;
 import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.service.EnumService;
-import com.demo.dive.cube.service.ItemService;
 import com.demo.dive.cube.service.OrderService;
 import com.demo.dive.cube.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("order")
@@ -23,13 +21,16 @@ public class OrderController {
     @Autowired
     private SupplierService supplierService;
 
+    @Autowired
+    private EnumService enumService;
+
     @GetMapping
     public ModelAndView getOrder(){
         ModelAndView modelAndView = new ModelAndView("order");
         modelAndView.addObject("order",new Order());
         modelAndView.addObject("orders",orderService.findAll());
         modelAndView.addObject("suppliers",supplierService.findAll());
-        modelAndView.addObject("paymentMethods",orderService.getAllPaymentMethods());
+        modelAndView.addObject("paymentMethods",enumService.getEnumList(PaymentMethod.values()));
         return modelAndView;
     }
 
@@ -51,7 +52,7 @@ public class OrderController {
         modelAndView.addObject("order",orderService.findOne(id));
         modelAndView.addObject("orders",orderService.findAll());
         modelAndView.addObject("suppliers",supplierService.findAll());
-        modelAndView.addObject("paymentMethods",orderService.getAllPaymentMethods());
+        modelAndView.addObject("paymentMethods",enumService.getEnumList(PaymentMethod.values()));
         return modelAndView;
     }
 }

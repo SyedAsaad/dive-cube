@@ -39,7 +39,18 @@ public class ItemService {
         }
     }
 
+    public String generateItemId() {
+        Long id= itemRepository.getHighestId();
+        if(id!=null)
+            return "IT-"+id;
+        else
+            return "IT-01";
+
+    }
+
     public Item findOne(Long id){
         return itemRepository.findOneByIdAndIsDeletedFalse(id);
     }
+
+
 }

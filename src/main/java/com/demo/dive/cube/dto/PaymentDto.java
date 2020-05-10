@@ -1,22 +1,18 @@
 package com.demo.dive.cube.dto;
 
-import com.demo.dive.cube.config.Constants.PaymentMethod;
-import com.demo.dive.cube.config.Constants.PaymentType;
-import com.demo.dive.cube.model.Item;
+import com.demo.dive.cube.enums.PaymentMethod;
+import com.demo.dive.cube.enums.PaymentType;
 import com.demo.dive.cube.model.Order;
 import com.demo.dive.cube.model.Supplier;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 public class PaymentDto {
 
     private Long id;
     @NotNull
-    private Order orderId;
-    @NotNull
-    private Supplier supplierId;
+    private String orderId;
     @NotNull()
     private PaymentMethod paymentMethod;
     @NotNull
@@ -27,20 +23,19 @@ public class PaymentDto {
     @NotNull
     private String paymentDate;
 
-    public Order getOrderId() {
-        return orderId;
+    public PaymentDto() {
     }
 
-    public void setOrderId(Order orderId) {
+    public PaymentDto(@NotNull String orderId) {
         this.orderId = orderId;
     }
 
-    public Supplier getSupplierId() {
-        return supplierId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setSupplierId(Supplier supplierId) {
-        this.supplierId = supplierId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getPaymentDate() {
@@ -51,20 +46,20 @@ public class PaymentDto {
         this.paymentDate = paymentDate;
     }
 
-    public Integer getPaymentType() {
-        return paymentType != null ? paymentType.ordinal() : null;
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setPaymentType(Integer i) {
-        this.paymentType = PaymentType.values()[i];
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
-    public Integer getPaymentMethod() {
-        return paymentMethod != null ? paymentMethod.ordinal() : null;
+    public PaymentType getPaymentType() {
+        return paymentType;
     }
 
-    public void setPaymentMethod(Integer i) {
-        this.paymentMethod = PaymentMethod.values()[i];
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
 
     public Double getAmount() {

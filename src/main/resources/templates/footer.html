@@ -29,6 +29,14 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
     <script>
+        jQuery(document).ready(function() {
+            jQuery(".standardSelect").chosen({
+                disable_search_threshold : 3,
+                no_results_text : "Oops, nothing found!",
+                width : "100%"
+            });
+        });
+
         $('a[href*="#"]')
         // Remove links that don't actually link to anything
             .not('[href="#"]').not('[href="#0"]').click(

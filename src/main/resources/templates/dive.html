@@ -75,8 +75,8 @@
                         <tr th:each="dive : ${dives}">
                             <td th:text="${dive.diveName}"></td>
                             <td th:text="${dive.amount}"></td>
-                            <td><a th:href="@{dive/delete/{id}(id=${dive.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-                            <td><a th:href="@{dive/edit/{id}(id=${dive.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                            <td><a th:href="@{/dive/delete/{id}(id=${dive.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/dive/edit/{id}(id=${dive.id})}" class="btn btn-danger btn-sm">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -85,6 +85,9 @@
         </div>
     </div>
 </div>
+<footer>
+    <div th:replace="footer :: myfooter"></div>
+</footer>
 <script>
     $('#supplier-datatable').DataTable({
         "paging" : true,
@@ -98,9 +101,7 @@
         "order" : [ [ 1, 'asc' ] ]
     });
 </script>
-<footer>
-    <div th:replace="footer :: myfooter"></div>
-</footer>
+
 </body>
 </html>
 

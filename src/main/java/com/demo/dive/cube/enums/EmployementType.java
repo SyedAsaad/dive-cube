@@ -12,4 +12,5 @@ public enum EmployementType {
     }
 
     private String title;
+
 }

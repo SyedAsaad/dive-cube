@@ -1,0 +1,242 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+    <div th:replace="header :: myheader"></div>
+</head>
+<body>
+<aside id="left-panel" class="left-panel">
+    <div th:replace="aside :: myMenu"></div>
+</aside>
+<div id="right-panel" class="right-panel">
+    <header id="header" class="header">
+        <div class="header-menu">
+            <div class="col-sm-7">
+                <a id="menuToggle" class="menutoggle pull-left"><i
+                        class="fa fa fa-tasks"></i></a>
+            </div>
+            <a class="btn-logout pull-right" th:href="@{/logout}">
+                <i class="fa fa-sign-out"></i> Logout
+            </a>
+        </div>
+    </header>
+    <div class="content mt-3">
+        <div class="col-lg-12">
+            <div class="card">
+                <form th:action="@{/book/course/save}" method="post" enctype="multipart/form-data" th:object="${bookCourse}">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="card-header">
+                        <small>Book Course </small>Entry
+                    </div>
+                    <div class="card-body card-block">
+
+                        <div class="form-row" id="showImage" >
+                            <div class="form-group col-md-6">
+                            <a  id="fileSpn" th:href="${fileName}" >
+                                <span style="color: red;">Pdf File</span>
+                            </a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row">
+
+
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Select File :</label>
+
+                                <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateFile changeFile" accept="application/pdf"
+                                       name="claimFile" th:required="id==null" th:field="*{claimFile}">
+                                <a href="#" id="removeBtn" th:if="${fileName}" class="btn btn-primary btn-sm removeFile fileinput-exists"
+                                   onclick="fileRequiredTrue()"
+                                   data-dismiss="fileinput">Remove</a>
+
+
+                                <span style="color: red; font-size: 13px;float: left;width: 55%" id="fileEr"></span>
+                                <br/>
+                                <span style="color: #2991d9; font-size: 12px;">Max file size 2MB, Only Pdf allow</span>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class=" form-control-label">Course :</label>
+                                <select class="standardSelect form-control" id="course" name="course" th:field="*{course}" required>
+                                    <option value="" selected>Select Courses</option>
+                                    <option th:each="item : ${courses}"
+                                            th:value="${item.id}"
+                                            th:text="${item.courseName}"></option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class=" form-control-label">Student :</label>
+                                <select class="form-control" id="sudent" name="student" th:field="*{student}" required>
+                                    <option value="" selected>Select Student</option>
+                                    <option th:each="student : ${students}"
+                                            th:value="${student.id}"
+                                            th:text="${student.firstName}+''+(${student.middleName}!=null ? ${student.middleName}+'':'' )+${student.lastName}"></option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class=" form-control-label">Class (Optional):</label>
+                                <select class="standardSelect form-control" id="classRoom" name="classRoom" th:field="*{classRoom}">
+                                    <option value="" selected>Select Class Room</option>
+                                    <option th:each="item : ${classRooms}"
+                                            th:value="${item.id}"
+                                            th:text="${item.room}"></option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class=" form-control-label">Instructor (Optional):</label>
+                                <select class="standardSelect form-control" id="instructor" name="instructor" th:field="*{instructor}">
+                                    <option value="" selected>Select Instructor</option>
+                                    <option th:each="item : ${instructors}"
+                                            th:value="${item.id}"
+                                            th:text="${item.instructorName}"></option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Course Date : </label>
+
+                                <input type="text"
+                                       class="form-control" name="courseDate" id="courseDate"
+                                       th:field="*{courseDate}" readonly>
+
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Course Time : </label>
+
+                                <input type="time"
+                                       class="form-control" name="courseDate" id="courseDate"
+                                       th:field="*{courseTime}" required>
+
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm"
+                                id="submit-btn">
+                            <i class="fa fa-dot-circle-o"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm" id="reset">
+                            <i class="fa fa-ban"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Booking Course List</strong>
+                </div>
+                <div class="card-body">
+                    <table id="quote-datatable"
+                           class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Class Room </th>
+                            <th>Instructor</th>
+                            <th>Trip Date & Time</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="bookCourse : ${bookCourseList}">
+                            <td th:text="${bookCourse.student.firstName}"></td>
+                            <td th:text="${bookCourse.course.courseName}"></td>
+                            <td th:text="${bookCourse.classRoom!=null?bookCourse.classRoom.room:''}"></td>
+                            <td th:text="${bookCourse.instructor!=null?bookCourse.instructor.instructorName:''}"></td>
+                            <td th:text="${bookCourse.courseDate} +${' '} + ${bookCourse.courseTime}"></td>
+                            <td><a th:href="@{/payment/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Payment</a></td>
+                            <td th:if="!${bookCourse.isCompleted}"><a th:href="@{/book/course/completed/{id}/(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Completed</a></td>
+                            <td th:if="${bookCourse.isCompleted}"><a th:href="@{/process/certificate/{id}/(id=${bookCourse.bookingId})}" class="btn btn-danger btn-sm">Process Certificate</a></td>
+                            <td><a th:href="@{/book/course/delete/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/book/course/edit/{id}(id=${bookCourse.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
+<script th:src="@{/assets/js/lib/bootstrap-datepicker.js}"></script>
+<script src="/Utility/util.js"></script>
+
+
+<script>
+    $('#courseDate').datepicker('setDate', 'today');
+    $('.input-group.date').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    $('#paymentDate').datepicker({
+
+        format : 'dd/MM/yyyy',
+        autoclose : true
+
+    });
+    function fileRequiredTrue(){
+        $('#fileUploadForm').attr('required', true);
+        $('#showImage').hide();
+
+    }
+
+    $(document).ready(function(){
+        if($('#fileSpn').val()=="" && $('#fileSpn').attr('href')=="") {
+            fileRequiredTrue();
+        }
+
+    });
+</script>
+<footer>
+    <div th:replace="footer :: myfooter"></div>
+</footer>
+<script>
+    $('#quote-datatable').DataTable({
+        "paging" : true,
+        "lengthChange" : true,
+        "searching" : true,
+        "ordering" : true,
+        "info" : false,
+        "responsive" : true,
+        "autoWidth" : false,
+        "pageLength" : 10,
+        "order" : [ [ 1, 'asc' ] ]
+    });
+</script>
+</body>
+</html>
+

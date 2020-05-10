@@ -1,7 +1,7 @@
 package com.demo.dive.cube.model;
 
-import com.demo.dive.cube.config.Constants.PaymentMethod;
-import com.demo.dive.cube.config.Constants.PaymentType;
+import com.demo.dive.cube.enums.PaymentMethod;
+import com.demo.dive.cube.enums.PaymentType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -9,13 +9,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "supplier_payment")
-public class SupplierPayment extends BaseEntity {
+public class Payment extends BaseEntity {
 
-    @ManyToOne
-    private Order order;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    private Supplier supplier;
+    private String orderId;
 
     private String paymentDate;
     @NotNull()
@@ -58,19 +54,11 @@ public class SupplierPayment extends BaseEntity {
         this.amount = amount;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }
