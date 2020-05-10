@@ -2,7 +2,6 @@ package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.dto.ProcessCertificationDto;
-import com.demo.dive.cube.enums.CertificationLevel;
 import com.demo.dive.cube.enums.CertificationType;
 import com.demo.dive.cube.enums.PaymentMethod;
 import com.demo.dive.cube.repository.ProcessCertificateRepository;
@@ -29,7 +28,6 @@ public class ProcessCertificationController {
         ModelAndView modelAndView = new ModelAndView("processCertificate");
         modelAndView.addObject("certificate",processCertificateService.getNewObject(bookingId));
         modelAndView.addObject("certificateTypes",enumService.getEnumList(CertificationType.values()));
-        modelAndView.addObject("certificateLevels",enumService.getEnumList(CertificationLevel.values()));
         modelAndView.addObject("processCertificateList",processCertificateService.findAll());
         return modelAndView;
     }
@@ -51,7 +49,6 @@ public class ProcessCertificationController {
         ModelAndView modelAndView = new ModelAndView("processCertificate");
         modelAndView.addObject("certificate",processCertificateService.getNewObject(id));
         modelAndView.addObject("certificateTypes",enumService.getEnumList(CertificationType.values()));
-        modelAndView.addObject("certificateLevels",enumService.getEnumList(CertificationLevel.values()));
         modelAndView.addObject("processCertificateList",processCertificateService.findAll());
         return modelAndView;
     }

@@ -13,21 +13,12 @@ public class StudentDto implements Serializable {
     private Long id;
     @NotNull(message = "Name cannot be null")
     @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")
-    private String firstName;
-    private String middleName;
-    @NotNull(message = "Name cannot be null")
-    @Size(min = 2, max = 50, message = "Name must contain at-least 2 and at-most 50 characters")
-    private String lastName;
-    private String email;
+    private String name;
     private String permanentAddress;
-    private String recievingAddress;
     @Size(min = 7, max = 20, message = "Phone Number should be at-least 7 digits and at-most 20 digits long")
     private String phoneNumber;
-    private String altPhoneNumber;
     private MultipartFile image;
     private String country;
-    private String state;
-    @NotNull(message = "City cannot be null")
     private String city;
     private String zipCode;
     private String dob;
@@ -35,45 +26,14 @@ public class StudentDto implements Serializable {
     private String emergencyContactNum;
     private String emergencyContactName;
     private String gender;
+    private String recievingAddress;
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPermanentAddress() {
@@ -84,14 +44,6 @@ public class StudentDto implements Serializable {
         this.permanentAddress = permanentAddress;
     }
 
-    public String getRecievingAddress() {
-        return recievingAddress;
-    }
-
-    public void setRecievingAddress(String recievingAddress) {
-        this.recievingAddress = recievingAddress;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -100,36 +52,12 @@ public class StudentDto implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAltPhoneNumber() {
-        return altPhoneNumber;
-    }
-
-    public void setAltPhoneNumber(String altPhoneNumber) {
-        this.altPhoneNumber = altPhoneNumber;
-    }
-
-    public MultipartFile getImage() {
-        return image;
-    }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
-
     public String getCountry() {
         return country;
     }
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public String getCity() {
@@ -178,5 +106,30 @@ public class StudentDto implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getRecievingAddress() {
+        return recievingAddress;
+    }
+
+    public void setRecievingAddress(String recievingAddress) {
+        this.recievingAddress = recievingAddress;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 }

@@ -12,6 +12,4 @@ public interface ProcessCertificateRepository extends JpaRepository<ProcessCerti
     List<ProcessCertification> findAllByIsDeletedFalse();
 
     ProcessCertification findByIdAndIsDeletedFalse(Long id);
-
-    ProcessCertification findByIsDeletedFalseAndBookCourse_Id(Long bookingId);
 }

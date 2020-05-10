@@ -1,6 +1,5 @@
 package com.demo.dive.cube.dto;
 
-import com.demo.dive.cube.enums.CertificationLevel;
 import com.demo.dive.cube.enums.CertificationType;
 import com.demo.dive.cube.model.Student;
 
@@ -16,8 +15,6 @@ public class ProcessCertificationDto {
 
     private CertificationType certificationType;
 
-    private CertificationLevel certificationLevel;
-
     private String studentName;
 
     private String courseName;
@@ -31,13 +28,12 @@ public class ProcessCertificationDto {
         this.courseName = courseName;
     }
 
-    public ProcessCertificationDto(String bookingId, Long id, String dateOfCertificate, String dateOfProcessing, CertificationType certificationType,CertificationLevel certificationLevel,String studentName, String courseName) {
+    public ProcessCertificationDto(String bookingId, Long id, String dateOfCertificate, String dateOfProcessing, CertificationType certificationType, String studentName, String courseName) {
         this.bookingId = bookingId;
         this.id = id;
         this.dateOfCertificate = dateOfCertificate;
         this.dateOfProcessing = dateOfProcessing;
         this.certificationType = certificationType;
-        this.certificationLevel = certificationLevel;
         this.studentName = studentName;
         this.courseName = courseName;
     }
@@ -96,13 +92,5 @@ public class ProcessCertificationDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public CertificationLevel getCertificationLevel() {
-        return certificationLevel;
-    }
-
-    public void setCertificationLevel(CertificationLevel certificationLevel) {
-        this.certificationLevel = certificationLevel;
     }
 }
