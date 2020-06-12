@@ -25,7 +25,9 @@ public class ProcessCertificateService {
     public ProcessCertificationDto getNewObject(Long id){
         ProcessCertification processCertification=findOne(id);
 
-        return new ProcessCertificationDto(processCertification.getBookCourse().getBookingId(),processCertification.getId(),processCertification.getDateOfCertificate(),processCertification.getDateOfProcessing(),processCertification.getCertificationType(),processCertification.getCertificationLevel(),processCertification.getBookCourse().getStudent().getFirstName()+processCertification.getBookCourse().getStudent().getMiddleName()+processCertification.getBookCourse().getStudent().getLastName(),processCertification.getBookCourse().getCourse().getCourseName());
+        return new ProcessCertificationDto(processCertification.getBookCourse().getBookingId(),processCertification.getId(),processCertification.getDateOfCertificate(),processCertification.getDateOfProcessing(),processCertification.getCertificationType(),
+                processCertification.getCertificationLevel(),processCertification.getBookCourse().getStudent().getFirstName()+processCertification.getBookCourse().getStudent().getMiddleName()+processCertification.getBookCourse().getStudent().getLastName()
+                ,processCertification.getBookCourse().getCourse().getCourseName(),processCertification.getTrainingAgency());
     }
 
     public List<ProcessCertification> findAll(){
@@ -59,8 +61,8 @@ public class ProcessCertificateService {
     public void deleteCertificateProcess(Long id){
         ProcessCertification processCertification=findOne(id);
         if(processCertification!=null){
-            processCertification.setIsDeleted(true);
-            processCertificateRepository.save(processCertification);
+//            processCertification.setIsDeleted(true);
+            processCertificateRepository.delete(processCertification);
         }
     }
 }

@@ -5,7 +5,11 @@ public enum CertificationLevel {
     PICK_OF_WATER_DIVER("Pick Ow water diver"),
     JR_OPEN_WATER_DIVER("Jr.Open water Diver"),
     RESCUE_DIVER("Rescue Diver"),
-    DIVE_MASTER("Dive Master");
+    DIVE_MASTER("Dive Master"),
+    STUDENT("Student"),
+    DSD("DSD"),
+    SNORKELER("Snorkeler"),
+    PASSENGER("Passenger");
 
     private String title;
 

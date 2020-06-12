@@ -22,6 +22,8 @@ public class ProcessCertification extends BaseEntity {
 
     private CertificationLevel certificationLevel;
 
+    private String trainingAgency;
+
     public BookCourse getBookCourse() {
         return bookCourse;
     }
@@ -60,5 +62,13 @@ public class ProcessCertification extends BaseEntity {
 
     public void setCertificationLevel(Integer i) {
         this.certificationLevel = CertificationLevel.values()[i];
+    }
+
+    public String getTrainingAgency() {
+        return trainingAgency;
+    }
+
+    public void setTrainingAgency(String trainingAgency) {
+        this.trainingAgency = trainingAgency;
     }
 }

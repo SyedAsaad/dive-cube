@@ -33,7 +33,7 @@ public class OrderService {
                 Order orderExist = findOne(order.getId());
                 if(orderExist != null){
                     orderExist = order;
-                    order.setAmount(totalAmount);
+                    orderExist.setAmount(totalAmount);
                     orderRepository.save(orderExist);
                 }
             }

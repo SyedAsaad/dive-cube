@@ -22,6 +22,8 @@ public class ProcessCertificationDto {
 
     private String courseName;
 
+    private String trainingAgency;
+
     public ProcessCertificationDto() {
     }
 
@@ -31,7 +33,8 @@ public class ProcessCertificationDto {
         this.courseName = courseName;
     }
 
-    public ProcessCertificationDto(String bookingId, Long id, String dateOfCertificate, String dateOfProcessing, CertificationType certificationType,CertificationLevel certificationLevel,String studentName, String courseName) {
+    public ProcessCertificationDto(String bookingId, Long id, String dateOfCertificate, String dateOfProcessing, CertificationType certificationType,
+                                   CertificationLevel certificationLevel,String studentName, String courseName,String trainingAgency) {
         this.bookingId = bookingId;
         this.id = id;
         this.dateOfCertificate = dateOfCertificate;
@@ -40,6 +43,7 @@ public class ProcessCertificationDto {
         this.certificationLevel = certificationLevel;
         this.studentName = studentName;
         this.courseName = courseName;
+        this.trainingAgency = trainingAgency;
     }
 
     public String getDateOfCertificate() {
@@ -104,5 +108,13 @@ public class ProcessCertificationDto {
 
     public void setCertificationLevel(CertificationLevel certificationLevel) {
         this.certificationLevel = certificationLevel;
+    }
+
+    public String getTrainingAgency() {
+        return trainingAgency;
+    }
+
+    public void setTrainingAgency(String trainingAgency) {
+        this.trainingAgency = trainingAgency;
     }
 }

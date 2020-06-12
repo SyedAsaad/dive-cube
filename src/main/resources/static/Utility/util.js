@@ -80,3 +80,15 @@ reader.onload = function(r_event) {
     // $('#showImage').show()
     // document.getElementById('fileSpn').setAttribute('href', r_event.target.result);
 }
+
+
+
+
+/**Delete dynamic row by id**/
+function deleteRow(event){
+    var idx=event.currentTarget.getAttribute('id');
+    var rowGroup = document.getElementById("row["+idx+"]");
+    // var list = document.getElementById("partsListContainer");
+    rowGroup.remove();
+
+}

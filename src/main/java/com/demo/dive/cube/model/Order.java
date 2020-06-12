@@ -30,6 +30,9 @@ public class Order extends BaseEntity {
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
+    @Column(name = "tracking_num")
+    private String trackingNum;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true,mappedBy = "order")
     @Column(name="order_detail")
     private List<OrderDetail> orderDetailList = new ArrayList<>();
@@ -95,6 +98,14 @@ public class Order extends BaseEntity {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public String getTrackingNum() {
+        return trackingNum;
+    }
+
+    public void setTrackingNum(String trackingNum) {
+        this.trackingNum = trackingNum;
     }
 }
 
