@@ -69,7 +69,7 @@ public class BoatLogService {
         for(BoatUserLog boatUserLog : boatLog.getBoatUserLogs()) {
             BoatLogUserDto boatLogUserDto = new BoatLogUserDto();
             BeanUtils.copyProperties(boatUserLog,boatLogUserDto);
-            boatLogUserDto.setCertificationLevel(CertificationLevel.DIVE_MASTER);
+            boatLogUserDto.setCertificationLevel(boatUserLog.getCertificationLevel());
 //            boatLogUserDto.setLastDiveDate(boatUserLog.get);
             boatLogDto.addBoatUserLogs(boatLogUserDto);
             Collections.sort(boatLogDto.getBoatLogUserDtoList(), Comparator.comparingLong(BoatLogUserDto::getId));

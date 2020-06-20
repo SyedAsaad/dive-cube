@@ -134,11 +134,9 @@
 
                                     </div>
 
-                                    <div class="form-group col-md-1">
+                                    <div class="form-group col-sm-1">
                                         <label class=" form-control-label">Action</label>
-                                        <button class="btn-danger" th:id="__${itemStat.index}__" th:onclick="'javascript:deleteRow(event);'"
-                                                type="button">
-                                            Delete
+                                        <button class="btn-danger" th:id="__${itemStat.index}__" th:onclick="'javascript:deleteRow(event);'"><i class="fa fa-trash"></i>
 <!--                                            <i class="nav-icon fa fa-plus-circle"></i>-->
                                         </button>
                                     </div>
@@ -241,22 +239,20 @@
             '</div> <div class="form-group col-md-1">' +
             '<label class=" form-control-label">Gide</label>' +
             '<input type="text" class="form-control" id="gide" name="boatLogUserDtoList[' + index + '].gide" > </div>'+
-                '<div class="form-group col-md-2">' +
-            '                                <label class=" form-control-label">Check in Site1</label>\n' +
-            '                                <input type="text" class="form-control"  id="checkInSite1" name="boatLogUserDtoList[' + index + '].checkInSite1" >\n' +
-            '                            </div>\n' +
-            '                            <div class="form-group col-md-2">\n' +
-            '                                <label class=" form-control-label">Check in Site2</label>\n' +
-            '                                <input type="text" class="form-control" id="checkInSite2" name="boatLogUserDtoList[' + index + '].checkInSite2" >\n' +
-            '                            </div>\n' +
-            '                            <div class="form-group col-md-1">\n' +
-            '                                <label class=" form-control-label"># Divers</label>\n' +
-            '                                <input type="text" class="form-control" id="numDivers" name="boatLogUserDtoList[' + index + '].numDivers" >\n' +
-            '                            </div>'+
+            '<div class="form-group col-md-2">' +
+            '<label class=" form-control-label">Check in Site1</label>'+
+            '<input type="text" class="form-control"  id="checkInSite1" name="boatLogUserDtoList[' + index + '].checkInSite1" ></div>'+
+            '<div class="form-group col-md-2">'+
+            '<label class=" form-control-label">Check in Site2</label>'+
+            '<input type="text" class="form-control" id="checkInSite2" name="boatLogUserDtoList[' + index + '].checkInSite2" >' +
+            '</div>'+
+            '<div class="form-group col-md-1">'+
+            '<label class=" form-control-label"># Divers</label>' +
+            '<input type="text" class="form-control" id="numDivers" name="boatLogUserDtoList[' + index + '].numDivers" ></div>'+
             '<div class="form-group col-md-1">\n' +
             '<label class=" form-control-label">Action</label>\n' +
-            '<button class="btn-danger"  id="' + index + '" onclick="deleteRow(event);" type="button">Delete</button>' +
-            '                                    </div>'+
+            '<button class="btn-danger"  id="' + index + '" onclick="deleteRow(event);"><i class="fa fa-trash"></i></button>' +
+            '</div>'+
             '</div></div>'
         ).appendTo('#partsListContainer');
         index++;
