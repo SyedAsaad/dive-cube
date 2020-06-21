@@ -10,4 +10,5 @@ import java.util.List;
 public interface SupplierRepository extends JpaRepository<Supplier,Long> {
     public Supplier findOneByIdAndIsDeletedFalse(Long id);
     public List<Supplier> findAllByIsDeletedFalse();
+    public List<Supplier> findAllByCompanyAndIsDeletedFalse(String company);
 }

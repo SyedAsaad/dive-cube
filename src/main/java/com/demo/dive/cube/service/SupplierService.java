@@ -1,16 +1,23 @@
 package com.demo.dive.cube.service;
 
+import com.demo.dive.cube.config.ReportConstants;
 import com.demo.dive.cube.model.Supplier;
 import com.demo.dive.cube.repository.SupplierRepository;
+import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
 public class SupplierService {
     @Autowired
     private SupplierRepository supplierRepository;
+
+    @Autowired
+    private ReportService reportService;
 
     public void save(Supplier supplier){
         if(supplier != null){
@@ -41,5 +48,18 @@ public class SupplierService {
 
     public Supplier findOne(Long id){
         return supplierRepository.findOneByIdAndIsDeletedFalse(id);
+    }
+
+    public void exportReport(Supplier supplier, HttpServletRequest request, HttpServletResponse response){
+        if(supplier != null){
+            if(supplier.getCompany() != null && !supplier.getCompany().isEmpty()){
+                List<Supplier> suppliers = supplierRepository.findAllByCompanyAndIsDeletedFalse(supplier.getCompany());
+                reportService.export(suppliers, ReportConstants.SUPPLIER_REPORT,request,response,ReportConstants.SUPPLIER_REPORT);
+            }
+            else{
+                List<Supplier> suppliers = findAll();
+                reportService.export(suppliers, ReportConstants.SUPPLIER_REPORT,request,response,ReportConstants.SUPPLIER_REPORT);
+            }
+        }
     }
 }
