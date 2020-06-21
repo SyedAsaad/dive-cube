@@ -93,15 +93,15 @@ public class OrderService {
             parameters.put(parameterNo,request.getParameter("company").toString());
             parameterNo++;
         }
-        if(request.getParameter("from") != null && !request.getParameter("from").toString().isEmpty() && request.getParameter("to") != null && !request.getParameter("to").toString().isEmpty()){
-            criteria += "AND STR_TO_DATE(b.order_date,'%d-%m-%Y') >= ?";
-            parameters.put(parameterNo,"STR_TO_DATE("+request.getParameter("from").toString()+",'%d-%m-%Y')");
+        if(request.getParameter("fromDate") != null && !request.getParameter("fromDate").toString().isEmpty() && request.getParameter("toDate") != null && !request.getParameter("toDate").toString().isEmpty()){
+            criteria += " AND STR_TO_DATE(b.order_date,'%d-%m-%Y') >= STR_TO_DATE( ? ,'%d-%m-%Y')";
+            parameters.put(parameterNo,request.getParameter("fromDate"));
             parameterNo++;
-            criteria += "AND b.order_date <= ?";
-            parameters.put(parameterNo,"STR_TO_DATE("+request.getParameter("to").toString()+",'%d-%m-%Y')");
+            criteria += " AND STR_TO_DATE(b.order_date,'%d-%m-%Y') <= STR_TO_DATE( ? ,'%d-%m-%Y')";
+            parameters.put(parameterNo,request.getParameter("toDate"));
             parameterNo++;
         }
-        System.out.println(Queries.orderDetailQuery+criteria);
+
         Query query = em.createNativeQuery(Queries.orderDetailQuery+criteria);
         List<Object> results = UtilService.toParameterized(query,parameters,parameterNo).getResultList();
 

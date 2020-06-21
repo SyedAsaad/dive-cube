@@ -1,5 +1,7 @@
 package com.demo.dive.cube.jrbeans;
 
+import java.math.BigInteger;
+
 public class DetailOrderFormJrBean {
     private String company;
     private String name;
@@ -10,6 +12,15 @@ public class DetailOrderFormJrBean {
     private double amount;
     private int quantity;
     private double total;
+    private String totalOrder;
+
+    public String getTotalOrder() {
+        return totalOrder;
+    }
+
+    public void setTotalOrder(String totalOrder) {
+        this.totalOrder = totalOrder;
+    }
 
     public String getCompany() {
         return company;

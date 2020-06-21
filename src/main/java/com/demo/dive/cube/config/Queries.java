@@ -12,4 +12,12 @@ public class Queries {
             "and b.is_deleted = 0 \n" +
             "and c.is_deleted = 0 \n" +
             "and d.is_deleted = 0 \n";
+
+    public static String orderSummary = "Select a.company,count(*) totalOrders,sum(b.amount) totalAmount from supplier a\n" +
+            "inner join supplier_order b \n" +
+            "on a.id = b.supplier_id \n" +
+            "where a.is_deleted = 0 \n" +
+            "and b.is_deleted = 0 \n" +
+            "criteria \n" +
+            "group by a.company ";
 }

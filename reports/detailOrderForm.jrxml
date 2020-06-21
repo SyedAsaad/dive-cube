@@ -22,7 +22,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="22" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Detail Order Report]]></text>
+				<text><![CDATA[Order Placed]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="724" y="98" width="100" height="20" uuid="e8e89856-d900-4767-a6f9-abee51414937"/>
