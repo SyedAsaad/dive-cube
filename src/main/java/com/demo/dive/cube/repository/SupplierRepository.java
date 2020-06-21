@@ -1,7 +1,9 @@
 package com.demo.dive.cube.repository;
 
 import com.demo.dive.cube.model.Supplier;
+import com.demo.dive.cube.service.OrderService;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

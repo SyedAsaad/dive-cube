@@ -28,7 +28,7 @@ public class ReportService {
     @Value("${export.path}")
     private String exportPath;
 
-	public void getPDF(String filename, HttpServletRequest request, HttpServletResponse response) {
+	private void getPDF(String filename, HttpServletRequest request, HttpServletResponse response) {
 
 		File pdfFile = new File(filename);
 		if (pdfFile.exists())
@@ -47,9 +47,9 @@ public class ReportService {
         }
 	}
 
-    public void export(List<?> data, String reportName,HttpServletRequest request,HttpServletResponse response,String reportPrefix) {
+    public void export(List<?> data, String reportName,HttpServletRequest request,HttpServletResponse response) {
 		try {
-			String exportDest = exportPath+reportPrefix+"-"+System.currentTimeMillis()+".pdf";
+			String exportDest = exportPath+reportName+"-"+System.currentTimeMillis()+".pdf";
 			File file = ResourceUtils.getFile(reportsPath+reportName+".jrxml");
 			JasperReport jr = JasperCompileManager.compileReport(file.getAbsolutePath());
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(data);

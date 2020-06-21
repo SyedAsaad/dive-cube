@@ -1,5 +1,7 @@
 package com.demo.dive.cube.model;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="supplier")
@@ -21,6 +23,17 @@ public class Supplier extends BaseEntity{
     private String company;
 
     private String accountNum;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true,mappedBy = "supplier")
+    private List<Order> orderList = new ArrayList<>();
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
 
     public String getName() {
         return name;

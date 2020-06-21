@@ -54,11 +54,11 @@ public class SupplierService {
         if(supplier != null){
             if(supplier.getCompany() != null && !supplier.getCompany().isEmpty()){
                 List<Supplier> suppliers = supplierRepository.findAllByCompanyAndIsDeletedFalse(supplier.getCompany());
-                reportService.export(suppliers, ReportConstants.SUPPLIER_REPORT,request,response,ReportConstants.SUPPLIER_REPORT);
+                reportService.export(suppliers, ReportConstants.SUPPLIER_REPORT,request,response);
             }
             else{
                 List<Supplier> suppliers = findAll();
-                reportService.export(suppliers, ReportConstants.SUPPLIER_REPORT,request,response,ReportConstants.SUPPLIER_REPORT);
+                reportService.export(suppliers, ReportConstants.SUPPLIER_REPORT,request,response);
             }
         }
     }
