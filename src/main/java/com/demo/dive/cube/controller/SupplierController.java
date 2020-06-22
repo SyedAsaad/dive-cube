@@ -1,6 +1,7 @@
 package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
+import com.demo.dive.cube.model.Report;
 import com.demo.dive.cube.model.Supplier;
 import com.demo.dive.cube.service.CommonService;
 import com.demo.dive.cube.service.SupplierService;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("supplier")
@@ -49,6 +53,18 @@ public class SupplierController {
         modelAndView.addObject("supplier",supplierService.findOne(id));
         modelAndView.addObject("suppliers",supplierService.findAll());
         return modelAndView;
+    }
+
+    @GetMapping(value = URLConstants.REPORT)
+    public ModelAndView getReportView(){
+        ModelAndView modelAndView = new ModelAndView("supplierContactForm");
+        modelAndView.addObject("supplier",new Supplier());
+        return modelAndView;
+    }
+
+    @PostMapping(value = URLConstants.EXPORT_REPORT)
+    public void reportExport(@ModelAttribute Supplier supplier, HttpServletRequest request, HttpServletResponse response){
+        supplierService.exportReport(supplier,request,response);
     }
 }
 

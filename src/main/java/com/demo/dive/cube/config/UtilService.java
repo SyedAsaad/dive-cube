@@ -4,12 +4,12 @@ import com.demo.dive.cube.config.exception.BadRequestException;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Query;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class UtilService {
 
@@ -75,5 +75,16 @@ public class UtilService {
         catch(Exception e){
 //            logger.error("Error in deleting image. " + e.getMessage());
         }
+    }
+
+    public static Query toParameterized(Query query, Map<Integer,Object> parameters, int parameterNo){
+        for(int i=1; i<parameterNo; i++){
+            query.setParameter(i,parameters.get(i));
+        }
+        return query;
+    }
+
+    public static String isValid(Object str){
+        return str == null ? "" : str.toString();
     }
 }
