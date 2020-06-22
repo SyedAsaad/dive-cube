@@ -2,7 +2,6 @@ package com.demo.dive.cube.controller;
 
 import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.model.BookDive;
-import com.demo.dive.cube.model.DiveType;
 import com.demo.dive.cube.service.BookDiveService;
 import com.demo.dive.cube.service.DiveTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
