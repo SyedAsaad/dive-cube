@@ -1,17 +1,22 @@
 package com.demo.dive.cube.service;
 
+import com.demo.dive.cube.config.ReportConstants;
 import com.demo.dive.cube.dto.EmployeeDto;
 import com.demo.dive.cube.dto.UserDto;
 import com.demo.dive.cube.enums.EmployementType;
 import com.demo.dive.cube.enums.UserType;
+import com.demo.dive.cube.jrbeans.EmployeeJrBean;
 import com.demo.dive.cube.model.Employee;
 import com.demo.dive.cube.repository.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -20,6 +25,12 @@ public class EmployeeService {
 
     @Autowired
     private UserService userService;
+
+    @PersistenceContext
+    public EntityManager entityManager;
+
+    @Autowired
+    private ReportService reportService;
 
     public void save(EmployeeDto employeeDto){
 
@@ -79,5 +90,30 @@ public class EmployeeService {
         employeeDto.setShift(userService.findUserByUsername(employee.getEmail()).getShift());
         BeanUtils.copyProperties(employee,employeeDto);
         return employeeDto;
+    }
+
+    public void employeeReport(HttpServletRequest request, HttpServletResponse response) {
+        Map<Integer, Object> parameters = new LinkedHashMap<>();
+        String empName = request.getParameter("name");
+        List<Employee> data = new ArrayList<>();
+        if(empName!=null && !empName.isEmpty())
+            data =  employeeRepository.findAllByNameAndIsDeletedFalseOrderByStartDate(empName);
+        else
+            data = employeeRepository.findAllByIsDeletedFalseOrderByStartDate();
+
+
+        reportService.export(getJrBean(data), ReportConstants.EMPLOYEE_REPORT, request, response);
+
+    }
+
+    private List<EmployeeJrBean> getJrBean(List<Employee> employeeList){
+        List<EmployeeJrBean> employeeJrBeans = new ArrayList<>();
+        for(Employee employee: employeeList){
+            EmployeeJrBean employeeJrBean = new EmployeeJrBean();
+            BeanUtils.copyProperties(employee,employeeJrBean);
+            employeeJrBean.setEmployementType(employee.getEmployementType().getTitle());
+            employeeJrBeans.add(employeeJrBean);
+        }
+        return employeeJrBeans;
     }
 }

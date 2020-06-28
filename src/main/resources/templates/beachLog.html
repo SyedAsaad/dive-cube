@@ -33,22 +33,22 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="form-control-label">Date : </label>
+                                <label class="form-control-label">Date <span style="color: red;"><b>*</b></span> </label>
 
                                 <input type="text"
                                        class="form-control" name="logDate" id="logDate"
-                                       th:field="*{logDate}" >
+                                       th:field="*{logDate}" required>
 
                             </div>
                             <div class="form-group col-md-6">
-                                <label class=" form-control-label">Beach Crew :</label>
+                                <label class=" form-control-label">Beach Crew </label>
                                 <input type="text"
                                        class="form-control" name="crew" id="crew" th:field="*{crew}" >
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class=" form-control-label">Instructor :</label>
+                                <label class=" form-control-label">Instructor <span style="color: red;"><b>*</b></span></label>
                                 <select class="standardSelect form-control" id="instructor" name="instructor" th:field="*{instructor}" required>
                                     <option value="" selected>Select Instructor</option>
                                     <option th:each="item : ${instructors}"
@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class=" form-control-label">Site :</label>
+                                <label class=" form-control-label">Site </label>
                                 <input type="text"
                                        class="form-control" name="site" id="site" th:field="*{site}" >
 
@@ -68,13 +68,13 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class=" form-control-label">Activities :</label>
+                                <label class=" form-control-label">Activities </label>
                                 <input type="text"
                                        class="form-control" name="activities" id="activities" th:field="*{activities}" >
 
                             </div>
                             <div class="form-group col-md-6">
-                                <label class=" form-control-label">Dive :</label>
+                                <label class=" form-control-label">Dive <span style="color: red;"><b>*</b></span></label>
                                 <select class="standardSelect form-control" id="diveName" name="diveName" th:field="*{diveName}" required>
                                     <option value="" selected>Select Dive</option>
                                     <option th:each="item : ${dives}"
@@ -150,7 +150,7 @@
                            class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th>Creaw</th>
+                            <th>Crew</th>
                             <th>Beach Instructor</th>
                             <th>Beach Activities</th>
                             <th>Dive Name</th>

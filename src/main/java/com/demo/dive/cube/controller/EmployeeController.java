@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("employee")
 public class EmployeeController {
@@ -56,5 +59,17 @@ public class EmployeeController {
         modelAndView.addObject("shiftList",shiftService.findAll());
         modelAndView.addObject("employmentTypes",employeeService.getAllEmploymentType());
         return modelAndView;
+    }
+
+    @GetMapping(value = URLConstants.REPORT)
+    public ModelAndView getEmployeeReportView(){
+        ModelAndView modelAndView = new ModelAndView("employeeReport");
+        return modelAndView;
+    }
+
+    @PostMapping(value = URLConstants.EXPORT_REPORT)
+    public void reportEmployeeExport(HttpServletRequest request, HttpServletResponse response){
+
+        employeeService.employeeReport(request,response);
     }
 }

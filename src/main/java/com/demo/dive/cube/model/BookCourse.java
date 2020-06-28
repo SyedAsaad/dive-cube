@@ -19,6 +19,9 @@ public class BookCourse extends BaseEntity {
 
     private boolean isCompleted;
 
+    @Column(name = "course_completion_date")
+    private String courseCompletionDate;
+
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
     private ClassRoom classRoom;
 
@@ -29,7 +32,6 @@ public class BookCourse extends BaseEntity {
     private String courseDate;
     @NotNull
     private String courseTime;
-
 
     private boolean isTransactionExist;
 
@@ -114,5 +116,13 @@ public class BookCourse extends BaseEntity {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getCourseCompletionDate() {
+        return courseCompletionDate;
+    }
+
+    public void setCourseCompletionDate(String courseCompletionDate) {
+        this.courseCompletionDate = courseCompletionDate;
     }
 }

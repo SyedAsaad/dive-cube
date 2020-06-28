@@ -43,7 +43,7 @@
 
 
                             <div class="form-group col-md-6">
-                                <label class="form-control-label">Select File :</label>
+                                <label class="form-control-label">Select File </label>
 
                                 <input type="file" id="fileUploadForm" class="btn btn-primary btn-sm btn-file validateFile changeFile" accept="application/pdf"
                                        name="claimFile" th:required="id==null" th:field="*{claimFile}">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class=" form-control-label">Course :</label>
+                                <label class=" form-control-label">Course <span style="color: red;"><b>*</b></span></label>
                                 <select class="standardSelect form-control" id="course" name="course" th:field="*{course}" required>
                                     <option value="" selected>Select Courses</option>
                                     <option th:each="item : ${courses}"
@@ -73,7 +73,7 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class=" form-control-label">Student :</label>
+                                <label class=" form-control-label">Student <span style="color: red;"><b>*</b></span></label>
                                 <select class="form-control" id="sudent" name="student" th:field="*{student}" required>
                                     <option value="" selected>Select Student</option>
                                     <option th:each="student : ${students}"
@@ -85,7 +85,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class=" form-control-label">Class (Optional):</label>
+                                <label class=" form-control-label">Class (Optional)</label>
                                 <select class="standardSelect form-control" id="classRoom" name="classRoom" th:field="*{classRoom}">
                                     <option value="" selected>Select Class Room</option>
                                     <option th:each="item : ${classRooms}"
@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label class=" form-control-label">Instructor (Optional):</label>
+                                <label class=" form-control-label">Instructor (Optional)</label>
                                 <select class="standardSelect form-control" id="instructor" name="instructor" th:field="*{instructor}">
                                     <option value="" selected>Select Instructor</option>
                                     <option th:each="item : ${instructors}"
@@ -113,17 +113,17 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label class="form-control-label">Course Date : </label>
+                                <label class="form-control-label">Course Date <span style="color: red;"><b>*</b></span></label>
 
                                 <input type="text"
                                        class="form-control" name="courseDate" id="courseDate"
-                                       th:field="*{courseDate}" readonly>
+                                       th:field="*{courseDate}" readonly required>
 
                             </div>
 
 
                             <div class="form-group col-md-6">
-                                <label class="form-control-label">Course Time : </label>
+                                <label class="form-control-label">Course Time <span style="color: red;"><b>*</b></span> </label>
 
                                 <input type="time"
                                        class="form-control" name="courseDate" id="courseDate"
@@ -196,7 +196,7 @@
 
 
 <script>
-    $('#courseDate').datepicker('setDate', 'today');
+    $('#courseDate').datepicker();
     $('.input-group.date').datepicker({
         autoclose: true,
         todayHighlight: true

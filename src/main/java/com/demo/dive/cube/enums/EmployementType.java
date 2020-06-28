@@ -13,4 +13,7 @@ public enum EmployementType {
 
     private String title;
 
+    public String getTitle() {
+        return title;
+    }
 }

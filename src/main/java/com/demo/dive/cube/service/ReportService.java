@@ -1,10 +1,8 @@
 package com.demo.dive.cube.service;
 
-import com.demo.dive.cube.model.Report;
-import com.demo.dive.cube.model.Supplier;
+import com.demo.dive.cube.config.UtilService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -15,7 +13,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +46,7 @@ public class ReportService {
 
     public void export(List<?> data, String reportName,HttpServletRequest request,HttpServletResponse response) {
 		try {
+			UtilService.createFolder(exportPath);
 			String exportDest = exportPath+reportName+"-"+System.currentTimeMillis()+".pdf";
 			File file = ResourceUtils.getFile(reportsPath+reportName+".jrxml");
 			JasperReport jr = JasperCompileManager.compileReport(file.getAbsolutePath());

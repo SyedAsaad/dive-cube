@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -161,6 +163,8 @@ public class BookCourseService {
     public void updateCourseStatus(Long id) {
         BookCourse bookCourse = findOne(id);
         bookCourse.setIsCompleted(Boolean.TRUE);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+        bookCourse.setCourseCompletionDate(formatter.format(new Date()));
         bookCourseRepository.save(bookCourse);
     }
 

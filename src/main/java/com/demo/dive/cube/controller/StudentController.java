@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("student")
 public class StudentController {
@@ -55,5 +58,29 @@ public class StudentController {
         modelAndView.addObject("studentList",studentService.findAllStudents());
         modelAndView.addObject("imageName","/studentImage/"+ studentService.getImageName(id));
         return modelAndView;
+    }
+
+    @GetMapping(value = "/contact"+URLConstants.REPORT)
+    public ModelAndView getContactReportView(){
+        ModelAndView modelAndView = new ModelAndView("studentContactReport");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/old"+URLConstants.REPORT)
+    public ModelAndView getOldStudentReportView(){
+        ModelAndView modelAndView = new ModelAndView("oldStudentReport");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/contact"+ URLConstants.EXPORT_REPORT)
+    public void reportStudentContactExport(HttpServletRequest request, HttpServletResponse response){
+
+        studentService.studentContact(request,response);
+    }
+
+    @PostMapping(value = "/old"+ URLConstants.EXPORT_REPORT)
+    public void reportOldStudentExport(HttpServletRequest request, HttpServletResponse response){
+
+        studentService.oldStudent(request,response);
     }
 }

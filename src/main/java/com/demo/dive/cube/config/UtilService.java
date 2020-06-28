@@ -16,6 +16,15 @@ public class UtilService {
 
 
 
+    public static Boolean isValidFile(MultipartFile file, Long minSize, Long maxSize, List<String> extension){
+
+        if(file.getContentType() != null && file.getSize() > minSize && file.getSize() <= maxSize){
+            String ext = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
+            if(extension.stream().filter(fileExt -> fileExt.equalsIgnoreCase(ext)).findAny().isPresent()) return true;
+        }
+        return false;
+    }
+
     public static Boolean uploadFile(MultipartFile fileData, String dirPath, String fileName) throws BadRequestException {
         try{
 //            logger.info("Utility.uploadFile: Uploading Image...");
@@ -36,18 +45,6 @@ public class UtilService {
 //            logger.error("Error in uploading image. " + e.getMessage());
             return false;
         }
-    }
-
-    public static Boolean isValidFile(MultipartFile file, Long minSize, Long maxSize, List<String> extension){
-
-//        logger.info("Utility.isValidFile: Started");
-
-        if(file.getContentType() != null && file.getSize() > minSize && file.getSize() <= maxSize){
-            String ext = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
-            if(extension.stream().filter(fileExt -> fileExt.equalsIgnoreCase(ext)).findAny().isPresent()) return true;
-        }
-//        logger.info("Utility.isValidFile: Invalid File");
-        return false;
     }
 
     public static byte[] fetchImageFromDirectory(String filename, String dirPath) {
@@ -86,5 +83,11 @@ public class UtilService {
 
     public static String isValid(Object str){
         return str == null ? "" : str.toString();
+    }
+
+    public static void createFolder(String dirPath){
+        File file = new File(dirPath);
+        if(!file.exists())
+            file.mkdir();
     }
 }
