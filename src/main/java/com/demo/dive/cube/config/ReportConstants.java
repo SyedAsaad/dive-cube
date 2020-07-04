@@ -6,6 +6,5 @@ public class ReportConstants {
     public static final String ORDER_SUMMARY_REPORT = "orderSummary";
     public static final String STUDENT_CONTACT_REPORT = "studentContact";
     public static final String EMPLOYEE_REPORT = "employeeReport";
-
-
+    public static final String SALES_REPORT = "sales";
 }
