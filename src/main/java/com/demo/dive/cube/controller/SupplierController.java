@@ -66,5 +66,16 @@ public class SupplierController {
     public void reportExport(@ModelAttribute Supplier supplier, HttpServletRequest request, HttpServletResponse response){
         supplierService.exportReport(supplier,request,response);
     }
+
+    @GetMapping(value = "/sales"+URLConstants.REPORT)
+    public ModelAndView getSaleReportView(){
+        ModelAndView modelAndView = new ModelAndView("sales");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/sales"+URLConstants.EXPORT_REPORT)
+    public void reportExport( HttpServletRequest request, HttpServletResponse response){
+        supplierService.exportSalesReport(request,response);
+    }
 }
 

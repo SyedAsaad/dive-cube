@@ -9,6 +9,5 @@ public class ReportConstants {
     public static final String CURRENT_STUDENT_REPORT = "currentStudent";
     public static final String COUNT_STUDENT_REPORT = "studentCount";
     public static final String EMPLOYEE_REPORT = "employeeReport";
-
-
+    public static final String SALES_REPORT = "sales";
 }
