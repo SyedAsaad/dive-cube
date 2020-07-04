@@ -30,7 +30,7 @@ public class Queries {
      * Student Queries
      */
 
-    public static String studentDetailQuery = "Select a.first_name,a.middle_name,a.last_name,a.email,a.permanent_address,a.phone_number,a.emergency_contact_no,a.country , a.zip_code ,a.date_of_birth , b.course_name ,c.course_date ,c.course_time from course_student a \n" +
+    public static String studentDetailQuery = "Select a.first_name,a.middle_name,a.last_name,a.email,a.permanent_address,a.phone_number,a.emergency_contact_no,a.country , a.zip_code ,a.date_of_birth , b.course_name ,c.course_date  from course_student a \n" +
             "inner join book_course c \n" +
             "on a.id = c.student_id \n" +
             "inner join course b \n" +
@@ -41,7 +41,7 @@ public class Queries {
             "criteria"+
             "order by a.first_name";
 
-    public static String oldStudentDetailQuery = "Select a.first_name,a.middle_name,a.last_name,a.email,a.permanent_address,a.phone_number,a.emergency_contact_no,a.country , a.zip_code ,a.date_of_birth , b.course_name ,c.course_completion_date,d.date_of_processing from course_student a \n" +
+    public static String oldStudentDetailQuery = "Select a.first_name,a.middle_name,a.last_name,a.email,a.permanent_address,a.phone_number,a.emergency_contact_no,a.country , a.zip_code ,a.date_of_birth , b.course_name,c.course_date ,c.course_completion_date,d.date_of_processing from course_student a \n" +
             "inner join book_course c \n" +
             "on a.id = c.student_id \n" +
             "inner join course b \n" +
@@ -54,4 +54,23 @@ public class Queries {
             "and c.is_completed = 1 \n"+
             "criteria"+
             "order by a.first_name";
+
+    public static String currentStudentQuery = "Select a.first_name,a.middle_name,a.last_name,a.email,a.permanent_address,a.phone_number,a.emergency_contact_no,a.country , a.zip_code ,a.date_of_birth , b.course_name ,c.course_date  from course_student a \n" +
+            "inner join book_course c \n" +
+            "on a.id = c.student_id \n" +
+            "inner join course b \n" +
+            "on b.id = c.course_id \n" +
+            "where a.is_deleted = 0 \n" +
+            "and b.is_deleted = 0 \n" +
+            "and c.is_deleted = 0 \n" +
+            "and c.is_completed = 0 \n"+
+            "criteria"+
+            "order by a.first_name";
+
+
+    public static String studentCountQuery = "select count(a.student_id) , b.course_name from book_course a \n" +
+            "INNER JOIN course b ON b.id = a.course_id \n" +
+            " where a.is_deleted = 0 \n"+
+            " criteria "+
+            "group by a.course_id";
 }

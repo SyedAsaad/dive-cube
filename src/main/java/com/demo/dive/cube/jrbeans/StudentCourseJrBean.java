@@ -16,7 +16,6 @@ public class StudentCourseJrBean {
     private String dob;
     private String courseName;
     private String courseDate;
-    private String courseTime;
     private String courseCompletionDate;
     private String dateOfProcessing;
     private String studentName;
@@ -115,14 +114,6 @@ public class StudentCourseJrBean {
 
     public void setCourseDate(String courseDate) {
         this.courseDate = courseDate;
-    }
-
-    public String getCourseTime() {
-        return courseTime;
-    }
-
-    public void setCourseTime(String courseTime) {
-        this.courseTime = courseTime;
     }
 
     public String getCourseCompletionDate() {

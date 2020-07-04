@@ -1,19 +1,13 @@
 package com.demo.dive.cube.controller;
 
-import com.demo.dive.cube.config.JsonConverter;
 import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.dto.StudentDto;
-import com.demo.dive.cube.model.Student;
 import com.demo.dive.cube.service.CommonService;
 import com.demo.dive.cube.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,27 +54,28 @@ public class StudentController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/contact"+URLConstants.REPORT)
-    public ModelAndView getContactReportView(){
-        ModelAndView modelAndView = new ModelAndView("studentContactReport");
+    @GetMapping(value = URLConstants.REPORT)
+    public ModelAndView getReportView(){
+        ModelAndView modelAndView = new ModelAndView("studentReport");
         return modelAndView;
     }
 
-    @GetMapping(value = "/old"+URLConstants.REPORT)
-    public ModelAndView getOldStudentReportView(){
-        ModelAndView modelAndView = new ModelAndView("oldStudentReport");
+    @PostMapping(value = URLConstants.EXPORT_REPORT)
+    public void reportExport(HttpServletRequest request, HttpServletResponse response){
+        studentService.studentReport(request,response);
+
+    }
+
+    @GetMapping(value = "/count"+ URLConstants.REPORT)
+    public ModelAndView getCountReportView(){
+        ModelAndView modelAndView = new ModelAndView("studentCountReport");
         return modelAndView;
     }
 
-    @PostMapping(value = "/contact"+ URLConstants.EXPORT_REPORT)
-    public void reportStudentContactExport(HttpServletRequest request, HttpServletResponse response){
+    @PostMapping(value = "/count"+ URLConstants.EXPORT_REPORT)
+    public void reportCountExport(HttpServletRequest request, HttpServletResponse response){
+        studentService.studentCountReport(request,response);
 
-        studentService.studentContact(request,response);
     }
 
-    @PostMapping(value = "/old"+ URLConstants.EXPORT_REPORT)
-    public void reportOldStudentExport(HttpServletRequest request, HttpServletResponse response){
-
-        studentService.oldStudent(request,response);
-    }
 }

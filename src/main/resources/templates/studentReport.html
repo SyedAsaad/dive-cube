@@ -1,0 +1,148 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <div th:replace="header :: myheader"></div>
+
+</head>
+<body>
+<aside id="left-panel" class="left-panel">
+    <div th:replace="aside :: myMenu"></div>
+</aside>
+<div id="right-panel" class="right-panel">
+    <header id="header" class="header">
+        <div class="header-menu">
+            <div class="col-sm-7">
+                <a id="menuToggle" class="menutoggle pull-left"><i
+                        class="fa fa fa-tasks"></i></a>
+            </div>
+            <a class="btn-logout pull-right" th:href="@{/logout}">
+                <i class="fa fa-sign-out"></i> Logout
+            </a>
+        </div>
+    </header>
+    <div class="content mt-3">
+        <div class="col-lg-12">
+            <div class="card">
+                <form th:action="@{/student/report/export}" method="post">
+
+                    <div class="card-header">
+                        <small>Student Report </small>
+                    </div>
+                    <div class="card-body card-block">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Report Name</label>
+                                <select class="form-control" id="reportType" name="reportType" required onclick="reportSelected(event)">
+                                    <option value="" selected>Select Certification Level</option>
+                                    <option value="Contact_Report" >Student Contact Report</option>
+                                    <option value="Old_Report" >Old Student Report</option>
+                                    <option value="Current_Report" >Current Student Report</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" name="firstName" placeholder="First Name">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Middle Name</label>
+                                <input type="text" class="form-control" name="middleName" placeholder="Middle Name">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" name="lastName" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Date Of Birth</label>
+                                <input type="text" class="form-control" id="dob" name="dob" placeholder="Date Of Birth">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <br>
+                                <input type="checkbox" value="allStudent" name="allStudent"/>
+                                <label>All Students</label>
+                            </div>
+                        </div>
+                        <div class="form-row dateRange">
+                            <div class="form-group col-md-6">
+                                <label>From</label>
+                                <input type="text" class="form-control" id="from" name="fromDate" placeholder="From date" onchange="chnangeAttribute()">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>To</label>
+                                <input type="text" class="form-control" id="to" name="toDate" placeholder="To date">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm"
+                                id="submit-btn">
+                            <i class="fa fa-dot-circle-o"></i> Search
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm" id="reset">
+                            <i class="fa fa-ban"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
+<script th:src="@{/assets/js/lib/bootstrap-datepicker.js}"></script>
+<script th:src="@{/assets/js/lib/bootstrap-datepicker.de.min.js}"></script>
+<script src="/Utility/util.js"></script>
+<script>
+    $('#dob').datepicker({
+        format : 'dd-mm-yyyy',
+        autoclose : true
+    });
+    $('#from').datepicker({
+        format : 'dd-mm-yyyy',
+        minDate : +1,
+        autoclose : true
+    });
+    $('#from').datepicker();
+
+    $(document).ready(function(){
+       $('.dateRange').hide();
+
+    });
+
+
+
+    function reportSelected(event){
+        var type=document.getElementById('reportType');
+        if(type.options[type.selectedIndex].value=='Current_Report')
+            $('.dateRange').show();
+        else {
+            $('.dateRange').hide();
+            document.getElementById("from").value='';
+            document.getElementById("to").value='';
+        }
+
+    }
+
+    function chnangeAttribute(){
+        var from = document.getElementById('from');
+        if(from.value!='') {
+            document.getElementById("to").required = true;
+            $('#to').datepicker({
+                format : 'dd-mm-yyyy',
+                minDate: '29-06-2020',
+                autoclose : true
+            });
+
+        }
+        else
+            document.getElementById("to").required = false;
+    }
+</script>
+<footer>
+    <div th:replace="footer :: myfooter"></div>
+</footer>
+</body>
+</html>
+

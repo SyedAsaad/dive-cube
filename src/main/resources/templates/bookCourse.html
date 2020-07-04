@@ -196,17 +196,19 @@
 
 
 <script>
-    $('#courseDate').datepicker();
+
     $('.input-group.date').datepicker({
         autoclose: true,
         todayHighlight: true
     });
-
-    $('#paymentDate').datepicker({
-
-        format : 'dd/MM/yyyy',
+    $('#courseDate').datepicker({
+        format : 'dd-mm-yyyy',
         autoclose : true
-
+    });
+    $('#courseDate').datepicker();
+    $('#paymentDate').datepicker({
+        format : 'dd-mm-yyyy',
+        autoclose : true
     });
     function fileRequiredTrue(){
         $('#fileUploadForm').attr('required', true);

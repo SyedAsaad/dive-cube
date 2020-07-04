@@ -5,15 +5,14 @@ import com.demo.dive.cube.config.ReportConstants;
 import com.demo.dive.cube.config.UtilService;
 import com.demo.dive.cube.config.exception.BadRequestException;
 import com.demo.dive.cube.dto.StudentDto;
-import com.demo.dive.cube.jrbeans.DetailOrderFormJrBean;
+import com.demo.dive.cube.jrbeans.StudentCountJrBean;
 import com.demo.dive.cube.jrbeans.StudentCourseJrBean;
 import com.demo.dive.cube.model.Student;
 import com.demo.dive.cube.repository.StudentRepository;
-import org.apache.commons.io.IOUtils;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,12 +22,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigInteger;
+import java.util.*;
 
 @Service
 public class StudentService {
@@ -130,71 +125,143 @@ public class StudentService {
         return studentRepository.findByIdAndIsDeletedFalse(id).getImageName();
     }
 
-    public void studentContact(HttpServletRequest request, HttpServletResponse response) {
+    public void studentReport(HttpServletRequest request, HttpServletResponse response) {
         String criteria = "";
         int parameterNo = 1;
+        Query query = null;
+        List<Object> results =  new ArrayList<>();
         Map<Integer, Object> parameters = new LinkedHashMap<>();
         String dob = request.getParameter("dob");
         String firstName = request.getParameter("firstName");
         String middelName = request.getParameter("middelName");
         String lastName = request.getParameter("lastName");
-        if (dob != null && !dob.toString().isEmpty()) {
-            criteria += " AND STR_TO_DATE(a.date_of_birth,'%d-%m-%Y') = STR_TO_DATE( ? ,'%d-%m-%Y')";
-            parameters.put(parameterNo, dob);
-            parameterNo++;
-        }
-        if (firstName != null && !firstName.isEmpty()) {
-            criteria += "AND a.first_name LIKE ?";
-            parameters.put(parameterNo, "%" + firstName + "%");
-            parameterNo++;
-        }
-        if (middelName != null && !middelName.isEmpty()) {
-            criteria += "AND a.middle_name LIKE ?";
-            parameters.put(parameterNo, "%" + middelName + "%");
-            parameterNo++;
-        }
-        if (lastName != null && !lastName.isEmpty()) {
-            criteria += "AND a.last_name LIKE ?";
-            parameters.put(parameterNo, "%" + lastName + "%");
-            parameterNo++;
+        Boolean allStudents = request.getParameter("allStudent")==null? Boolean.FALSE:Boolean.TRUE;
+
+        if(allStudents.equals(Boolean.FALSE)) {
+            if (dob != null && !dob.toString().isEmpty()) {
+                criteria += " AND STR_TO_DATE(a.date_of_birth,'%d-%m-%Y') = STR_TO_DATE( ? ,'%d-%m-%Y')";
+                parameters.put(parameterNo, dob);
+                parameterNo++;
+            }
+            if (firstName != null && !firstName.isEmpty()) {
+                criteria += "AND a.first_name LIKE ?";
+                parameters.put(parameterNo, "%" + firstName + "%");
+                parameterNo++;
+            }
+            if (middelName != null && !middelName.isEmpty()) {
+                criteria += "AND a.middle_name LIKE ?";
+                parameters.put(parameterNo, "%" + middelName + "%");
+                parameterNo++;
+            }
+            if (lastName != null && !lastName.isEmpty()) {
+                criteria += "AND a.last_name LIKE ?";
+                parameters.put(parameterNo, "%" + lastName + "%");
+                parameterNo++;
+            }
+            if(request.getParameter("fromDate") != null && !request.getParameter("fromDate").toString().isEmpty() && request.getParameter("toDate") != null && !request.getParameter("toDate").toString().isEmpty()){
+                criteria += " AND STR_TO_DATE(c.course_date,'%d-%m-%Y') >= STR_TO_DATE( ? ,'%d-%m-%Y')";
+                parameters.put(parameterNo,request.getParameter("fromDate"));
+                parameterNo++;
+                criteria += " AND STR_TO_DATE(c.course_date,'%d-%m-%Y') <= STR_TO_DATE( ? ,'%d-%m-%Y')";
+                parameters.put(parameterNo,request.getParameter("toDate"));
+                parameterNo++;
+            }
         }
 
-        Query query = entityManager.createNativeQuery(Queries.studentDetailQuery.replace("criteria", criteria));
+        String reportType = request.getParameter("reportType");
+        if(reportType.equals("Contact_Report")) {
+            query = entityManager.createNativeQuery(Queries.studentDetailQuery.replace("criteria", criteria));
+            results = UtilService.toParameterized(query, parameters, parameterNo).getResultList();
+            studentContact(request,response,results);
+        }
+        else if(reportType.equals("Old_Report")) {
+            query = entityManager.createNativeQuery(Queries.oldStudentDetailQuery.replace("criteria", criteria));
+            results = UtilService.toParameterized(query, parameters, parameterNo).getResultList();
+            oldStudent(request,response,results);
+        }
+        else if(reportType.equals("Current_Report")) {
+            query = entityManager.createNativeQuery(Queries.currentStudentQuery.replace("criteria", criteria));
+            results = UtilService.toParameterized(query, parameters, parameterNo).getResultList();
+            currentStudent(request,response,results);
+        }
+    }
 
-        List<Object> results = UtilService.toParameterized(query, parameters, parameterNo).getResultList();
+
+    public void studentContact(HttpServletRequest request, HttpServletResponse response,List<Object> results ) {
 
         List<StudentCourseJrBean> data  =  getStudentReportBean(results);
         reportService.export(data, ReportConstants.STUDENT_CONTACT_REPORT, request, response);
+    }
+    public void oldStudent(HttpServletRequest request, HttpServletResponse response,List<Object> results) {
 
-
+        List<StudentCourseJrBean> data  =  getStudentReportBean(results);
+        reportService.export(data, ReportConstants.OLD_STUDENT_REPORT, request, response);
     }
 
-   private List<StudentCourseJrBean> getStudentReportBean(List<Object> results){
-        List<StudentCourseJrBean> data = new ArrayList<>();
 
+    private void currentStudent(HttpServletRequest request, HttpServletResponse response, List<Object> results) {
+        List<StudentCourseJrBean> data  =  getStudentReportBean(results);
+        reportService.export(data, ReportConstants.CURRENT_STUDENT_REPORT, request, response);
+    }
+
+   private List<StudentCourseJrBean> getStudentReportBean(List<Object> results) {
+       List<StudentCourseJrBean> data = new ArrayList<>();
+       for (Object object : results) {
+           int i = 0;
+           Object[] obj = (Object[]) object;
+           StudentCourseJrBean studentCourseJrBean = new StudentCourseJrBean();
+           studentCourseJrBean.setFirstName(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setMiddleName(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setLastName(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setEmail(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setPermanentAddress(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setPhoneNumber(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setAltPhoneNumber(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setCountry(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setZipCode(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setDob(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setCourseName(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setCourseDate(UtilService.isValid(obj[i++]));
+           studentCourseJrBean.setCourseCompletionDate(UtilService.isValid(obj.length>=i?"":obj[i++]));
+           studentCourseJrBean.setDateOfProcessing(UtilService.isValid(obj.length>=i?"":obj[i++]));
+           studentCourseJrBean.setStudentName(studentCourseJrBean.getFirstName()+" "+studentCourseJrBean.getMiddleName()+" "+studentCourseJrBean.getLastName());
+           data.add(studentCourseJrBean);
+       }
+
+       return data;
+   }
+
+    public void studentCountReport(HttpServletRequest request, HttpServletResponse response) {
+        String criteria = "";
+        int parameterNo = 1;
+
+        Map<Integer, Object> parameters = new LinkedHashMap<>();
+        Boolean allCourses = request.getParameter("allCourse")==null? Boolean.FALSE:Boolean.TRUE;
+        if(allCourses.equals(Boolean.FALSE)) {
+            if (request.getParameter("fromDate") != null && !request.getParameter("fromDate").toString().isEmpty() && request.getParameter("toDate") != null && !request.getParameter("toDate").toString().isEmpty()) {
+                criteria += " AND STR_TO_DATE(a.course_completion_date,'%d-%m-%Y') >= STR_TO_DATE( ? ,'%d-%m-%Y')";
+                parameters.put(parameterNo, request.getParameter("fromDate"));
+                parameterNo++;
+                criteria += " AND STR_TO_DATE(a.course_completion_date,'%d-%m-%Y') <= STR_TO_DATE( ? ,'%d-%m-%Y')";
+                parameters.put(parameterNo, request.getParameter("toDate"));
+                parameterNo++;
+            }
+        }
+
+        Query query = entityManager.createNativeQuery(Queries.studentCountQuery.replace("criteria", criteria));
+        List<Object> results  = UtilService.toParameterized(query, parameters, parameterNo).getResultList();
+
+
+        List<StudentCountJrBean> data = new ArrayList<>();
         for (Object object : results) {
             int i = 0;
             Object[] obj = (Object[]) object;
-            StudentCourseJrBean studentCourseJrBean = new StudentCourseJrBean();
-            studentCourseJrBean.setFirstName(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setMiddleName(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setLastName(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setEmail(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setPermanentAddress(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setPhoneNumber(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setAltPhoneNumber(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setCountry(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setZipCode(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setDob(UtilService.isValid(obj[i++]));
+            StudentCountJrBean studentCourseJrBean = new StudentCountJrBean();
+            studentCourseJrBean.setStudentCount(((BigInteger)obj[i++]).toString());
             studentCourseJrBean.setCourseName(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setCourseCompletionDate(UtilService.isValid(obj[i++]));
-            studentCourseJrBean.setDateOfProcessing(UtilService.isValid(obj[i++]));
             data.add(studentCourseJrBean);
         }
 
-        return data;
-    }
-
-    public void oldStudent(HttpServletRequest request, HttpServletResponse response) {
+        reportService.export(data, ReportConstants.COUNT_STUDENT_REPORT, request, response);
     }
 }
