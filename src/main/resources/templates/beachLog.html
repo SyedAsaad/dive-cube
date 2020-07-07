@@ -213,7 +213,7 @@
     }
 
 
-    $('#logDate').datepicker('setDate', 'today');
+
     $('.input-group.date').datepicker({
         autoclose: true,
         todayHighlight: true
@@ -221,10 +221,11 @@
 
     $('#logDate').datepicker({
 
-        format : 'dd/MM/yyyy',
+        format : 'dd-mm-yyyy',
         autoclose : true
 
     });
+    $('#logDate').datepicker();
 
     $(document).ready(function(){
         if($('#logId').val()=="") {

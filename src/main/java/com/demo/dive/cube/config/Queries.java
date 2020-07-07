@@ -99,4 +99,17 @@ public class Queries {
             "and b.is_deleted = 0 \n " +
             "and c.is_deleted = 0 ";
 
+    /*Beach Log Query*/
+    public static String beachLog = "SELECT a.log_date,b.name,b.certification_level,a.dive_name,c.instructor_name \n " +
+            " FROM beach_log a \n " +
+            "INNER JOIN beach_user_log b \n " +
+            "ON a.id = b.beach_log_id \n " +
+            "INNER JOIN instructor c \n " +
+            "ON a.instructor_id = c.id \n "+
+            "where a.is_deleted = 0 \n " +
+            "and b.is_deleted = 0 \n " +
+            "and c.is_deleted = 0 \n"+
+            "criteria ";
+
+
 }

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="beachLogReport" pageWidth="670" pageHeight="842" columnWidth="630" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="65765403-3510-4441-b0e4-0d4a95da79d6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="personName" class="java.lang.String"/>
+	<field name="personCert" class="java.lang.String"/>
+	<field name="instructorName" class="java.lang.String"/>
+	<field name="diveType" class="java.lang.String"/>
+	<field name="logDate" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="78" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="630" height="40" uuid="5a5a0b97-4a64-4579-8202-7b7c19c4903e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Beach Log Report]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="525" y="54" width="100" height="20" uuid="e451db5b-375d-4070-888b-cbc58a18f2a5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="425" y="54" width="100" height="20" uuid="c9514956-9cb2-4ad9-b763-8dea6ae5003a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Print Date]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="119" height="26" backcolor="#CCCCCC" uuid="96660906-e652-4861-b536-0813611c7a98"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="491" y="1" width="139" height="26" backcolor="#CCCCCC" uuid="df0f3bdf-b799-4c94-830e-baa1bacb9d7f"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Log Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="1" width="121" height="26" backcolor="#CCCCCC" uuid="07a6b797-e0d4-4e40-a361-0964543332da"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Dive]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="119" y="1" width="122" height="26" backcolor="#CCCCCC" uuid="b3297db5-18f5-4423-81da-fea18e62c66e"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Certification Level]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="240" y="1" width="130" height="26" backcolor="#CCCCCC" uuid="a676d2c8-6e74-473a-9065-a0198cf9a8a8"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Instructor Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="120" height="20" uuid="6101f965-344b-4cc7-899f-fd63fca81533"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{personName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="121" height="20" uuid="98b36be2-937c-4a57-8cd1-e62872ddb8b6"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{diveType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="121" height="20" uuid="1cfeb017-ead0-4fa9-8e21-d50f70a8b392"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{personCert}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="130" height="20" uuid="f73b7006-ef0f-40ff-8379-15e4fe4895d4"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{instructorName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="491" y="0" width="139" height="20" uuid="1282a0d7-005e-44f7-8c9d-fbae1d8b85ad"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{logDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="28" splitType="Stretch"/>
+	</summary>
+</jasperReport>
