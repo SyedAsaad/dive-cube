@@ -5,15 +5,16 @@ import com.demo.dive.cube.config.ReportConstants;
 import com.demo.dive.cube.config.UtilService;
 import com.demo.dive.cube.dto.BeachLogDto;
 import com.demo.dive.cube.dto.BeachLogUserDto;
-import com.demo.dive.cube.dto.BoatLogDto;
-import com.demo.dive.cube.dto.BoatLogUserDto;
 import com.demo.dive.cube.enums.CertificationLevel;
 import com.demo.dive.cube.enums.DiveName;
 import com.demo.dive.cube.jrbeans.BeachLogJrBean;
-import com.demo.dive.cube.jrbeans.BoatLogJrBean;
 import com.demo.dive.cube.model.*;
 import com.demo.dive.cube.repository.BeachLogRepository;
-import com.demo.dive.cube.repository.BoatLogRepository;
+import org.apache.commons.io.IOUtils;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,6 +50,8 @@ public class BeachLogService {
 
     @PersistenceContext
     public EntityManager em;
+
+    private static String[] columnName = { "Name" ,"Certificate Level","Site Name"};
 
     public List<Instructor> findAllInstructors(){
        return instructorService.findAll();
@@ -108,7 +114,7 @@ public class BeachLogService {
         modelAndView.addObject("beachLogList",findAll().stream().map(boatLog -> getDto(boatLog)).collect(Collectors.toSet()));
     }
 
-    public void exportReport(HttpServletRequest request, HttpServletResponse response) {
+    public List<BeachLogJrBean> getRequiredData(HttpServletRequest request, HttpServletResponse response) {
 
         String criteria = "";
         int parameterNo = 1;
@@ -143,9 +149,52 @@ public class BeachLogService {
             beachLogJrBean.setPersonCert(CertificationLevel.values()[(Integer)obj[i++]].getTitle());
             beachLogJrBean.setDiveType(DiveName.values()[(Integer)obj[i++]].getTitle());
             beachLogJrBean.setInstructorName(UtilService.isValid(obj[i++]));
+            beachLogJrBean.setSite(UtilService.isValid(obj[i++]));
             data.add(beachLogJrBean);
         }
+        return data;
 
-        reportService.export(data, ReportConstants.BEACH_LOG_REPORT,request,response);
+    }
+
+
+    public ByteArrayInputStream exportExcel(List<BeachLogJrBean> data, String sheetname) {
+        try {
+            Workbook workbook = new XSSFWorkbook();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            Sheet sheet = UtilService.initializeExcel(workbook,columnName,sheetname);
+
+            // Create Other rows and cells with contacts data
+            int rowCount = 1;
+            for (BeachLogJrBean beach : data) {
+                Row row = sheet.createRow(rowCount++);
+                int columnCount = 0;
+
+                row.createCell(columnCount++).setCellValue(beach.getPersonName());
+                row.createCell(columnCount++).setCellValue(beach.getPersonCert());
+                row.createCell(columnCount++).setCellValue(beach.getSite());
+            }
+
+            for (int i = 0; i < columnName.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public ByteArrayInputStream excelReport(HttpServletRequest request, HttpServletResponse response) {
+        List<BeachLogJrBean> beachLogJrBeans=getRequiredData(request,response);
+        return exportExcel(beachLogJrBeans,"beachLog");
+
+    }
+
+    public void pdfReport(HttpServletRequest request, HttpServletResponse response) {
+        List<BeachLogJrBean> beachLogJrBeans=getRequiredData(request,response);
+         reportService.export(beachLogJrBeans, ReportConstants.BEACH_LOG_REPORT,request,response);
     }
 }

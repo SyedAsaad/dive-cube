@@ -100,7 +100,7 @@ public class Queries {
             "and c.is_deleted = 0 ";
 
     /*Beach Log Query*/
-    public static String beachLog = "SELECT a.log_date,b.name,b.certification_level,a.dive_name,c.instructor_name \n " +
+    public static String beachLog = "SELECT a.log_date,b.name,b.certification_level,a.dive_name,c.instructor_name,a.site \n " +
             " FROM beach_log a \n " +
             "INNER JOIN beach_user_log b \n " +
             "ON a.id = b.beach_log_id \n " +

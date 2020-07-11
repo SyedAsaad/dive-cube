@@ -2,6 +2,7 @@ package com.demo.dive.cube.config;
 
 import com.demo.dive.cube.config.exception.BadRequestException;
 import net.bytebuddy.agent.builder.AgentBuilder;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Query;
@@ -89,5 +90,31 @@ public class UtilService {
         File file = new File(dirPath);
         if(!file.exists())
             file.mkdir();
+    }
+
+    public static Sheet initializeExcel(Workbook workbook, String[] columnName, String sheetName){
+
+        Sheet sheet = workbook.createSheet(sheetName);
+
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 11);
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        // Create a Row
+        Row headerRow = sheet.createRow(0);
+
+
+        for (int i = 0; i < columnName.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columnName[i]);
+            cell.setCellStyle(headerCellStyle);
+            sheet.autoSizeColumn(i);
+        }
+        return sheet;
+
     }
 }

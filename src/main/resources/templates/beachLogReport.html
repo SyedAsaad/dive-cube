@@ -53,13 +53,18 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary btn-sm"
+                        <button type="submit" class="btn btn-primary btn-sm" value="pdf" name="action"
                                 id="submit-btn">
-                            <i class="fa fa-dot-circle-o"></i> Submit
+                            <i class="fa fa-dot-circle-o"></i> PDF Report
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm" value="excel" name="action"
+                                id="submit-btn">
+                            <i class="fa fa-dot-circle-o"></i> Excel Report
                         </button>
                         <button type="reset" class="btn btn-danger btn-sm" id="reset">
                             <i class="fa fa-ban"></i> Reset
                         </button>
+
                     </div>
                 </form>
             </div>
@@ -83,6 +88,8 @@
         format : 'dd-mm-yyyy',
         autoclose : true
     });
+
+
 </script>
 <footer>
     <div th:replace="footer :: myfooter"></div>

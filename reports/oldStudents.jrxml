@@ -14,21 +14,21 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="114" splitType="Stretch">
+		<band height="88" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="679" height="43" uuid="972a3b3a-a607-4a91-8180-a005fad4d4c9"/>
+				<reportElement x="0" y="0" width="680" height="43" uuid="972a3b3a-a607-4a91-8180-a005fad4d4c9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="26" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Old Student Report]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="509" y="93" width="66" height="20" uuid="b55bd3b1-9f73-460a-956f-89fd6edc5432"/>
+				<reportElement x="508" y="63" width="66" height="20" uuid="b55bd3b1-9f73-460a-956f-89fd6edc5432"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Print Date]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="575" y="93" width="104" height="20" uuid="95d1070d-20f1-4bbb-afb5-daa660c47c79"/>
+				<reportElement x="574" y="63" width="104" height="20" uuid="95d1070d-20f1-4bbb-afb5-daa660c47c79"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -211,6 +211,6 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="37" splitType="Stretch"/>
 	</summary>
 </jasperReport>

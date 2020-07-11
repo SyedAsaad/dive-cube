@@ -7,6 +7,7 @@ public class BeachLogJrBean {
     private String diveType;
     private String instructorName;
     private String totalPersons;
+private String site;
 
     public String getPersonName() {
         return personName;
@@ -54,5 +55,13 @@ public class BeachLogJrBean {
 
     public void setLogDate(String logDate) {
         this.logDate = logDate;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
     }
 }

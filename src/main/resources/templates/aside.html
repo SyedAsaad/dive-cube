@@ -25,26 +25,25 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li sec:authorize="hasAuthority('ADMIN')"><i  class="fa fa-table"></i><a  th:href="@{/shift}">User Shift</a></li>
                         <li sec:authorize="hasAuthority('INSTRUCTOR')"><i class="fa fa-table"></i><a th:href="@{/registration}">Add User</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/supplier}">Supplier</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/item}">Item</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/supplier}">Add Supplier</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/item}">Add Item</a></li>
 <!--                        <li><i class="fa fa-table"></i><a th:href="@{/quote}">Create Quote</a></li>-->
 <!--                        <li><i class="fa fa-table"></i><a th:href="@{/payment/supplier}">Supplier Payment</a></li>-->
                         <li><i class="fa fa-table"></i><a th:href="@{/order}">Supplier Order</a></li>
                         <li><i class="fa fa-table"></i><a th:href="@{/dive}">Add Dive</a></li>
                         <li><i class="fa fa-table"></i><a th:href="@{/book/dive}">Book Dive</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/boat/log}">Boat Log</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/beach/log}">Beach Log</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/student}">Add Student For Course</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/report}">Report</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/boat/log}">Add Boat Log</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/beach/log}">Add Beach Log</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/student}">Add Student</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Administrations</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-table"></i><a th:href="@{/employee}">Employee</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/course}">Course</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/instructor}">Instructor</a></li>
-                        <li><i class="fa fa-table"></i><a th:href="@{/class/room}">Class Room</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/employee}">Add Employee</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/course}">Add Course</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/instructor}">Add Instructor</a></li>
+                        <li><i class="fa fa-table"></i><a th:href="@{/class/room}">Add Class Room</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">

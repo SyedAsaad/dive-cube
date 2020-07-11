@@ -7,4 +7,5 @@ public class URLConstants {
     public static final String LIST_ALL = "/list/all";
     public static final String REPORT = "/report";
     public static final String EXPORT_REPORT = "/report/export";
+    public static final String EXCEL_REPORT = "/report/excel";
 }

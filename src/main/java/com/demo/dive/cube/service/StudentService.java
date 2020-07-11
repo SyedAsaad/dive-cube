@@ -5,11 +5,16 @@ import com.demo.dive.cube.config.ReportConstants;
 import com.demo.dive.cube.config.UtilService;
 import com.demo.dive.cube.config.exception.BadRequestException;
 import com.demo.dive.cube.dto.StudentDto;
+import com.demo.dive.cube.jrbeans.BeachLogJrBean;
 import com.demo.dive.cube.jrbeans.StudentCountJrBean;
 import com.demo.dive.cube.jrbeans.StudentCourseJrBean;
 import com.demo.dive.cube.model.Student;
 import com.demo.dive.cube.repository.StudentRepository;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +27,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.DateFormatter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -38,6 +48,10 @@ public class StudentService {
 
     @Autowired
     private ReportService reportService;
+
+    private static final String[] columnName = { "First Name","Middle Name","Last Name"
+            ,"BirthDate","City","State","Country","Address","Zip code","Telephone"
+            ,"Emergency Telephone","email","Enrollment Date"};
 
     public List<Student> findAllStudents() {
         return studentRepository.findAllByIsDeletedFalse();
@@ -109,9 +123,6 @@ public class StudentService {
                 Student student = studentRepository.findByIdAndIsDeletedFalse(id);
 
                 studentDto.setId(student.getId());
-//                String fileName = student.getImageName().substring(student.getImageName().indexOf("-")+1,student.getImageName().length());
-//                MultipartFile multipartFile = new MockMultipartFile(fileName,student.getImageName(),"image/jpeg", IOUtils.toByteArray(fileLocation + student.getImageName()));
-//                studentDto.setImage(multipartFile);
                 BeanUtils.copyProperties(student, studentDto);
                 return studentDto;
             }
@@ -263,5 +274,60 @@ public class StudentService {
         }
 
         reportService.export(data, ReportConstants.COUNT_STUDENT_REPORT, request, response);
+    }
+
+    public ByteArrayInputStream excelReport(HttpServletRequest request, HttpServletResponse response) {
+
+        String firstName = request.getParameter("firstName");
+        String middelName = request.getParameter("middelName");
+        String lastName = request.getParameter("lastName");
+
+        List<Student> studentList = studentRepository.findByFirstNameOrMiddleNameOrLastNameAndIsDeletedFalse(firstName,middelName,lastName);
+        return exportExcel(studentList,"student");
+
+    }
+
+
+    public ByteArrayInputStream exportExcel(List<Student> data, String sheetname) {
+        try {
+
+
+            Workbook workbook = new XSSFWorkbook();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            Sheet sheet = UtilService.initializeExcel(workbook,columnName,sheetname);
+
+            // Create Other rows and cells with contacts data
+            int rowCount = 1;
+            for (Student student : data) {
+                Row row = sheet.createRow(rowCount++);
+                int columnCount = 0;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                row.createCell(columnCount++).setCellValue(student.getFirstName());
+                row.createCell(columnCount++).setCellValue(student.getMiddleName());
+                row.createCell(columnCount++).setCellValue(student.getLastName());
+                row.createCell(columnCount++).setCellValue(student.getDob());
+                row.createCell(columnCount++).setCellValue(student.getCity());
+                row.createCell(columnCount++).setCellValue(student.getState());
+                row.createCell(columnCount++).setCellValue(student.getCountry());
+                row.createCell(columnCount++).setCellValue(student.getPermanentAddress());
+                row.createCell(columnCount++).setCellValue(student.getZipCode());
+                row.createCell(columnCount++).setCellValue(student.getPhoneNumber());
+                row.createCell(columnCount++).setCellValue(student.getEmergencyContactNum());
+                row.createCell(columnCount++).setCellValue(student.getEmail());
+                row.createCell(columnCount++).setCellValue(dateFormat.format(student.getCreationDate()));
+
+            }
+
+            for (int i = 0; i < columnName.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

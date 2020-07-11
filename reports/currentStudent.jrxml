@@ -19,7 +19,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="76" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="2" width="600" height="40" uuid="64b0f0f0-8b81-4766-8a97-a940697971d7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -43,7 +43,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="149" splitType="Stretch">
+		<band height="146" splitType="Stretch">
 			<textField>
 				<reportElement x="283" y="61" width="114" height="20" uuid="0f559cba-bbaf-436b-9c6e-8f8f9caae989"/>
 				<textElement textAlignment="Justified"/>

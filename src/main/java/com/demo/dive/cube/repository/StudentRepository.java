@@ -15,4 +15,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     List<Student> findAllByIsDeletedFalse();
     Student findByIdAndIsDeletedFalse(Long id);
+
+    List<Student> findByFirstNameOrMiddleNameOrLastNameAndIsDeletedFalse(String fname,String mname, String lname);
 }

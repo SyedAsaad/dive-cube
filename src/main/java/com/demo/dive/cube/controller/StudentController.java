@@ -4,6 +4,7 @@ import com.demo.dive.cube.config.URLConstants;
 import com.demo.dive.cube.dto.StudentDto;
 import com.demo.dive.cube.service.CommonService;
 import com.demo.dive.cube.service.StudentService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Date;
 
 @Controller
 @RequestMapping("student")
@@ -72,9 +76,19 @@ public class StudentController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/count"+ URLConstants.EXPORT_REPORT)
+    @PostMapping(value = "/count"+ URLConstants.EXPORT_REPORT,  params="action=pdf")
     public void reportCountExport(HttpServletRequest request, HttpServletResponse response){
         studentService.studentCountReport(request,response);
+
+    }
+
+    @PostMapping(value = URLConstants.EXPORT_REPORT,  params="action=excel")
+    public void excelExport( HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        String filename = "student-"+ new Date().getTime()+".xlsx";
+        response.setHeader("Content-Disposition", "attachment; filename="+filename);
+        ByteArrayInputStream stream = studentService.excelReport(request,response);
+        IOUtils.copy(stream, response.getOutputStream());
 
     }
 
