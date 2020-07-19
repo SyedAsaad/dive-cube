@@ -10,4 +10,6 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     Employee findOneByIdAndIsDeletedFalse(Long id);
     List<Employee> findAllByIsDeletedFalse();
+    List<Employee> findAllByNameAndIsDeletedFalseOrderByStartDate(String name);
+    List<Employee> findAllByIsDeletedFalseOrderByStartDate();
 }

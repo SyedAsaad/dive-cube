@@ -15,6 +15,9 @@ public class Order extends BaseEntity {
     @Column
     private String title;
 
+    @Column
+    private String orderId;
+
     @ManyToOne
     private Supplier supplier;
 
@@ -27,8 +30,11 @@ public class Order extends BaseEntity {
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
-    @OneToMany
-    @JoinColumn(name="id")
+    @Column(name = "tracking_num")
+    private String trackingNum;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true,mappedBy = "order")
+    @Column(name="order_detail")
     private List<OrderDetail> orderDetailList = new ArrayList<>();
 
     public Supplier getSupplier() {
@@ -84,6 +90,22 @@ public class Order extends BaseEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getTrackingNum() {
+        return trackingNum;
+    }
+
+    public void setTrackingNum(String trackingNum) {
+        this.trackingNum = trackingNum;
     }
 }
 

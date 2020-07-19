@@ -30,8 +30,10 @@
         <div class="login-content">
 
             <div class="login-form">
-<!--                <img class="img-responsive" th:src="@{/images/fish.png}" alt="Chania">-->
-                <p th:if="${loginError}" class="error">Wrong user or password</p>
+                <img class="img-responsive" style="display: block;margin-left: auto;margin-right: auto; width: 50%;" th:src="@{/images/cubeLogo.png}" alt="Logo">
+                <p th:if="${loginError}" style="color: red" class="error" >
+                    <span >Wrong credentials or Shift is over</span>
+                </p>
 
                 <div class="form-group">
                     <form th:action="@{/userLogin}" method="post" th:object="${authenticationRequestDto}">
@@ -43,9 +45,8 @@
                     <input type="password" class="form-control" placeholder="Password" name="password">
                 </div>
 
-                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" id="login" style="background-color: #156338;">Sign in</button>
+                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" id="login" style="background-color: #201E1E">Sign in</button>
                 </form>
-
             </div>
         </div>
     </div>

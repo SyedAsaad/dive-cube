@@ -1,27 +1,23 @@
 package com.demo.dive.cube.model;
 
 import com.demo.dive.cube.config.Constants;
+import com.demo.dive.cube.enums.UserType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table
 @Entity(name = "user")
 public class User extends BaseEntity{
 
-    @Column(name = "first_name", nullable = false)
-    @NotNull(message = "First name cannot be null")
+    @Column(name = "name", nullable = false)
+    @NotNull(message = "Name cannot be null")
     @Size(min = 2, max = 50, message = "First Name must contain at-least 2 and at-most 20 characters")
-    private String firstName;
-
-    @Column(name = "last_name")
-    @NotNull(message = "Last name cannot be null")
-    @Size(min = 2, max = 50, message = "Last Name must contain at-least 2 and at-most 20 characters")
-    private String lastName;
+    private String name;
 
     @Column(name = "email", nullable = false,unique = true)
     @NotNull(message = "Email cannot be null")
@@ -41,24 +37,23 @@ public class User extends BaseEntity{
     private String address;
 
     @Column(name="password",length = 200)
-    @NotNull(message = "Password number cannot be null")
+//    @NotNull(message = "Password number cannot be null")
     @Size(min = 5, max = 200, message = "Password should be at-least 7 digits and at-most 20 digits long")
     private String password;
 
-    public String getFirstName() {
-        return firstName;
+    @OneToOne()
+    private Role role ;
+
+    @OneToOne
+    private Shift shift;
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -99,5 +94,21 @@ public class User extends BaseEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Shift getShift() {
+        return shift;
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
 }

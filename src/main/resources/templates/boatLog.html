@@ -1,0 +1,323 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+    <div th:replace="header :: myheader"></div>
+</head>
+<body>
+<aside id="left-panel" class="left-panel">
+    <div th:replace="aside :: myMenu"></div>
+</aside>
+<div id="right-panel" class="right-panel">
+    <header id="header" class="header">
+        <div class="header-menu">
+            <div class="col-sm-7">
+                <a id="menuToggle" class="menutoggle pull-left"><i
+                        class="fa fa fa-tasks"></i></a>
+            </div>
+            <a class="btn-logout pull-right" th:href="@{/logout}">
+                <i class="fa fa-sign-out"></i> Logout
+            </a>
+        </div>
+    </header>
+    <div class="content mt-3">
+        <div class="col-lg-12">
+            <div class="card">
+                <form th:action="@{/boat/log/save}" method="post" th:object="${boatLog}">
+                    <input type="hidden" id="logId" th:field="*{id}"/>
+                    <div class="card-header">
+                        <small>Boat Log </small>Entry
+                    </div>
+                    <div class="card-body card-block">
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Date <span style="color: red;"><b>*</b></span></label>
+
+                                <input type="text"
+                                       class="form-control" name="logDate" id="logDate"
+                                       th:field="*{logDate}" required>
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class=" form-control-label">Boat Captain <span style="color: red;"><b>*</b></span></label>
+                                <input type="text"
+                                       class="form-control" name="boatCaptain" id="boatCaptain" th:field="*{boatCaptain}" required >
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class=" form-control-label">Instructor <span style="color: red;"><b>*</b></span></label>
+                                <select class="standardSelect form-control" id="instructor" name="instructor" th:field="*{instructor}" required>
+                                    <option value="" selected>Select Instructor</option>
+                                    <option th:each="item : ${instructors}"
+                                            th:value="${item.id}"
+                                            th:text="${item.instructorName}"></option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class=" form-control-label">Staff</label>
+                                <input type="text"
+                                       class="form-control" name="staffName" id="staffName" th:field="*{staffName}" >
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class=" form-control-label">Dive <span style="color: red;"><b>*</b></span></label>
+                                <select class="standardSelect form-control" id="diveName" name="diveName" th:field="*{diveName}" required>
+                                    <option value="" selected>Select Dive</option>
+                                    <option th:each="item : ${dives}"
+                                            th:value="${item}"
+                                            th:text="${item}"></option>
+                                </select>
+                            <hr>
+                            </div>
+                        </div>
+
+
+                    <div id="collapse1">
+                        <div class="form-group userList" id="partsListContainer">
+                            <div class="card-body" th:id="row[__${itemStat.index}__]" th:each="part, itemStat :*{boatLogUserDtoList}">
+                                <div class="form-row" >
+                                    <input class="form-control"
+                                           th:field="*{boatLogUserDtoList[__${itemStat.index}__].id}"
+                                           type="hidden"/>
+                                    <div class="form-group col-md-2">
+                                        <label class=" form-control-label">Name</label>
+                                        <input class="form-control"
+                                           th:field="*{boatLogUserDtoList[__${itemStat.index}__].name}"
+                                           type="text" value=""/>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label class="form-control-label">Cert Level</label>
+                                        <select class="standardSelect form-control" th:field="*{boatLogUserDtoList[__${itemStat.index}__].certificationLevel}">
+                                            <option value="" selected>Select Dive</option>
+                                            <option value="PICK_OF_WATER_DIVER">PICK_OF_WATER_DIVER</option><option value="JR_OPEN_WATER_DIVER">JR_OPEN_WATER_DIVER</option><option value="RESCUE_DIVER">RESCUE_DIVER</option><option value="DIVE_MASTER">DIVE_MASTER</option>
+                                            <option value="STUDENT">STUDENT</option> <option value="DSD">DSD</option><option value="SNORKELER">SNORKELER</option><option value="PASSENGER">PASSENGER</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label class=" form-control-label">Last Dive</label>
+                                        <input type="text"
+                                               class="form-control lastDate"  name="lastDiveDate" th:field="*{boatLogUserDtoList[__${itemStat.index}__].lastDiveDate}" >
+
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label class=" form-control-label"># Dives</label>
+                                        <input type="text"
+                                               class="form-control" name="numDives" th:field="*{boatLogUserDtoList[__${itemStat.index}__].numDives}"  >
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label class=" form-control-label">Gide</label>
+                                        <input type="text"
+                                               class="form-control" name="gide" th:field="*{boatLogUserDtoList[__${itemStat.index}__].gide}" >
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class=" form-control-label">Check in Site1</label>
+                                        <input type="text"
+                                               class="form-control" name="checkInSite1" th:field="*{boatLogUserDtoList[__${itemStat.index}__].checkInSite1}" >
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class=" form-control-label">Check in Site2</label>
+                                        <input type="text"
+                                               class="form-control" name="checkInSite2" th:field="*{boatLogUserDtoList[__${itemStat.index}__].checkInSite2}" >
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label class=" form-control-label"># Divers</label>
+                                        <input type="text"
+                                               class="form-control" name="numDivers" th:field="*{boatLogUserDtoList[__${itemStat.index}__].numDivers}" >
+
+                                    </div>
+
+                                    <div class="form-group col-sm-1">
+                                        <label class=" form-control-label">Action</label>
+                                        <button class="btn-danger" th:id="__${itemStat.index}__" th:onclick="'javascript:deleteRow(event);'"><i class="fa fa-trash"></i>
+<!--                                            <i class="nav-icon fa fa-plus-circle"></i>-->
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            <div class="form-row"></div>
+                            <div class="btn-group ">
+
+                                <button class="btn-success" th:onclick="'javascript:addToPartsList();'"
+                                        type="button">
+                                    Add Persons
+                                    <i class="nav-icon fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm"
+                                id="submit-btn">
+                            <i class="fa fa-dot-circle-o"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm" id="reset">
+                            <i class="fa fa-ban"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Boat Log List</strong>
+                </div>
+                <div class="card-body">
+                    <table id="quote-datatable"
+                           class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Boat Captain</th>
+                            <th>Boat Instructor</th>
+                            <th>Boat Staff </th>
+                            <th>DiveName</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="boatLog : ${boatLogList}">
+                            <td th:text="${boatLog.boatCaptain}"></td>
+                            <td th:text="${boatLog.instructor.instructorName}"></td>
+                            <td th:text="${boatLog.staffName}"></td>
+                            <td th:text="${boatLog.diveName}"></td>
+                            <td th:text="${boatLog.logDate}"></td>
+                            <td><a th:href="@{/boat/log/delete/{id}(id=${boatLog.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td><a th:href="@{/boat/log/edit/{id}(id=${boatLog.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
+<script th:src="@{/assets/js/lib/bootstrap-datepicker.js}"></script>
+
+<script src="/Utility/util.js"></script>
+
+<script>
+
+
+
+    $('.glyphicon-remove').click(function(){
+        $(this).closest('.col-md-12').remove();
+    });
+
+    partsListContainer
+
+    function addToPartsList() {
+        var list = document.getElementById("partsListContainer");
+        index = list.childElementCount;
+        $(
+            '<div class="card-body" id="row['+index+']">'+
+            '<div class="form-row" >' +
+            ' <div class="form-group col-md-2" ><label class=" form-control-label">Name</label>'+ ' <input class="form-control" id="boatLogUserDtoList' + index + '.name" name="boatLogUserDtoList[' + index + '].name" type="text" value="' + name + '"> </div>'+
+            '<div class="form-group col-md-1" >' + '<label class=" form-control-label">Cert Level</label>' + '<select class="standardSelect form-control" id="certificationLevel" name="boatLogUserDtoList[' + index + '].certificationLevel"  required>' +
+            '<option value="" selected>Select Dive</option>' + '<option value="PICK_OF_WATER_DIVER">PICK_OF_WATER_DIVER</option>'+ '<option value="JR_OPEN_WATER_DIVER">JR_OPEN_WATER_DIVER</option>'+ '<option value="RESCUE_DIVER">RESCUE_DIVER</option>'+ '<option value="DIVE_MASTER">DIVE_MASTER</option>'+
+            '<option value="STUDENT">STUDENT</option> <option value="DSD">DSD</option>'+ '<option value="SNORKELER">SNORKELER</option>' + '<option value="PASSENGER">PASSENGER</option> </select> </div> ' +
+
+            '<div class="form-group col-md-1"> <label class=" form-control-label">Last Dive</label>' +
+            '<input type="text" class="form-control lastDive"  name="boatLogUserDtoList[' + index + '].lastDiveDate" >' +
+            '</div>'+
+
+            '<div class="form-group col-md-1"> <label class=" form-control-label"># Dives</label>' +
+            '<input type="text" class="form-control"  id="numDives" name="boatLogUserDtoList[' + index + '].numDives" >' +
+            '</div> <div class="form-group col-md-1">' +
+            '<label class=" form-control-label">Gide</label>' +
+            '<input type="text" class="form-control" id="gide" name="boatLogUserDtoList[' + index + '].gide" > </div>'+
+            '<div class="form-group col-md-2">' +
+            '<label class=" form-control-label">Check in Site1</label>'+
+            '<input type="text" class="form-control"  id="checkInSite1" name="boatLogUserDtoList[' + index + '].checkInSite1" ></div>'+
+            '<div class="form-group col-md-2">'+
+            '<label class=" form-control-label">Check in Site2</label>'+
+            '<input type="text" class="form-control" id="checkInSite2" name="boatLogUserDtoList[' + index + '].checkInSite2" >' +
+            '</div>'+
+            '<div class="form-group col-md-1">'+
+            '<label class=" form-control-label"># Divers</label>' +
+            '<input type="text" class="form-control" id="numDivers" name="boatLogUserDtoList[' + index + '].numDivers" ></div>'+
+            '<div class="form-group col-md-1">\n' +
+            '<label class=" form-control-label">Action</label>\n' +
+            '<button class="btn-danger"  id="' + index + '" onclick="deleteRow(event);"><i class="fa fa-trash"></i></button>' +
+            '</div>'+
+            '</div></div>'
+        ).appendTo('#partsListContainer');
+        index++;
+
+        $('.lastDive').datepicker();
+        $('.input-group.date').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        $('.lastDive').datepicker({
+
+            format : 'dd-mm-yyyy',
+            autoclose : true
+
+        });
+    }
+
+    $('#logDate').datepicker({
+
+        format : 'dd-mm-yyyy',
+        autoclose : true
+
+    });
+
+
+    $('.input-group.date').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+
+
+
+
+    $('.lastDate').datepicker();
+    $('.lastDate').datepicker({
+
+        format : 'dd-mm-yyyy',
+        autoclose : true
+
+    });
+
+    $(document).ready(function(){
+        if($('#logId').val()=="") {
+            index = 0;
+        }
+
+    });
+
+</script>
+<footer>
+    <div th:replace="footer :: myfooter"></div>
+</footer>
+<script>
+    $('#quote-datatable').DataTable({
+        "paging" : true,
+        "lengthChange" : true,
+        "searching" : true,
+        "ordering" : true,
+        "info" : false,
+        "responsive" : true,
+        "autoWidth" : false,
+        "pageLength" : 10,
+        "order" : [ [ 1, 'asc' ] ]
+    });
+</script>
+</body>
+</html>
+

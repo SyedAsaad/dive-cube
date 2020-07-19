@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("order/detail")
 public class OrderDetailController {
@@ -49,5 +52,17 @@ public class OrderDetailController {
         modelAndView.addObject("orderDetails",orderDetailService.findAllByOrderId(orderDetailService.getOrderByDetailId(id).getId()));
         modelAndView.addObject("items",itemService.findAll());
         return modelAndView;
+    }
+
+    @GetMapping(value = URLConstants.REPORT)
+    public ModelAndView getReportView(){
+        ModelAndView modelAndView = new ModelAndView("orderSummary");
+        return modelAndView;
+    }
+
+    @PostMapping(value = URLConstants.EXPORT_REPORT)
+    public void reportExport(HttpServletRequest request, HttpServletResponse response){
+
+        orderDetailService.exportReport(request,response);
     }
 }

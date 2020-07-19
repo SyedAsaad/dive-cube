@@ -46,17 +46,24 @@
                                     <label>Telephone</label>
                                     <input type="text" class="form-control" name="telephone" placeholder="Telephone" th:field="*{telephone}">
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label >City</label> <input
-                                        type="text" class="form-control" name="country"
-                                        placeholder="City" th:field="*{city}">
-                                </div>
+
+								<div class="form-group col-md-6">
+									<label>Country</label>
+									<select class="standardSelect form-control" id="country" name="country" th:field="*{country}">
+										<option value="">Select Country</option>
+										<option th:each="item : ${countries}"
+												th:value="${item.name}"
+												th:utext="${item.name}"></option>
+									</select>
+								</div>
+
                             </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Country</label>
-                                <input type="text" class="form-control" name="telephone" placeholder="Country" th:field="*{country}">
-                            </div>
+							<div class="form-group col-md-6">
+								<label >City</label> <input
+									type="text" class="form-control" name="country"
+									placeholder="City" th:field="*{city}">
+							</div>
 
 
 							<div class="form-group col-md-6">
@@ -85,6 +92,22 @@
 										th:value="${type}" th:utext="${type}"></option>
 							</select>
 							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6" id="shift">
+								<label >User Shift </label>
+								<select name="shift" th:field="*{shift}" class="standardSelect form-control"  required>
+								<option th:each="type : ${shiftList}"
+										th:value="${type.id}" th:utext="${type.shiftName} + ${' ('} +${type.shiftStart}+ ${' - '}+ ${type.shiftEnd} + ${')'} "></option>
+							</select>
+							</div>
+
+							<div class="form-group col-md-6" th:if="!${id}">
+								<label>Password</label>
+								<input type="password" class="form-control" name="password" placeholder="Password"
+									   th:field="*{password}" th:min="6" th:max="20">
+							</div>
+
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-12">
@@ -119,11 +142,11 @@
 									<th>Name</th>
 									<th>Email</th>
 									<th>Telephone</th>
-									<th>City</th>
-									<th>Country</th>
+<!--									<th>City</th>-->
+<!--									<th>Country</th>-->
                                     <th>Address</th>
 									<th>Week Salary</th>
-									<th>Class of Person</th>
+<!--									<th>Class of Person</th>-->
 									<th>Start Date</th>
 									<th>End Date</th>
 									<th>Action</th>
@@ -135,15 +158,12 @@
 									<td th:text="${employee.name}"></td>
 									<td th:text="${employee.email}"></td>
 									<td th:text="${employee.telephone}"></td>
-									<td th:text="${employee.city}"></td>
-									<td th:text="${employee.country}"></td>
 									<td th:text="${employee.address}"></td>
 									<td th:text="${employee.salaryPerWeek}"></td>
-									<td th:text="${employee.classOfPerson}"></td>
 									<td th:text="${employee.startDate}"></td>
 									<td th:text="${employee.endDate}"></td>
-									<td><a th:href="@{employee/delete/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-									<td><a th:href="@{employee/edit/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+									<td><a th:href="@{/employee/delete/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+									<td><a th:href="@{/employee/edit/{id}(id=${employee.id})}" class="btn btn-danger btn-sm">Edit</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -175,13 +195,13 @@
 		format : 'dd-mm-yyyy',
 		autoclose : true
 	});
-	$('#startDate').datepicker('setDate', 'today');
+	$('#startDate').datepicker();
 
 	$('#endDate').datepicker({
 		format : 'dd-mm-yyyy',
 		autoclose : true
 	});
-	$('#endDate').datepicker('setDate', 'today');
+	$('#endDate').datepicker();
 </script>
 </body>
 </html>

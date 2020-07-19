@@ -7,13 +7,20 @@ import javax.validation.constraints.NotNull;
 @Table(name = "book_course")
 public class BookCourse extends BaseEntity {
 
+    private String bookingId;
+
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Student student;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Course course;
+
+    private boolean isCompleted;
+
+    @Column(name = "course_completion_date")
+    private String courseCompletionDate;
 
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
     private ClassRoom classRoom;
@@ -26,8 +33,9 @@ public class BookCourse extends BaseEntity {
     @NotNull
     private String courseTime;
 
-
     private boolean isTransactionExist;
+
+    private String fileName;
 
 
     public Student getStudent() {
@@ -86,4 +94,35 @@ public class BookCourse extends BaseEntity {
         this.isTransactionExist = isTransactionExist;
     }
 
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public boolean getIsCompleted() {
+        return this.isCompleted;
+    }
+
+    public void setIsCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getCourseCompletionDate() {
+        return courseCompletionDate;
+    }
+
+    public void setCourseCompletionDate(String courseCompletionDate) {
+        this.courseCompletionDate = courseCompletionDate;
+    }
 }

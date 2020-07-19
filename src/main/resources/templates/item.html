@@ -30,9 +30,13 @@
 					</div>
 					<div class="card-body card-block">
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+								<div class="form-group col-md-6">
+									<label >Item Num</label>
+									<input type="text" class="form-control" name="id" placeholder="Item Id" th:field="*{itemId}" required readonly>
+								</div>
+                                <div class="form-group col-md-6">
                                     <label >Item Name</label>
-                                    <input type="text" class="form-control" name="firstName" placeholder="Item Name" th:field="*{itemName}">
+                                    <input type="text" class="form-control" name="firstName" placeholder="Item Name" th:field="*{itemName}" required>
                                 </div>
                             </div>
 					</div>
@@ -66,8 +70,8 @@
 							<tbody>
 								<tr th:each="item : ${items}">
 									<td th:text="${item.itemName}"></td>
-									<td><a th:href="@{item/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-									<td><a th:href="@{item/edit/{id}(id=${item.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+									<td><a th:href="@{/item/delete/{id}(id=${item.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+									<td><a th:href="@{/item/edit/{id}(id=${item.id})}" class="btn btn-danger btn-sm">Edit</a></td>
 								</tr>
 							</tbody>
 						</table>

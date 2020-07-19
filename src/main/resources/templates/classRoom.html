@@ -85,8 +85,8 @@
 									<td th:text="${classRoom.room}"></td>
 									<td th:text="${classRoom.studentCapacity}"></td>
 									<td th:text="${classRoom.classSection}"></td>
-									<td><a th:href="@{class/room/delete/{id}(id=${classRoom.id})}" class="btn btn-danger btn-sm">Delete</a></td>
-									<td><a th:href="@{class/room/edit/{id}(id=${classRoom.id})}" class="btn btn-danger btn-sm">Edit</a></td>
+									<td><a th:href="@{/class/room/delete/{id}(id=${classRoom.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+									<td><a th:href="@{/class/room/edit/{id}(id=${classRoom.id})}" class="btn btn-danger btn-sm">Edit</a></td>
 								</tr>
 							</tbody>
 						</table>
