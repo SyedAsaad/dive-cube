@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.DateFormat;
@@ -80,6 +81,18 @@ public class UserService {
         }
     }
 
+    public String login(AuthenticationRequestDto authenticationRequestDto, Model model) {
+        if(authenticate(authenticationRequestDto)){
+//            UserType role = findUserByUsername(authenticationRequestDto.getUsername()).getRole().getRoleId();
+                return "redirect:/dashboard";
+        }
+        else{
+            model.addAttribute("loginError", true);
+            return "login.html";
+        }
+
+    }
+
     public Boolean authenticate(AuthenticationRequestDto authenticationDto) {
         Boolean flag = false;
         try {
@@ -120,18 +133,16 @@ public class UserService {
 
     }
 
-    public ModelAndView checkUserAuthenticate(ModelAndView modelAndView) {
+    public String checkUserAuthenticate(ModelAndView modelAndView) {
         try {
-            Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             if(!authentication.getPrincipal().toString().equalsIgnoreCase("anonymoususer")) {
-                modelAndView.addObject("item", new Item());
-                modelAndView.addObject("items", itemService.findAll());
-                modelAndView.setViewName("item");
+                return "redirect:/";
+
             } else{
-                modelAndView.setViewName("login");
-                modelAndView.addObject("authenticationRequest",new AuthenticationRequestDto());
+                return "login.html";
+
             }
-            return modelAndView;
         }
         catch (Exception e){
             throw new ServiceException(e.getMessage(),e);

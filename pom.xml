@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.demo.dive</groupId>
-    <artifactId>cube</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>dive</artifactId>
+    <version>cube-0.1</version>
     <name>cube</name>
     <description>Dive Cube project</description>
 

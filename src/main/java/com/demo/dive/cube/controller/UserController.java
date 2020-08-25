@@ -38,6 +38,13 @@ public class UserController {
         return m;
     }
 
+    @GetMapping(value = "/dashboard")
+    private ModelAndView getDashboard(){
+        ModelAndView modelAndView = new ModelAndView("dashboard");
+
+        return modelAndView;
+    }
+
     @PostMapping(value = "/saveUser")
     public String save(@ModelAttribute @Valid UserDto user){
 
@@ -61,7 +68,7 @@ public class UserController {
     }
 
     @RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
-    public ModelAndView login(){
+    public String login(){
 
         return userService.checkUserAuthenticate(new ModelAndView());
     }
@@ -69,13 +76,8 @@ public class UserController {
 
     @RequestMapping(value="/userLogin", method = RequestMethod.POST)
     public String login(@ModelAttribute AuthenticationRequestDto authenticationRequestDto, HttpServletRequest httpServletRequest, Model model){
+        return userService.login(authenticationRequestDto,model);
 
-           Boolean isAuthenticated = userService.authenticate(authenticationRequestDto);
-           if(isAuthenticated)
-            return "redirect:/item";
-           else{
-               model.addAttribute("loginError", true);
-               return "login.html"; }
 
     }
 

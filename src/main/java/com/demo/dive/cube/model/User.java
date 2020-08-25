@@ -47,6 +47,17 @@ public class User extends BaseEntity{
     @OneToOne
     private Shift shift;
 
+    public User(String name, String email,String address, String phoneNumber, Boolean isEnabled, String password) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isEnabled = isEnabled;
+        this.address = address;
+        this.password = password;
+    }
+
+    public User() {
+    }
 
     public String getName() {
         return name;

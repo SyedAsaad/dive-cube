@@ -33,7 +33,7 @@ public class JpaAuditingConfiguration {
             @Override
             public Optional<String> getCurrentAuditor() {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                if(!authentication.getPrincipal().toString().equalsIgnoreCase("anonymoususer"))
+                if(authentication!=null && !authentication.getPrincipal().toString().equalsIgnoreCase("anonymoususer"))
                 {
                     return Optional.of(authentication.getName());
                 }
