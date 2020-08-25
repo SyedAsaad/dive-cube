@@ -5,6 +5,7 @@ import com.demo.dive.cube.dto.BoatLogDto;
 import com.demo.dive.cube.enums.DiveName;
 import com.demo.dive.cube.service.BoatLogService;
 import com.demo.dive.cube.service.EnumService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/boat/log")
@@ -58,8 +62,18 @@ public class BoatLogController {
         return modelAndView;
     }
 
-    @PostMapping(value = URLConstants.EXPORT_REPORT)
+    @PostMapping(value = URLConstants.EXPORT_REPORT,params="action=pdf")
     public void reportEmployeeExport(HttpServletRequest request, HttpServletResponse response){
         boatLogService.exportReport(request,response);
+    }
+
+    @PostMapping(value = URLConstants.EXPORT_REPORT,  params="action=excel")
+    public void excelEmployeeExport( HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        String filename = "boat-log-"+ new Date().getTime()+".xlsx";
+        response.setHeader("Content-Disposition", "attachment; filename="+filename);
+        ByteArrayInputStream stream =  boatLogService.excelReport(request,response);
+        IOUtils.copy(stream, response.getOutputStream());
+
     }
 }
